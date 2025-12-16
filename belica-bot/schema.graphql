@@ -1,0 +1,1902 @@
+"""
+Indicates that an Input Object is a OneOf Input Object (and thus requires
+                        exactly one of its field be provided)
+"""
+directive @oneOf on INPUT_OBJECT
+
+"""
+Provides a scalar specification URL for specifying the behavior of custom scalar types.
+"""
+directive @specifiedBy(
+  """URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
+
+type AbilityData {
+  ability: AbilityKey!
+  gameTime: Int!
+}
+
+enum AbilityKey {
+  BASIC
+  PRIMARY
+  SECONDARY
+  ULTIMATE
+  ALTERNATE
+  PASSIVE
+}
+
+enum AbilityType {
+  UNKNOWN
+  RANGED
+  MELEE
+  MOBILITY
+  UTILITY
+  DAMAGE
+  HEALING
+  SHIELD
+  COMPLEX
+  BUFF
+  DURABILITY
+}
+
+type Application {
+  allowUser: Boolean!
+  callbacks: [String!]!
+  canManage: Boolean!
+  clientId: String!
+  clientSecret: String!
+  confidential: Boolean!
+  id: ID!
+  name: String!
+  scopes: [String!]!
+  skipConsent: Boolean!
+  user: User!
+}
+
+input ApplicationInput {
+  allowUser: Boolean!
+  callbacks: [String!]!
+  confidential: Boolean!
+  name: String!
+}
+
+input ApplicationUpdateInput {
+  allowUser: Boolean
+  callbacks: [String!]
+  confidential: Boolean
+  name: String
+  scopes: [String!]
+  skipConsent: Boolean
+}
+
+type Authorization {
+  provider: ProviderLink
+  roles: [String!]!
+  scope: String!
+  user: User
+}
+
+type AuthorizeResult {
+  application: Application!
+  token: String
+}
+
+type Backend {
+  commitHash: String!
+}
+
+enum BaseAttribute {
+  HEALTH
+  MAX_HEALTH
+  HEALTH_REGEN
+  MANA
+  MAX_MANA
+  MANA_REGEN
+  ATTACK_SPEED
+  BASIC_ARMOR
+  ABILITY_ARMOR
+  BASIC_ATTACK_TIME
+  DAMAGE
+  MOVEMENT_SPEED
+  CLEAVE
+  ATTACK_RANGE
+  UNIT_TYPE
+  BASIC_MODIFIER
+  ABILITY_MODIFIER
+  DAMAGE_MODIFIER
+  MAX_LEVEL
+  MAX_RAGE
+}
+
+type Comment {
+  comments: [Comment!]!
+  createdAt: DateTime!
+  id: ID!
+  score: Int!
+  text: String!
+  updatedAt: DateTime!
+  user: User
+  userScore: Boolean
+}
+
+input CommentParent {
+  commentId: ID
+  guideId: ID
+}
+
+type CommonPlayer {
+  matchesPlayed: Int!
+  matchesWon: Int!
+  player: Player!
+}
+
+type CommonPlayerFilter {
+  gameModes: [GameMode!]
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input CommonPlayerFilterInput {
+  gameModes: [GameMode!]
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+type CommonPlayerResult {
+  filter: CommonPlayerFilter!
+  isAlly: Boolean
+  limit: Int!
+  results: [CommonPlayer!]!
+}
+
+"""
+Implement the DateTime<Utc> scalar
+
+The input/output is a string in RFC3339 format.
+"""
+scalar DateTime
+
+enum EntityType {
+  HERO
+  OUTER_TOWER
+  INNER_TOWER
+  INHIBITOR
+  CORE
+  BLUE_BUFF
+  RED_BUFF
+  JUNGLE_MINION
+  GOLD_BUFF
+  CYAN_BUFF
+  RIVER
+  FANGTOOTH
+  PRIMAL_FANGTOOTH
+  ORB_PRIME
+  MINI_PRIME
+  MELEE_MINION
+  RANGED_MINION
+  SIEGE_MINION
+  SUPER_MINION
+  ARENA_FANGTOOTH
+  GOLD_BUG
+  GOLD_BUG_ENHANCED
+  SEEDLING
+  GENESIS_CORE
+}
+
+type Event {
+  description: String!
+  endTime: DateTime
+  eventEntries: [EventEntry!]!
+  id: ID!
+  name: String!
+  startTime: DateTime!
+  trophies: [Trophy!]!
+}
+
+type EventEntry {
+  event: Event!
+  eventPlayers: [EventPlayer!]!
+  id: ID!
+  team: Team
+}
+
+input EventInput {
+  description: String!
+  endTime: DateTime
+  name: String!
+  startTime: DateTime!
+}
+
+input EventKey {
+  id: ID
+}
+
+type EventPlayer {
+  eventEntry: EventEntry!
+  id: ID!
+  player: Player!
+  trophyAwards: [TrophyAward!]!
+}
+
+enum GameMode {
+  NONE
+  STANDARD
+  PRACTICE
+  CUSTOM
+  SOLO
+  RANKED
+  TUTORIAL
+  ARENA
+  TEAM_VS_AI
+  RUSH
+  TEAM_VS_AI_RUSH
+  LEGACY
+  ARAM
+}
+
+type Group {
+  id: ID!
+  name: String!
+  roles: [String!]!
+  users: [User!]
+}
+
+input GroupInput {
+  name: String!
+  roles: [String!]!
+}
+
+type Guide {
+  author: User!
+  averageScore: Float
+  canEdit: Boolean!
+  changes: [GuideChange!]!
+  charCount: Int!
+  comments: [Comment!]!
+  createdAt: DateTime!
+  hasAbilityOrder: Boolean!
+  hero: Hero!
+  heroData: HeroData!
+  id: ID!
+  modules: [GuideModule!]!
+  public: Boolean!
+  role: Role!
+  scoreCount: Int!
+  title: String!
+  updatedAt: DateTime!
+  userScore: Int
+  version: Version!
+  viewCount: Int!
+}
+
+type GuideChange {
+  id: ID!
+  timestamp: DateTime!
+}
+
+type GuideFilter {
+  hasAbilityOrder: Boolean
+  hero: ID
+  maxCharCount: Int
+  minCharCount: Int
+  primaryItems: [ID!]
+  role: Role
+  searchKey: String
+  user: ID
+  versions: [ID!]
+  visibility: GuideVisibility
+}
+
+input GuideFilterInput {
+  hasAbilityOrder: Boolean
+  hero: ID
+  maxCharCount: Int
+  minCharCount: Int
+  primaryItems: [ID!]
+  role: Role
+  searchKey: String
+  user: ID
+  versions: [ID!]
+  visibility: GuideVisibility
+}
+
+input GuideInput {
+  hero: ID!
+  modules: [GuideModuleInput!]!
+  public: Boolean!
+  role: Role!
+  title: String!
+}
+
+input GuideKey {
+  id: ID
+}
+
+type GuideModule {
+  abilityOrder: [AbilityKey!]
+  id: ID!
+  itemData: [ItemData!]
+  items: [Item!]
+  order: Int!
+  perkData: [PerkData!]
+  perks: [Perk!]
+  primary: Boolean!
+  primaryPerk: Boolean!
+  text: String
+  title: String
+}
+
+input GuideModuleInput {
+  abilityOrder: [AbilityKey!]
+  items: [ID!]
+  order: Int!
+  perks: [ID!]
+  primary: Boolean!
+  primaryPerk: Boolean!
+  text: String
+  title: String
+}
+
+type GuideOrder {
+  field: GuideOrderField!
+  order: SortDirection!
+  scoreTimeframe: TimeFrame
+}
+
+enum GuideOrderField {
+  CREATED_AT
+  UPDATED_AT
+  TITLE
+  LENGTH
+  SCORE
+}
+
+input GuideOrderInput {
+  field: GuideOrderField!
+  order: SortDirection!
+  scoreTimeframe: TimeFrameInput
+}
+
+enum GuideVisibility {
+  ALL
+  PUBLIC
+  PRIVATE
+}
+
+type Hero {
+  availableVersions: [Version!]!
+  buildStatisticOld(filter: OldHeroBuildStatisticFilterInput): OldHeroBuildStatisticResult
+  coreBuild(filter: HeroCoreBuildFilterInput, heroPerk: ID, limit: Int): HeroCoreBuildResult
+  data(version: ID): HeroData
+  generalStatistic(filter: HeroGeneralStatisticFilterInput): HeroGeneralStatisticResult
+  id: ID!
+  leaderboard(filter: HeroLeaderboardFilterInput, timeframe: HeroLeaderboardTimeframe, scope: HeroLeaderboardScope, sortBy: HeroLeaderboardSortColumn): HeroLeaderboardResult
+  matchesPaginated(filter: HeroMatchesFilterInput, limit: Int, offset: Int): PaginatedHeroMatches!
+  matchupStatistic(filter: HeroMatchupStatisticFilterInput, metric: MatchupMetric, order: SortDirection, isAlly: Boolean, sameRole: Boolean): HeroMatchupStatisticResult
+  name: String!
+  simpleBuild(filter: HeroSimpleBuildFilterInput, heroPerk: ID): HeroSimpleBuildResult
+  slug: String
+}
+
+type HeroAbility {
+  cooldown: [Float!]!
+  cost: [Float!]!
+  displayName: String!
+  gameDescription: String!
+  icon: String!
+  id: ID!
+  key: AbilityKey!
+  menuDescription: String!
+  name: String!
+  simplifiedDescription: String
+  type: AbilityType
+  video: String
+}
+
+type HeroAttribute {
+  id: ID!
+  stat: BaseAttribute!
+  values: [Float!]!
+}
+
+type HeroBan {
+  hero: Hero
+  heroData: HeroData
+  team: MatchPlayerTeam!
+}
+
+enum HeroClass {
+  NONE
+  TANK
+  FIGHTER
+  ASSASSIN
+  SUPPORT
+  SHARPSHOOTER
+  MAGE
+  EXECUTIONER
+  ENCHANTER
+  WARDEN
+  CATCHER
+}
+
+type HeroCoreBuild {
+  abilities(ability: AbilityKey!): [HeroCoreBuildAbilityStatistic!]!
+  core1Item: Item!
+  core2Item: Item!
+  core3Item: Item!
+  items(slot: InventorySlot!, limit: Int): [HeroCoreBuildItemStatistic!]!
+  matchesPlayedAnyOrder: Int!
+  matchesPlayedBuildOrder: Int!
+  matchesWonAnyOrder: Int!
+  matchesWonBuildOrder: Int!
+  perks(slot: PerkSlot!): [HeroCoreBuildPerkStatistic!]!
+}
+
+type HeroCoreBuildAbilityStatistic {
+  level: Int!
+  matchesPlayedAnyOrder: Int!
+  matchesPlayedBuildOrder: Int!
+  matchesWonAnyOrder: Int!
+  matchesWonBuildOrder: Int!
+}
+
+type HeroCoreBuildFilter {
+  gameModes: [GameMode!]
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+input HeroCoreBuildFilterInput {
+  gameModes: [GameMode!]
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+type HeroCoreBuildItemStatistic {
+  item: Item!
+  matchesPlayedAnyOrder: Int!
+  matchesPlayedBuildOrder: Int!
+  matchesWonAnyOrder: Int!
+  matchesWonBuildOrder: Int!
+}
+
+type HeroCoreBuildPerkStatistic {
+  matchesPlayedAnyOrder: Int!
+  matchesPlayedBuildOrder: Int!
+  matchesWonAnyOrder: Int!
+  matchesWonBuildOrder: Int!
+  perk: Perk!
+}
+
+type HeroCoreBuildResult {
+  filter: HeroCoreBuildFilter!
+  heroPerk: ID
+  limit: Int!
+  results: [HeroCoreBuild!]!
+}
+
+type HeroData {
+  abilities: [HeroAbility!]!
+  altDisplayName: String!
+  attributes: [HeroAttribute!]!
+  classes: [HeroClass!]!
+  defaultSkin: HeroSkin
+  description: String
+  displayName: String!
+  hero: Hero!
+  icon: String!
+  id: ID!
+  mainAttributes: HeroMainAtrributes!
+  name: String!
+  perks: [PerkData!]
+  promoIcon: String
+  recommendedBuild(gameMode: GameMode!, role: Role!): HeroRecommendedBuild
+  recommendedBuilds(gameModes: [GameMode!], roles: [Role!]): [HeroRecommendedBuild!]!
+  recommendedSkills: [AbilityKey!]!
+  roles: [Role!]!
+  version: Version!
+}
+
+type HeroGeneralStatistic {
+  matchesBanned: Int!
+  matchesPlayed: Int!
+  matchesPlayedMirrorless: Int!
+  matchesWon: Int!
+  matchesWonMirrorless: Int!
+  totalAssists: Int!
+  totalDeaths: Int!
+  totalEnemyAssists: Int!
+  totalEnemyDeaths: Int!
+  totalEnemyFirstKillTime: Int!
+  totalEnemyFirstTowerTime: Int!
+  totalEnemyGoldAt15: Int!
+  totalEnemyKills: Int!
+  totalEnemyMinionsKilled: Int!
+  totalFirstKillTime: Int!
+  totalFirstTowerTime: Int!
+  totalGoldAt15: Int!
+  totalKills: Int!
+  totalMinionsKilled: Int!
+  totalSecondsPlayed: Int!
+}
+
+type HeroGeneralStatisticFilter {
+  gameModes: [GameMode!]
+  matchup: HeroGeneralStatMatchupFilter
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+input HeroGeneralStatisticFilterInput {
+  gameModes: [GameMode!]
+  matchup: HeroGeneralStatMatchupFilterInput
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+type HeroGeneralStatisticResult {
+  filter: HeroGeneralStatisticFilter!
+  result: HeroGeneralStatistic
+}
+
+type HeroGeneralStatMatchupFilter {
+  hero: ID!
+  isAlly: Boolean
+  role: Role
+}
+
+input HeroGeneralStatMatchupFilterInput {
+  hero: ID!
+  isAlly: Boolean
+  role: Role
+}
+
+input HeroKey {
+  id: ID
+  slug: String
+}
+
+type HeroKill {
+  gameTime: Int!
+  isFirstBlood: Boolean!
+  killedHero: Hero
+  killedHeroData: HeroData
+  killedPlayer: Player
+  killedTeam: MatchPlayerTeam
+  killerEntityType: EntityType!
+  killerHero: Hero
+  killerHeroData: HeroData
+  killerPlayer: Player
+  killerTeam: MatchPlayerTeam
+  location: Location!
+}
+
+type HeroLeaderboardFilter {
+  gameModes: [GameMode!]
+  regions: [Region!]
+  roles: [Role!]
+}
+
+input HeroLeaderboardFilterInput {
+  gameModes: [GameMode!]
+  regions: [Region!]
+  roles: [Role!]
+}
+
+type HeroLeaderboardPlayer {
+  matchesPlayed: Int!
+  matchesWon: Int!
+  player: Player!
+  winrate: Float!
+}
+
+type HeroLeaderboardResult {
+  filter: HeroLeaderboardFilter!
+  results: [HeroLeaderboardPlayer!]!
+  scope: HeroLeaderboardScope!
+  sortBy: HeroLeaderboardSortColumn!
+  timeframe: HeroLeaderboardTimeframe!
+}
+
+enum HeroLeaderboardScope {
+  NONE
+  DIAMOND_OR_HIGHER
+}
+
+enum HeroLeaderboardSortColumn {
+  WINRATE
+  MATCHES_PLAYED
+}
+
+enum HeroLeaderboardTimeframe {
+  ALL_TIME
+  LAST_30_DAYS
+}
+
+type HeroMainAtrributes {
+  abilityPower: Int!
+  attackPower: Int!
+  durability: Int!
+  mobility: Int!
+}
+
+type HeroMatchesFilter {
+  gameModes: [GameMode!]
+  matchup: HeroMatchesMatchupFilter
+  ranks: [ID!]
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+  win: Boolean
+}
+
+input HeroMatchesFilterInput {
+  gameModes: [GameMode!]
+  matchup: HeroMatchesMatchupFilterInput
+  ranks: [ID!]
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+  win: Boolean
+}
+
+type HeroMatchesMatchupFilter {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+input HeroMatchesMatchupFilterInput {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+type HeroMatchupStatistic {
+  firstTowerTime: Float!
+  firstTowerTimeDiff: Float!
+  loserate: Float!
+  matchesPlayed: Int!
+  matchupHero: Hero!
+  winrate: Float!
+}
+
+type HeroMatchupStatisticFilter {
+  gameModes: [GameMode!]
+  matchupRoles: [Role!]
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+input HeroMatchupStatisticFilterInput {
+  gameModes: [GameMode!]
+  matchupRoles: [Role!]
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+type HeroMatchupStatisticResult {
+  filter: HeroMatchupStatisticFilter!
+  isAlly: Boolean!
+  metric: MatchupMetric!
+  order: SortDirection!
+  results: [HeroMatchupStatistic!]!
+  sameRole: Boolean!
+}
+
+type HeroRecommendedBuild {
+  crestData: ItemData!
+  crestEvolutionData: ItemData!
+  gameMode: GameMode!
+  id: ID!
+  itemData: [ItemData!]!
+  role: Role!
+}
+
+type HeroSimpleAbilityStatistic {
+  level: Int!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  summedLevelTime: Int!
+}
+
+type HeroSimpleBuildFilter {
+  gameModes: [GameMode!]
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+input HeroSimpleBuildFilterInput {
+  gameModes: [GameMode!]
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+type HeroSimpleBuildResult {
+  ability(ability: AbilityKey!): [HeroSimpleAbilityStatistic!]!
+  filter: HeroSimpleBuildFilter!
+  heroPerk: ID
+  items(slot: InventorySlot!, limit: Int): [HeroSimpleItemStatistic!]!
+  perks(slot: PerkSlot!): [HeroSimplePerkStatistic!]!
+}
+
+type HeroSimpleItemStatistic {
+  item: Item!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  summedBuyTime: Int!
+}
+
+type HeroSimplePerkStatistic {
+  matchesPlayed: Int!
+  matchesWon: Int!
+  perk: Perk!
+}
+
+type HeroSkin {
+  altDisplayName: String
+  description: String
+  displayName: String
+  displayOrder: Int!
+  icon: String
+  id: ID!
+  name: String!
+  portrait: String
+  smallPortrait: String
+}
+
+enum InventorySlot {
+  CREST
+  FIRST_TIER_1
+  FIRST_TIER_2
+  FIRST_TIER_3
+  SECOND_TIER_3
+  THIRD_TIER_3
+  FOURTH_TIER_3
+  FIFTH_TIER_3
+  SIXTH_TIER_3
+}
+
+type Item {
+  availableVersions: [Version!]!
+  data(version: ID): ItemData
+  id: ID!
+  name: String!
+  slug: String
+}
+
+enum ItemAggressionType {
+  ANTI_BURST
+  ANTI_CRIT
+  ANTI_DISRUPTION
+  ANTI_HEAL
+  ANTI_MAGIC
+  ANTI_SHIELD
+  ANTI_TANK
+  AREA_DAMAGE
+  ATTACK_SPEED
+  BURST
+  CLEANSE
+  CRIPPLE
+  CRIT_AMP
+  CURSED
+  DAMAGE_AMP
+  DEFENSE
+  DEFENSIVE_AURA
+  DISRUPTION
+  DUELING
+  ENGAGE
+  HEALING
+  HEALING_AND_SHIELDING
+  MAGICAL_PENETRATION
+  MAGICAL_SHRED
+  MOBILITY
+  MULTI_KILL
+  OFFENSE
+  OFFENSIVE_AURA
+  ON_HIT
+  ON_HIT_AURA
+  PERIODIC_DAMAGE
+  POKE
+  PHYSICAL_PENETRATION
+  PHYSICAL_SHRED
+  REDUCED_COOLDOWNS
+  REFLECT_DAMAGE
+  REGEN
+  RESURRECTION
+  SCALING
+  SCALING_HEALTH
+  SCALING_MANA
+  SHIELDING
+  SHRED
+  SLOWING_AURA
+  SLOWING_BASICS
+  SLOWING_SPELLS
+  SPELL_SHIELD
+  SPLITPUSH
+  STASIS
+  SUSTAIN
+  SUSTAINED_DURABILITY
+  SUSTAINED_FIGHTING
+  TEAMFIGHT_DURABILITY
+  TEAMFIGHTING
+  UTILITY
+  UTILITY_AURA
+  ZONE_CONTROL
+  TESTING_OUR_SPACE_WITH_TEXT_123
+  ABILITY_DAMAGE
+  ANTI_CARRY
+  ANTI_CC
+  ARMOR
+  ASSASSIN
+  BASIC_ATTACKS
+  CARRY
+  COOLDOWNS
+  CRITICAL_STRIKES
+  CROUD_CONTROL
+  DAMAGE_OVER_TIME
+  ENHANCED_ABILITY
+  ENHANCED_BLINK
+  EXECUTIONS
+  FARMING
+  FIGHTER
+  FINISHER
+  HEALTH_REGEN
+  INCREASED_AMMO
+  INCREASED_GOLD
+  INCREASED_RANGE
+  INCREASED_XP
+  ISOLATION_DAMAGE
+  JUNGLE
+  MAGE
+  MANA_REGEN
+  OFFLANE
+  RELOAD_SPEED
+  SHRINK_EFFECT
+  SUPPORT
+  SUSTAINED_DAMAGE
+  TAKEDOWNS
+  ULTIMATE_DAMAGE
+}
+
+type ItemData {
+  aggressionType: ItemAggressionType!
+  blockedBy: [ItemData!]!
+  blocks: [ItemData!]!
+  buildsFrom: [ItemData!]!
+  buildsInto: [ItemData!]!
+  class: HeroClass!
+  displayName: String!
+  effects: [ItemEffect!]!
+  gameId: Int!
+  icon: String!
+  id: ID!
+  isEvolved: Boolean!
+  isHidden: Boolean!
+  item: Item!
+  name: String!
+  price: Int!
+  rarity: ItemRarity!
+  slotType: SlotType!
+  smallIcon: String!
+  stats: [ItemStat!]!
+  totalPrice: Int!
+  version: Version!
+}
+
+enum ItemDescriptionStat {
+  DEFAULT
+  HEALTH
+  BASE_HEALTH_REGENERATION
+  MANA
+  BASE_MANA_REGENERATION
+  PHYSICAL_POWER
+  MAGICAL_POWER
+  PHYSICAL_ARMOR
+  MAGICAL_ARMOR
+  PHYSICAL_PENETRATION
+  PERC_PHYSICAL_PENETRATION
+  MAGICAL_PENETRATION
+  PERC_MAGICAL_PENETRATION
+  ATTACK_SPEED
+  CRITICAL_CHANCE
+  ABILITY_HASTE
+  LIFESTEAL
+  MAGICAL_LIFESTEAL
+  OMNIVAMP
+  TENACITY
+  GOLD_PER_SECOND
+  MOVEMENT_SPEED
+  HEAL_AND_SHIELD_POWER
+}
+
+type ItemEffect {
+  active: Boolean!
+  condition: String
+  cooldown: String
+  id: ID!
+  name: String!
+  text: String!
+}
+
+input ItemKey {
+  id: ID
+  slug: String
+}
+
+enum ItemRarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+type ItemStat {
+  id: ID!
+  showPercent: Boolean!
+  stat: ItemDescriptionStat!
+  value: Float!
+}
+
+type LeaderboardFilter {
+  favHero: ID
+  favRegion: Region
+  favRegions: [Region!]
+  favRole: Role
+  nationality: String
+  playerName: String
+}
+
+input LeaderboardFilterInput {
+  favHero: ID
+  favRegions: [Region!]
+  favRole: Role
+  nationality: String
+  playerName: String
+}
+
+enum LeaderboardRatingType {
+  CURRENT
+  PEAK
+}
+
+type Location {
+  x: Float!
+  y: Float!
+  z: Float!
+}
+
+type Match {
+  duration: Int!
+  endReason: MatchEndReason!
+  endTime: DateTime!
+  gameMode: GameMode!
+  heroBans: [HeroBan!]
+  heroKills: [HeroKill!]!
+  id: ID!
+  matchPlayers: [MatchPlayer!]!
+  objectiveKills: [ObjectiveKill!]!
+  region: Region
+  startTime: DateTime!
+  structureDestructions: [StructureDestruction!]!
+  uuid: UUID!
+  version: Version!
+  winningTeam: MatchPlayerTeam!
+}
+
+enum MatchEndReason {
+  SURRENDER
+  CORE
+}
+
+input MatchKey {
+  id: ID
+}
+
+type MatchPlayer {
+  abilityOrder: [AbilityData!]!
+  assists: Int!
+  crestHealingDone: Int
+  deaths: Int!
+  endTime: DateTime!
+  gold: Int!
+  goldEarnedAtInterval: [Int!]!
+  goldSpent: Int!
+  hero: Hero
+  heroDamage: Int!
+  heroDamageTaken: Int!
+  heroData: HeroData
+  id: ID!
+  inventoryItemData: [ItemData]
+  itemHealingDone: Int
+  kills: Int!
+  laneMinionsKilled: Int!
+  largestCriticalStrike: Int
+  largestKillingSpree: Int!
+  level: Int
+  magicalDamageDealt: Int!
+  magicalDamageDealtToHeroes: Int!
+  magicalDamageTaken: Int!
+  magicalDamageTakenFromHeroes: Int!
+  match: Match!
+  minionsKilled: Int!
+  multiKill: Int!
+  name: String
+  neutralMinionsEnemyJungle: Int!
+  neutralMinionsKilled: Int!
+  neutralMinionsTeamJungle: Int!
+  perkData: [PerkData]
+  perks: [Perk]
+  physicalDamageDealt: Int!
+  physicalDamageDealtToHeroes: Int!
+  physicalDamageTaken: Int!
+  physicalDamageTakenFromHeroes: Int!
+  player: Player!
+  rating(ratingId: ID): MatchPlayerRating
+  role: Role
+  team: MatchPlayerTeam!
+  totalDamageDealt: Int!
+  totalDamageDealtToObjectives: Int!
+  totalDamageDealtToStructures: Int!
+  totalDamageMitigated: Int!
+  totalDamageTaken: Int!
+  totalHealingDone: Int!
+  totalShieldingReceived: Int
+  transactions: [Transactions!]!
+  trueDamageDealt: Int!
+  trueDamageDealtToHeroes: Int!
+  trueDamageTaken: Int!
+  trueDamageTakenFromHeroes: Int!
+  utilityHealingDone: Int
+  wardDestructions: [WardDestruction!]!
+  wardPlacements: [WardPlacement!]!
+  wardsDestroyed: Int!
+  wardsPlaced: Int!
+}
+
+type MatchPlayerRating {
+  isRankup: Boolean!
+  newPoints: Float!
+  points: Float!
+  rank: Rank
+  rating: Rating!
+  ratingData: [Float!]!
+}
+
+enum MatchPlayerTeam {
+  NONE
+  DAWN
+  DUSK
+}
+
+enum MatchupMetric {
+  WINRATE
+  LOSERATE
+  FIRST_TOWER_TIME
+  FIRST_TOWER_TIME_DIFF
+}
+
+type Mutation {
+  approvePlayerClaim(id: ID!, reason: String): UserPlayerClaim!
+  authorize(clientId: String!, scope: String!, consent: Boolean!): AuthorizeResult!
+  claimPlayer(id: ID!): UserPlayerClaim!
+  createApplication(input: ApplicationInput!): Application!
+  createEvent(input: EventInput!): Event!
+  createGroup(input: GroupInput!): Group!
+  createGuide(input: GuideInput!): Guide!
+  createTophy(eventId: ID!, input: TrophyInput!): Trophy!
+  deleteEvent(id: ID!): ID!
+  deleteGuide(id: ID!): ID!
+  deleteTrophy(id: ID!): ID!
+  discourseSso(sso: String!, sig: String!): SsoRedirect!
+  linkProvider(code: String!, codeVerifier: String!): ProviderLink!
+  linkProviderId(userId: ID!, providerId: ID!): ProviderLink!
+  postComment(parent: CommentParent!, text: String!): Comment!
+  rateComment(id: ID!, score: Boolean): Comment!
+  rateGuide(id: ID!, score: Int): Guide!
+  resetApplicationSecret(id: ID!): Application!
+  restoreGuide(id: ID!, changeId: ID!): Guide!
+  unlinkProvider(id: Int!): ProviderLink!
+  updateApplication(id: ID!, input: ApplicationUpdateInput!): Application!
+  updateEvent(id: ID!, input: EventInput!): Event!
+  updateFriendCode(playerId: ID!, friendCode: String!, public: Boolean!): Player
+  updateGroup(id: ID!, input: GroupInput!): Group!
+  updateGuide(id: ID!, input: GuideInput!): Guide!
+  updateGuideAuthor(id: ID!, authorId: ID!): Guide!
+  updateGuideAuthorBulk(sourceAuthorId: ID!, targetAuthorId: ID!): [Guide!]!
+  updatePlayerName(playerId: ID!, customName: String, blockSearch: Boolean!, blockName: Boolean!, reason: String): Player
+  updatePlayerSettings(playerId: ID!, userPublic: Boolean, showSocial: Boolean, showStream: Boolean): Player
+  updateProviderLink(id: Int!, input: ProviderUpdateInput!): ProviderLink!
+  updateTophy(id: ID!, input: TrophyInput!): Trophy!
+  updateUser(id: ID!, name: String, countryPublic: Boolean): User!
+  userAssignGroup(userId: ID!, groupId: ID!): User!
+  userRemoveGroup(userId: ID!, groupId: ID!): User!
+  viewGuide(id: ID!): ID!
+}
+
+type ObjectiveKill {
+  gameTime: Int!
+  killedEntityType: EntityType!
+  killerHero: Hero
+  killerHeroData: HeroData
+  killerPlayer: Player
+  killerTeam: MatchPlayerTeam
+  location: Location!
+}
+
+type OldHeroBuildStatistic {
+  coreItem1Data: ItemData
+  coreItem2Data: ItemData
+  coreItem3Data: ItemData
+  crests: [OldHeroBuildStatisticItemInfo!]!
+  firstTier1: [OldHeroBuildStatisticItemInfo!]!
+  firstTier2: [OldHeroBuildStatisticItemInfo!]!
+  flexSlot4: [OldHeroBuildStatisticItemInfo!]!
+  flexSlot5: [OldHeroBuildStatisticItemInfo!]!
+  flexSlot6: [OldHeroBuildStatisticItemInfo!]!
+  matchesPlayedSorted: Int!
+  matchesPlayedUnsorted: Int!
+  matchesWonSorted: Int!
+  matchesWonUnsorted: Int!
+  scoreUnsorted: Float!
+}
+
+type OldHeroBuildStatisticFilter {
+  gameModes: [GameMode!]
+  matchupHeroId: ID
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+input OldHeroBuildStatisticFilterInput {
+  gameModes: [GameMode!]
+  matchupHeroId: ID
+  ranks: [ID!]
+  roles: [Role!]
+  versions: [ID!]
+}
+
+type OldHeroBuildStatisticItemInfo {
+  itemData: ItemData
+  matchesPlayed: Int!
+  matchesPlayedBuild: Int!
+  matchesWon: Int!
+  matchesWonBuild: Int!
+}
+
+type OldHeroBuildStatisticResult {
+  filter: OldHeroBuildStatisticFilter!
+  results: [OldHeroBuildStatistic!]!
+}
+
+type PaginatedApplications {
+  limit: Int!
+  offset: Int!
+  result: [Application!]!
+}
+
+type PaginatedGuides {
+  filter: GuideFilter!
+  limit: Int!
+  offset: Int!
+  order: GuideOrder!
+  results: [Guide!]!
+  totalCount: Int!
+}
+
+type PaginatedHeroMatches {
+  filter: HeroMatchesFilter!
+  heroId: Int!
+  limit: Int!
+  offset: Int!
+  results: [MatchPlayer!]!
+  totalCount: Int!
+}
+
+type PaginatedLeaderboard {
+  filter: LeaderboardFilter!
+  limit: Int!
+  offset: Int!
+  ratingId: ID!
+  ratingType: LeaderboardRatingType!
+  results: [PlayerRating!]!
+  totalCount: Int!
+}
+
+type PaginatedPlayerMatches {
+  filter: PlayerMatchesFilter!
+  limit: Int!
+  offset: Int!
+  playerId: Int!
+  results: [MatchPlayer!]!
+  totalCount: Int!
+}
+
+type PaginatedPlayers {
+  filter: PlayerFilter!
+  limit: Int!
+  offset: Int!
+  results: [Player!]!
+  totalCount: Int!
+}
+
+enum PatchType {
+  CONTENT
+  BALANCE
+  HOTFIX
+}
+
+type Perk {
+  availableVersions: [Version!]!
+  data(version: ID): PerkData
+  id: ID!
+  name: String!
+}
+
+type PerkData {
+  aggressionTypes: [ItemAggressionType!]!
+  description: String!
+  displayName: String!
+  displayOrder: Int!
+  hero: Hero
+  heroData: HeroData
+  icon: String!
+  id: ID!
+  name: String!
+  perk: Perk!
+  simpleDescription: String
+  slot: PerkSlot!
+  version: Version!
+}
+
+input PerkKey {
+  id: ID
+}
+
+enum PerkSlot {
+  COMMON_1
+  COMMON_2
+  HERO_SPECIFIC_1
+}
+
+type Player {
+  blockName: Boolean!
+  blockSearch: Boolean!
+  canEditFriendcode: Boolean!
+  canEditName: Boolean!
+  commonPlayers(filter: CommonPlayerFilterInput, isAlly: Boolean, limit: Int): CommonPlayerResult
+  console: Float
+  eventPlayer: [EventPlayer!]!
+  favHero: Hero
+  favRegion: Region
+  favRole: Role
+  firstPlayedAt: DateTime
+  friendCode: String
+  friendCodePublic: Boolean
+  gamemodeStatistics(filter: PlayerGameModeStatisticFilterInput): PlayerGameModeStatisticResult
+  generalStatistic(filter: PlayerGeneralStatisticFilterInput): PlayerGeneralStatisticResult
+  heroStatistics(filter: PlayerHeroStatisticFilterInput): PlayerHeroStatisticResult
+  id: ID!
+  intervalStatistics(filter: PlayerIntervalStatisticFilterInput, interval: PlayerIntervalStatisticInterval): PlayerIntervalStatisticResult
+  isBlocked: Boolean!
+  isNameConsole: Boolean!
+  lastPlayedAt: DateTime
+  matchesPaginated(filter: PlayerMatchesFilterInput, limit: Int, offset: Int): PaginatedPlayerMatches
+  name: String
+  nameHistory: [PlayerName!]!
+  ratings: [PlayerRating!]!
+  roleStatistics(filter: PlayerRoleStatisticFilterInput): PlayerRoleStatisticResult
+  showSocial: Boolean!
+  showStream: Boolean!
+  teamPlayer: [TeamPlayer!]!
+  user: User
+  userPublic: Boolean!
+  uuid: UUID!
+  uuidLegacy: UUID
+}
+
+type PlayerFilter {
+  search: String!
+}
+
+input PlayerFilterInput {
+  search: String!
+}
+
+type PlayerGameModeStatistic {
+  doubleKills: Int!
+  gameMode: GameMode!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  pentaKills: Int!
+  quadraKills: Int!
+  totalAssists: Int!
+  totalDeaths: Int!
+  totalGold: Int!
+  totalHeroDamage: Int!
+  totalHeroDamageTaken: Int!
+  totalKills: Int!
+  totalMinionsKilled: Int!
+  totalTime: Int!
+  totalWardsDestroyed: Int!
+  totalWardsPlaced: Int!
+  tripleKills: Int!
+}
+
+type PlayerGameModeStatisticFilter {
+  gameModes: [GameMode!]
+  matchup: PlayerGameModeStatisticMatchupFilter
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input PlayerGameModeStatisticFilterInput {
+  gameModes: [GameMode!]
+  matchup: PlayerGameModeStatisticMatchupFilterInput
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+type PlayerGameModeStatisticMatchupFilter {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+input PlayerGameModeStatisticMatchupFilterInput {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+type PlayerGameModeStatisticResult {
+  filter: PlayerGameModeStatisticFilter!
+  results: [PlayerGameModeStatistic!]!
+}
+
+type PlayerGeneralStatistic {
+  doubleKills: Int!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  mostPlayedHero: Hero
+  mostPlayedRegion: Region
+  mostPlayedRole: Role
+  pentaKills: Int!
+  quadraKills: Int!
+  totalAssists: Int!
+  totalDeaths: Int!
+  totalGold: Int!
+  totalHeroDamage: Int!
+  totalHeroDamageTaken: Int!
+  totalKills: Int!
+  totalMinionsKilled: Int!
+  totalTime: Int!
+  totalWardsDestroyed: Int!
+  totalWardsPlaced: Int!
+  tripleKills: Int!
+}
+
+type PlayerGeneralStatisticFilter {
+  gameModes: [GameMode!]
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input PlayerGeneralStatisticFilterInput {
+  gameModes: [GameMode!]
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+type PlayerGeneralStatisticResult {
+  filter: PlayerGeneralStatisticFilter!
+  result: PlayerGeneralStatistic!
+}
+
+type PlayerHeroStatistic {
+  doubleKills: Int!
+  hero: Hero!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  pentaKills: Int!
+  quadraKills: Int!
+  totalAssists: Int!
+  totalDeaths: Int!
+  totalGold: Int!
+  totalHeroDamage: Int!
+  totalHeroDamageTaken: Int!
+  totalKills: Int!
+  totalMinionsKilled: Int!
+  totalTime: Int!
+  totalWardsDestroyed: Int!
+  totalWardsPlaced: Int!
+  tripleKills: Int!
+}
+
+type PlayerHeroStatisticFilter {
+  gameModes: [GameMode!]
+  matchup: PlayerHeroStatisticMatchupFilter
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input PlayerHeroStatisticFilterInput {
+  gameModes: [GameMode!]
+  matchup: PlayerHeroStatisticMatchupFilterInput
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+type PlayerHeroStatisticMatchupFilter {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+input PlayerHeroStatisticMatchupFilterInput {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+type PlayerHeroStatisticResult {
+  filter: PlayerHeroStatisticFilter!
+  results: [PlayerHeroStatistic!]!
+}
+
+type PlayerIntervalStatistic {
+  intervalStart: DateTime!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  ratingData: [PlayerIntervalStatisticRating!]!
+}
+
+type PlayerIntervalStatisticFilter {
+  gameModes: [GameMode!]
+  ratings: [ID!]
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input PlayerIntervalStatisticFilterInput {
+  gameModes: [GameMode!]
+  ratings: [ID!]
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+enum PlayerIntervalStatisticInterval {
+  DAY
+  WEEK
+  MONTH
+  QUARTER
+  YEAR
+}
+
+type PlayerIntervalStatisticRating {
+  maxPoints: Float!
+  rating: Rating!
+}
+
+type PlayerIntervalStatisticResult {
+  filter: PlayerIntervalStatisticFilter!
+  interval: PlayerIntervalStatisticInterval!
+  results: [PlayerIntervalStatistic!]!
+}
+
+input PlayerKey {
+  id: ID
+  legacyUuid: UUID
+  uuid: UUID
+}
+
+type PlayerMatchesFilter {
+  gameModes: [GameMode!]
+  heroes: [ID!]
+  matchup: PlayerMatchesMatchupFilter
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input PlayerMatchesFilterInput {
+  gameModes: [GameMode!]
+  heroes: [ID!]
+  matchup: PlayerMatchesMatchupFilterInput
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+type PlayerMatchesMatchupFilter {
+  heroes: [ID!]
+  isAlly: Boolean
+  playerName: String
+  roles: [Role!]
+}
+
+input PlayerMatchesMatchupFilterInput {
+  heroes: [ID!]
+  isAlly: Boolean
+  playerName: String
+  roles: [Role!]
+}
+
+type PlayerName {
+  hidden: Boolean!
+  id: ID!
+  lastSeenAt: DateTime!
+  name: String!
+}
+
+type PlayerRating {
+  id: ID!
+  peakPercentile: Float
+  peakPoints: Float!
+  peakRank: Rank
+  peakRanking: Int
+  peakRatingData: [Float!]
+  peakTimestamp: DateTime!
+  percentile: Float
+  player: Player!
+  points: Float!
+  rank: Rank
+  ranking: Int
+  rating: Rating!
+  ratingData: [Float!]
+  unranked: Boolean!
+}
+
+type PlayerRoleStatistic {
+  doubleKills: Int!
+  matchesPlayed: Int!
+  matchesWon: Int!
+  pentaKills: Int!
+  quadraKills: Int!
+  role: Role!
+  totalAssists: Int!
+  totalDeaths: Int!
+  totalGold: Int!
+  totalHeroDamage: Int!
+  totalHeroDamageTaken: Int!
+  totalKills: Int!
+  totalMinionsKilled: Int!
+  totalTime: Int!
+  totalWardsDestroyed: Int!
+  totalWardsPlaced: Int!
+  tripleKills: Int!
+}
+
+type PlayerRoleStatisticFilter {
+  gameModes: [GameMode!]
+  matchup: PlayerRoleStatisticMatchupFilter
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrame
+}
+
+input PlayerRoleStatisticFilterInput {
+  gameModes: [GameMode!]
+  matchup: PlayerRoleStatisticMatchupFilterInput
+  rating: ID
+  regions: [Region!]
+  roles: [Role!]
+  timeframe: TimeFrameInput
+}
+
+type PlayerRoleStatisticMatchupFilter {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+input PlayerRoleStatisticMatchupFilterInput {
+  heroes: [ID!]
+  isAlly: Boolean
+  roles: [Role!]
+}
+
+type PlayerRoleStatisticResult {
+  filter: PlayerRoleStatisticFilter!
+  results: [PlayerRoleStatistic!]!
+}
+
+enum Provider {
+  INTERNAL
+  STEAM
+  DISCORD
+  TWITCH
+  EPIC_GAMES
+}
+
+type ProviderLink {
+  canEdit: Boolean!
+  displayName: String
+  externalId: String!
+  id: Int!
+  linkedAt: DateTime
+  loginEnabled: Boolean
+  provider: Provider!
+  public: Boolean!
+  username: String
+}
+
+input ProviderUpdateInput {
+  loginEnabled: Boolean
+  public: Boolean
+}
+
+type Query {
+  application(id: ID!): Application
+  applicationsPaginated(limit: Int, offset: Int): PaginatedApplications
+  backend: Backend!
+  comment(id: ID!): Comment
+  currentAuth: Authorization
+  currentUser: User
+  event(by: EventKey!): Event
+  group(id: ID!): Group
+  groups: [Group!]
+  guide(by: GuideKey!): Guide
+  guidesPaginated(filter: GuideFilterInput, order: GuideOrderInput, limit: Int, offset: Int): PaginatedGuides!
+  hero(by: HeroKey!): Hero
+  heroes: [Hero!]!
+  item(by: ItemKey!): Item
+  items: [Item!]!
+  leaderboardPaginated(ratingId: ID!, ratingType: LeaderboardRatingType, limit: Int, offset: Int, filter: LeaderboardFilterInput): PaginatedLeaderboard!
+  match(by: MatchKey!): Match
+  perk(by: PerkKey!): Perk
+  perks: [Perk!]!
+  player(by: PlayerKey!): Player
+  playersPaginated(filter: PlayerFilterInput!, limit: Int, offset: Int): PaginatedPlayers!
+  rating(by: RatingKey!): Rating
+  ratings: [Rating!]!
+  user(by: UserKey!): User
+  version(by: VersionKey): Version
+  versions: [Version!]!
+}
+
+type Rank {
+  abbreviation: String!
+  divisionIdx: Int!
+  icon: String!
+  id: ID!
+  name: String!
+  ratingMax: Float!
+  ratingMin: Float!
+  tierIdx: Int!
+  tierName: String!
+}
+
+type Rating {
+  endTime: DateTime
+  group: String
+  id: ID!
+  name: String!
+  ranks: [Rank!]!
+  startTime: DateTime
+  suffix: String!
+}
+
+input RatingKey {
+  id: ID
+}
+
+enum Region {
+  NONE
+  EUROPE
+  NA_EAST
+  NA_WEST
+  SEA
+  DEV
+  NA
+  OCE
+  ASIA
+  MENA
+  SA
+}
+
+enum Role {
+  NONE
+  CARRY
+  OFFLANE
+  MIDLANE
+  SUPPORT
+  JUNGLE
+  FILL
+}
+
+enum SlotType {
+  PASSIVE
+  ACTIVE
+  CREST
+  TRINKET
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+type SsoRedirect {
+  redirectUrl: String!
+}
+
+type StructureDestruction {
+  destructionHero: Hero
+  destructionHeroData: HeroData
+  destructionPlayer: Player
+  destructionTeam: MatchPlayerTeam!
+  gameTime: Int!
+  location: Location!
+  structureEntityType: EntityType!
+  structureTeam: MatchPlayerTeam!
+}
+
+type Team {
+  eventEntries: [EventEntry!]!
+  id: ID!
+  name: String!
+  teamPlayers: [TeamPlayer!]!
+}
+
+type TeamPlayer {
+  id: ID!
+  player: Player!
+  team: Team!
+}
+
+type TimeFrame {
+  endTime: DateTime
+  startTime: DateTime
+}
+
+input TimeFrameInput {
+  endTime: DateTime
+  startTime: DateTime
+}
+
+type Transactions {
+  gameTime: Int!
+  itemData: ItemData
+  transactionType: TransactionType!
+}
+
+enum TransactionType {
+  BUY
+  SELL
+  UNDO_BUY
+  UNDO_SELL
+  AUTO_BUY
+}
+
+type Trophy {
+  awardedTo: [TrophyAward!]!
+  description: String
+  event: Event!
+  id: ID!
+  name: String!
+}
+
+type TrophyAward {
+  assignedAt: DateTime!
+  eventEntry: EventEntry
+  eventPlayer: EventPlayer!
+  id: ID!
+  trophy: Trophy!
+}
+
+input TrophyInput {
+  description: String
+  name: String!
+}
+
+type User {
+  applications: [Application!]!
+  canEdit: Boolean!
+  country: String
+  countryPublic: Boolean!
+  groups: [Group!]
+  id: ID!
+  name: String!
+  nationality: String @deprecated(reason: "Use `country` instead.")
+  players: [Player!]!
+  providerLinks: [ProviderLink!]!
+  uuid: UUID!
+}
+
+input UserKey {
+  id: ID
+  uuid: UUID
+}
+
+type UserPlayerClaim {
+  chatFriendCode: String
+  chatMessage: String
+  confirmed: Boolean!
+  expiresAt: DateTime!
+  items: [ItemData]!
+  player: Player!
+}
+
+"""
+A UUID is a unique 128-bit number, stored as 16 octets. UUIDs are parsed as
+Strings within GraphQL. UUIDs are used to assign unique identifiers to
+entities without requiring a central allocating authority.
+
+# References
+
+* [Wikipedia: Universally Unique Identifier](http://en.wikipedia.org/wiki/Universally_unique_identifier)
+* [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](http://tools.ietf.org/html/rfc4122)
+"""
+scalar UUID
+
+type Version {
+  build: Int
+  changelist: Int
+  changelistReplay: Int
+  gameString: String
+  heroData: [HeroData!]!
+  id: ID!
+  itemData: [ItemData!]!
+  name: String
+  patchNotesUrl: String
+  patchType: PatchType
+  perkData: [PerkData!]!
+  releaseDate: DateTime
+  rollbackDate: DateTime
+  steamBuild: Int
+  steamManifest: String
+}
+
+input VersionKey {
+  id: ID
+}
+
+type WardDestruction {
+  gameTime: Int!
+  location: Location!
+  type: WardType!
+}
+
+type WardPlacement {
+  gameTime: Int!
+  location: Location!
+  type: WardType!
+}
+
+enum WardType {
+  STEALTH
+  ORACLE
+  SENTRY
+  SONAR_DRONE
+  SOLSTONE_DRONE
+}
+
