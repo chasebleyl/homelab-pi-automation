@@ -1,0 +1,30 @@
+Player Stats Links from https://predecessor.wiki.gg/wiki/Mechanics
+
+DEFENSIVE STATS:
+1. Armor - https://predecessor.wiki.gg/wiki/Armor
+2. Health - https://predecessor.wiki.gg/wiki/Health
+3. Health Regen - https://predecessor.wiki.gg/wiki/Health_Regen
+4. Mana - https://predecessor.wiki.gg/wiki/Mana
+5. Mana Regen - https://predecessor.wiki.gg/wiki/Mana_Regen
+6. Tenacity - https://predecessor.wiki.gg/wiki/Tenacity
+7. Damage Mitigation - https://predecessor.wiki.gg/wiki/Damage_Mitigation
+8. Heal & Shield Power - https://predecessor.wiki.gg/wiki/Heal_%26_Shield_Power
+9. Shield - https://predecessor.wiki.gg/wiki/Shield
+
+DAMAGE STATS:
+10. Damage - https://predecessor.wiki.gg/wiki/Damage
+11. Power - https://predecessor.wiki.gg/wiki/Power
+12. Penetration - https://predecessor.wiki.gg/wiki/Penetration
+13. Attack Speed - https://predecessor.wiki.gg/wiki/Attack_Speed
+14. Critical Strike Chance - https://predecessor.wiki.gg/wiki/Critical_Strike_Chance
+15. Lifesteal - https://predecessor.wiki.gg/wiki/Lifesteal
+16. Attack Range - https://predecessor.wiki.gg/wiki/Attack_Range
+
+UTILITY STATS:
+17. Cooldown - https://predecessor.wiki.gg/wiki/Cooldown
+18. Ability Haste - https://predecessor.wiki.gg/wiki/Ability_Haste
+19. Movement Speed - https://predecessor.wiki.gg/wiki/Movement_Speed
+
+OTHER:
+20. Status Effects - https://predecessor.wiki.gg/wiki/Status_Effects
+21. Unstoppable - https://predecessor.wiki.gg/wiki/Unstoppable

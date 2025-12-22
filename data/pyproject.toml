@@ -1,0 +1,9 @@
+[project]
+name = "predecessor-data"
+version = "0.1.0"
+description = "Shared data layer for Predecessor projects (database, entities, schema)"
+requires-python = ">=3.9"
+# Dependencies managed in root pyproject.toml
+
+[tool.setuptools]
+packages = ["data"]

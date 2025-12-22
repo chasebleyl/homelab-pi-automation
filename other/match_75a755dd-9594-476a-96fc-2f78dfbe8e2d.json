@@ -1,0 +1,2846 @@
+{
+  "match": {
+    "id": "75a755dd-9594-476a-96fc-2f78dfbe8e2d",
+    "uuid": "75a755dd-9594-476a-96fc-2f78dfbe8e2d",
+    "duration": 1071,
+    "endReason": "CORE",
+    "endTime": "2025-12-17T21:23:39Z",
+    "startTime": "2025-12-17T21:05:48Z",
+    "gameMode": "RUSH",
+    "region": "NA",
+    "winningTeam": "DUSK",
+    "version": {
+      "id": "129",
+      "name": "1.10.2",
+      "build": null,
+      "changelist": 552215,
+      "releaseDate": "2025-12-16T10:01:50Z"
+    },
+    "matchPlayers": [
+      {
+        "id": "132328687",
+        "name": "HIDDEN",
+        "team": "DUSK",
+        "role": "OFFLANE",
+        "level": 18,
+        "kills": 1,
+        "deaths": 0,
+        "assists": 1,
+        "gold": 23689,
+        "minionsKilled": 313,
+        "heroDamage": 20077,
+        "heroDamageTaken": 18793,
+        "totalDamageDealt": 163141,
+        "totalDamageDealtToObjectives": 229,
+        "totalDamageDealtToStructures": 6184,
+        "totalDamageTaken": 24694,
+        "totalDamageMitigated": 27841,
+        "totalHealingDone": 5412,
+        "largestKillingSpree": 1,
+        "largestCriticalStrike": 0,
+        "multiKill": 1,
+        "wardsPlaced": 2,
+        "wardsDestroyed": 0,
+        "endTime": "2025-12-17T21:23:39Z",
+        "player": {
+          "id": "47112d35-ac57-4e51-a34d-6915bae560c3",
+          "uuid": "47112d35-ac57-4e51-a34d-6915bae560c3",
+          "name": null
+        },
+        "hero": {
+          "id": "33",
+          "name": "Kwang",
+          "slug": "kwang"
+        },
+        "heroData": {
+          "id": "8744",
+          "name": "Kwang",
+          "displayName": "Kwang",
+          "icon": "45214f75bfd55c46",
+          "classes": [
+            "FIGHTER"
+          ],
+          "roles": [
+            "JUNGLE",
+            "OFFLANE"
+          ],
+          "mainAttributes": {
+            "attackPower": 3,
+            "abilityPower": 7,
+            "durability": 5,
+            "mobility": 5
+          }
+        },
+        "inventoryItemData": [
+          {
+            "id": "50618",
+            "name": "Magnify",
+            "displayName": "Magnify",
+            "icon": "5c33f1c40f2c49be",
+            "smallIcon": "283e8fd87299f1e6",
+            "gameId": 500408,
+            "price": 750,
+            "totalPrice": 3100,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "MAGE",
+            "aggressionType": "DUELING",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120840",
+                "stat": "MAGICAL_POWER",
+                "value": 55.0,
+                "showPercent": false
+              },
+              {
+                "id": "120841",
+                "stat": "HEALTH",
+                "value": 300.0,
+                "showPercent": false
+              },
+              {
+                "id": "120842",
+                "stat": "ABILITY_HASTE",
+                "value": 15.0,
+                "showPercent": false
+              },
+              {
+                "id": "120843",
+                "stat": "OMNIVAMP",
+                "value": 10.0,
+                "showPercent": true
+              }
+            ],
+            "effects": [
+              {
+                "id": "64783",
+                "name": "Shredding Spells",
+                "text": "• Reduce their <AbilityPowerText>Magical Armor</> by <AbilityPowerText>6%</> for <AbilityPowerText>3.5s</>.\n• Stacks up to <EffectText>5</> times.",
+                "active": false,
+                "condition": "<Condition>Upon damaging Heroes with an Ability:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50666",
+            "name": "TaintedGuard",
+            "displayName": "Tainted Guard",
+            "icon": "74b42dfa1ff8f26e",
+            "smallIcon": "f25b8d0b3808a49a",
+            "gameId": 500510,
+            "price": 450,
+            "totalPrice": 3000,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "TANK",
+            "aggressionType": "ANTI_HEAL",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120989",
+                "stat": "HEALTH",
+                "value": 250.0,
+                "showPercent": false
+              },
+              {
+                "id": "120990",
+                "stat": "PHYSICAL_ARMOR",
+                "value": 55.0,
+                "showPercent": false
+              },
+              {
+                "id": "120991",
+                "stat": "ABILITY_HASTE",
+                "value": 8.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64859",
+                "name": "Blighted Thorns",
+                "text": "• Reduce the Source's <HealthText>Healing</> by <HealthText>45%</> for <HealthText>3s</>.\n• Apply a <EffectText>Bleed</> dealing <AbilityPowerText>30</> <AttackDamageText>(+30%</><img id=\"ArmorOrange\"></><AttackDamageText>)</> <AbilityPowerText>Damage</> over <EffectText>3s</>.",
+                "active": false,
+                "condition": "<Condition> On being hit by a Basic Attack:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50637",
+            "name": "Overseer",
+            "displayName": "Overseer",
+            "icon": "e26221f71d5c4288",
+            "smallIcon": "26c80d36c3d7c67e",
+            "gameId": 500425,
+            "price": 1000,
+            "totalPrice": 3100,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "MAGE",
+            "aggressionType": "SUSTAIN",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120897",
+                "stat": "MAGICAL_POWER",
+                "value": 75.0,
+                "showPercent": false
+              },
+              {
+                "id": "120898",
+                "stat": "MAGICAL_PENETRATION",
+                "value": 7.0,
+                "showPercent": false
+              },
+              {
+                "id": "120899",
+                "stat": "MAGICAL_LIFESTEAL",
+                "value": 7.0,
+                "showPercent": true
+              }
+            ],
+            "effects": [
+              {
+                "id": "64815",
+                "name": "Exalted",
+                "text": "• Deals <EffectText>15%</> more damage.  \n• <HealthText>Heals</> you for <HealthText>25%</> of the damage dealt to Heroes.",
+                "active": false,
+                "condition": "<Condition>Enhance your Ultimate Ability:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50673",
+            "name": "Transference",
+            "displayName": "Transference",
+            "icon": "2b174078d40cec50",
+            "smallIcon": "ace89df93060307f",
+            "gameId": 500523,
+            "price": 450,
+            "totalPrice": 2900,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "TANK",
+            "aggressionType": "SHIELDING",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "121010",
+                "stat": "HEALTH",
+                "value": 200.0,
+                "showPercent": false
+              },
+              {
+                "id": "121011",
+                "stat": "PHYSICAL_ARMOR",
+                "value": 40.0,
+                "showPercent": false
+              },
+              {
+                "id": "121012",
+                "stat": "MAGICAL_ARMOR",
+                "value": 35.0,
+                "showPercent": false
+              },
+              {
+                "id": "121013",
+                "stat": "HEAL_AND_SHIELD_POWER",
+                "value": 12.0,
+                "showPercent": true
+              }
+            ],
+            "effects": [
+              {
+                "id": "64869",
+                "name": "Shield Transference",
+                "text": "• <HealthText>50%</> of its remaining value is restored as <HealthText>Health</> over <HealthText>3s</>.\n• Reduced to <HealthText>25%</> for <EffectText>Ally Shields</>.",
+                "active": false,
+                "condition": "<Condition>Upon</> <EffectText>Shields</> <Condition>expiring:</>",
+                "cooldown": null
+              },
+              {
+                "id": "64870",
+                "name": "Ionizing Charge",
+                "text": "• Gain <EffectText>12% Movement Speed</>.\n• Gain <EffectText>10%</> increased <EffectText>Armors</>.",
+                "active": false,
+                "condition": "<Condition>While</> <EffectText>Shielded</><Condition>:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50629",
+            "name": "Oathkeeper",
+            "displayName": "Oathkeeper",
+            "icon": "04f69f18c98f3d9e",
+            "smallIcon": "e7332989e3d2e08c",
+            "gameId": 500410,
+            "price": 100,
+            "totalPrice": 3100,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "MAGE",
+            "aggressionType": "BURST",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120875",
+                "stat": "MAGICAL_POWER",
+                "value": 75.0,
+                "showPercent": false
+              },
+              {
+                "id": "120876",
+                "stat": "HEALTH",
+                "value": 175.0,
+                "showPercent": false
+              },
+              {
+                "id": "120877",
+                "stat": "MANA",
+                "value": 200.0,
+                "showPercent": false
+              },
+              {
+                "id": "120878",
+                "stat": "ABILITY_HASTE",
+                "value": 15.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64802",
+                "name": "Celestial Spellblade",
+                "text": "• Empower your next Basic Attack within <EffectText>4s</>.\n• Deal <AbilityPowerText>55 (+35%</><img id=\"APIconBlue\"></><AbilityPowerText>)</> <AbilityPowerText>Damage</> <EffectText>On-Hit</>.",
+                "active": false,
+                "condition": "<Condition>On Ability Cast:</>",
+                "cooldown": "1.5s"
+              }
+            ]
+          },
+          {
+            "id": "50686",
+            "name": "WorldBreaker",
+            "displayName": "World Breaker",
+            "icon": "d372b25cf8cf04f3",
+            "smallIcon": "34ec2795078d2f0a",
+            "gameId": 500416,
+            "price": 600,
+            "totalPrice": 3200,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "MAGE",
+            "aggressionType": "DAMAGE_AMP",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "121053",
+                "stat": "MAGICAL_POWER",
+                "value": 40.0,
+                "showPercent": false
+              },
+              {
+                "id": "121054",
+                "stat": "HEALTH",
+                "value": 300.0,
+                "showPercent": false
+              },
+              {
+                "id": "121055",
+                "stat": "TENACITY",
+                "value": 20.0,
+                "showPercent": true
+              }
+            ],
+            "effects": [
+              {
+                "id": "64887",
+                "name": "Fiend",
+                "text": "• Increases your <AbilityPowerText>Magical Damage</> dealt by <AbilityPowerText>2%</> for <AbilityPowerText>3s</>.\n• Stacks up to <EffectText>6</> times.",
+                "active": false,
+                "condition": "<Condition>On dealing</> <AbilityPowerText>Magical Damage</> <Condition>to a Hero:</>",
+                "cooldown": null
+              },
+              {
+                "id": "64888",
+                "name": "Maya",
+                "text": "• Gain <HealthText>(+5%</><img id=\"HealthIconGreen\"></><HealthText>)</> <AbilityPowerText>Magical Power</>.",
+                "active": false,
+                "condition": null,
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50429",
+            "name": "RefillablePotion",
+            "displayName": "Refillable Potion",
+            "icon": "292cd3994e805212",
+            "smallIcon": "0f2c5edce41c24c7",
+            "gameId": 100006,
+            "price": 0,
+            "totalPrice": 0,
+            "rarity": "COMMON",
+            "slotType": "ACTIVE",
+            "class": "NONE",
+            "aggressionType": "OFFENSE",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [],
+            "effects": [
+              {
+                "id": "64580",
+                "name": "Consume",
+                "text": "• <HealthText>Regenerate 150-330 Health</> over <HealthText>15s</>.\n• Based on <ManaText>Level</>.\n• Max Charges: <EffectText>2</>.\n• Charges are restored upon entering Base.",
+                "active": true,
+                "condition": null,
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50455",
+            "name": "Tempest",
+            "displayName": "Tempest",
+            "icon": "dd9e27722858fb11",
+            "smallIcon": "0467f5f1f4b0e930",
+            "gameId": 200408,
+            "price": 0,
+            "totalPrice": 0,
+            "rarity": "LEGENDARY",
+            "slotType": "CREST",
+            "class": "MAGE",
+            "aggressionType": "SUSTAINED_FIGHTING",
+            "isEvolved": false,
+            "isHidden": true,
+            "stats": [
+              {
+                "id": "120448",
+                "stat": "MAGICAL_POWER",
+                "value": 30.0,
+                "showPercent": false
+              },
+              {
+                "id": "120449",
+                "stat": "HEALTH",
+                "value": 100.0,
+                "showPercent": false
+              },
+              {
+                "id": "120450",
+                "stat": "ABILITY_HASTE",
+                "value": 8.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64610",
+                "name": "Overcharge",
+                "text": "• Deal <AbilityPowerText>15 (+15%</><img id=\"APIconBlue\"></><AbilityPowerText>) Damage</> to 3 nearby Heroes every second for <AbilityPowerText>7s</>.\n• <HealthText>Heal</> equal to <HealthText>30%</> of the damage dealt.\n• Additional hits against the same Target deal <AbilityPowerText>20% Damage</>.",
+                "active": true,
+                "condition": null,
+                "cooldown": "90s"
+              }
+            ]
+          },
+          {
+            "id": "50691",
+            "name": "StealthWard",
+            "displayName": "Stealth Ward",
+            "icon": "592f49a275b51673",
+            "smallIcon": "97f78d1dc259e331",
+            "gameId": 100009,
+            "price": 0,
+            "totalPrice": 0,
+            "rarity": "COMMON",
+            "slotType": "TRINKET",
+            "class": "NONE",
+            "aggressionType": "OFFENSE",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [],
+            "effects": [
+              {
+                "id": "64895",
+                "name": "Stealth Ward",
+                "text": "• Place an invisible <EffectText>Ward</> for <EffectText>86s</>.\n• Reveals any nearby non <EffectText>Stealthed</> Units.\n• Max Charges: <EffectText>2</>.",
+                "active": true,
+                "condition": null,
+                "cooldown": "171s"
+              }
+            ]
+          }
+        ],
+        "perkData": [
+          {
+            "id": "9212",
+            "name": "Perk_Common_Ultimatum",
+            "displayName": "Ultimatum",
+            "icon": "f0829c1b0eabed82",
+            "description": "Your Ultimate Ability deals 6% more damage.",
+            "simpleDescription": null,
+            "slot": "COMMON_1",
+            "displayOrder": 1,
+            "aggressionTypes": []
+          },
+          {
+            "id": "9128",
+            "name": "Perk_Kwang_TempestOfTheHeavens",
+            "displayName": "Slayer of the Heavens",
+            "icon": "68913b7c2237cad9",
+            "description": "Strike of the Heavens deals 25% more damage and reduces Cooldowns by 25% more.",
+            "simpleDescription": null,
+            "slot": "HERO_SPECIFIC_1",
+            "displayOrder": 0,
+            "aggressionTypes": [
+              "OFFENSE"
+            ]
+          },
+          {
+            "id": "9206",
+            "name": "Perk_Common_Executioner",
+            "displayName": "Executioner",
+            "icon": "85b5efaaa58ed007",
+            "description": "Deal 6% more damage to Heroes below 40% Max Health.",
+            "simpleDescription": null,
+            "slot": "COMMON_2",
+            "displayOrder": 4,
+            "aggressionTypes": []
+          }
+        ],
+        "transactions": [
+          {
+            "gameTime": 0,
+            "transactionType": "AUTO_BUY",
+            "itemData": {
+              "id": "50429",
+              "name": "RefillablePotion",
+              "displayName": "Refillable Potion",
+              "icon": "292cd3994e805212",
+              "smallIcon": "0f2c5edce41c24c7",
+              "gameId": 100006,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "COMMON",
+              "slotType": "ACTIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [],
+              "effects": [
+                {
+                  "id": "64580",
+                  "name": "Consume",
+                  "text": "• <HealthText>Regenerate 150-330 Health</> over <HealthText>15s</>.\n• Based on <ManaText>Level</>.\n• Max Charges: <EffectText>2</>.\n• Charges are restored upon entering Base.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 0,
+            "transactionType": "AUTO_BUY",
+            "itemData": {
+              "id": "50691",
+              "name": "StealthWard",
+              "displayName": "Stealth Ward",
+              "icon": "592f49a275b51673",
+              "smallIcon": "97f78d1dc259e331",
+              "gameId": 100009,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "COMMON",
+              "slotType": "TRINKET",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [],
+              "effects": [
+                {
+                  "id": "64895",
+                  "name": "Stealth Ward",
+                  "text": "• Place an invisible <EffectText>Ward</> for <EffectText>86s</>.\n• Reveals any nearby non <EffectText>Stealthed</> Units.\n• Max Charges: <EffectText>2</>.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": "171s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 3,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50453",
+              "name": "OccultCrest",
+              "displayName": "Occult Crest",
+              "icon": "86c6ca3c309d9ec1",
+              "smallIcon": "7644a6c4b1d3e809",
+              "gameId": 200402,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "LEGENDARY",
+              "slotType": "CREST",
+              "class": "MAGE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120442",
+                  "stat": "MAGICAL_POWER",
+                  "value": 8.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120443",
+                  "stat": "HEALTH",
+                  "value": 50.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120444",
+                  "stat": "ABILITY_HASTE",
+                  "value": 4.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64608",
+                  "name": "Occultist",
+                  "text": "• <HealthText>Restore 3 Health</> (<HealthText>4</> for Kills).\n• After restoring <HealthText>200 Health</>:\n• <EffectText>Evolves</> into <AbilityName>Warlock Crest</>.",
+                  "active": false,
+                  "condition": "<Condition>On dealing Ability Damage to Heroes or Monsters and Unit Kills:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 19,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50480",
+              "name": "Codex",
+              "displayName": "Codex",
+              "icon": "61132f6ebb9c4b11",
+              "smallIcon": "d7f81b52a8f0d868",
+              "gameId": 300001,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120523",
+                  "stat": "MAGICAL_POWER",
+                  "value": 12.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 19,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50498",
+              "name": "VitalityBeads",
+              "displayName": "Vitality Beads",
+              "icon": "052fcbfd421ce5ff",
+              "smallIcon": "c7909f26fd05cd2d",
+              "gameId": 300016,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120538",
+                  "stat": "HEALTH",
+                  "value": 100.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 278,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50506",
+              "name": "ChaoticCore",
+              "displayName": "Chaotic Core",
+              "icon": "d5f627b82cb55e50",
+              "smallIcon": "d4a927cada32c01c",
+              "gameId": 400007,
+              "price": 400,
+              "totalPrice": 1100,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120548",
+                  "stat": "MAGICAL_POWER",
+                  "value": 25.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120549",
+                  "stat": "HEALTH",
+                  "value": 150.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 278,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50489",
+              "name": "Pendant",
+              "displayName": "Pendant",
+              "icon": "e1be09cd50c108e1",
+              "smallIcon": "1ed4e199d81f98f2",
+              "gameId": 300019,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "UTILITY",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120530",
+                  "stat": "ABILITY_HASTE",
+                  "value": 5.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 278,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50503",
+              "name": "BloodTome",
+              "displayName": "Blood Tome",
+              "icon": "586acd1182d2eb49",
+              "smallIcon": "b741537f1fc07a33",
+              "gameId": 400005,
+              "price": 550,
+              "totalPrice": 900,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120543",
+                  "stat": "MAGICAL_POWER",
+                  "value": 25.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120544",
+                  "stat": "MAGICAL_LIFESTEAL",
+                  "value": 5.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 365,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50455",
+              "name": "Tempest",
+              "displayName": "Tempest",
+              "icon": "dd9e27722858fb11",
+              "smallIcon": "0467f5f1f4b0e930",
+              "gameId": 200408,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "LEGENDARY",
+              "slotType": "CREST",
+              "class": "MAGE",
+              "aggressionType": "SUSTAINED_FIGHTING",
+              "isEvolved": false,
+              "isHidden": true,
+              "stats": [
+                {
+                  "id": "120448",
+                  "stat": "MAGICAL_POWER",
+                  "value": 30.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120449",
+                  "stat": "HEALTH",
+                  "value": 100.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120450",
+                  "stat": "ABILITY_HASTE",
+                  "value": 8.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64610",
+                  "name": "Overcharge",
+                  "text": "• Deal <AbilityPowerText>15 (+15%</><img id=\"APIconBlue\"></><AbilityPowerText>) Damage</> to 3 nearby Heroes every second for <AbilityPowerText>7s</>.\n• <HealthText>Heal</> equal to <HealthText>30%</> of the damage dealt.\n• Additional hits against the same Target deal <AbilityPowerText>20% Damage</>.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": "90s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 366,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50618",
+              "name": "Magnify",
+              "displayName": "Magnify",
+              "icon": "5c33f1c40f2c49be",
+              "smallIcon": "283e8fd87299f1e6",
+              "gameId": 500408,
+              "price": 750,
+              "totalPrice": 3100,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "MAGE",
+              "aggressionType": "DUELING",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120840",
+                  "stat": "MAGICAL_POWER",
+                  "value": 55.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120841",
+                  "stat": "HEALTH",
+                  "value": 300.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120842",
+                  "stat": "ABILITY_HASTE",
+                  "value": 15.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120843",
+                  "stat": "OMNIVAMP",
+                  "value": 10.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64783",
+                  "name": "Shredding Spells",
+                  "text": "• Reduce their <AbilityPowerText>Magical Armor</> by <AbilityPowerText>6%</> for <AbilityPowerText>3.5s</>.\n• Stacks up to <EffectText>5</> times.",
+                  "active": false,
+                  "condition": "<Condition>Upon damaging Heroes with an Ability:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 372,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50521",
+              "name": "HornedPlate",
+              "displayName": "Horned Plate",
+              "icon": "ff7b0d05fb043d70",
+              "smallIcon": "b78c9fabe033062e",
+              "gameId": 400021,
+              "price": 550,
+              "totalPrice": 900,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120577",
+                  "stat": "PHYSICAL_ARMOR",
+                  "value": 25.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64668",
+                  "name": "Blighted Skin",
+                  "text": "• Reduce the Source's <HealthText>Healing</> by <HealthText>35%</> for <HealthText>3s</>.",
+                  "active": false,
+                  "condition": "<Condition> On being hit by a Basic Attack:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 467,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50489",
+              "name": "Pendant",
+              "displayName": "Pendant",
+              "icon": "e1be09cd50c108e1",
+              "smallIcon": "1ed4e199d81f98f2",
+              "gameId": 300019,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "UTILITY",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120530",
+                  "stat": "ABILITY_HASTE",
+                  "value": 5.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 467,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50552",
+              "name": "VigorousAmulet",
+              "displayName": "Vigorous Amulet",
+              "icon": "bcae70d0f299d4f2",
+              "smallIcon": "5ec77d4f3e5c4dd2",
+              "gameId": 400050,
+              "price": 600,
+              "totalPrice": 1300,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120629",
+                  "stat": "HEALTH",
+                  "value": 200.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120630",
+                  "stat": "PHYSICAL_ARMOR",
+                  "value": 20.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 545,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50666",
+              "name": "TaintedGuard",
+              "displayName": "Tainted Guard",
+              "icon": "74b42dfa1ff8f26e",
+              "smallIcon": "f25b8d0b3808a49a",
+              "gameId": 500510,
+              "price": 450,
+              "totalPrice": 3000,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "TANK",
+              "aggressionType": "ANTI_HEAL",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120989",
+                  "stat": "HEALTH",
+                  "value": 250.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120990",
+                  "stat": "PHYSICAL_ARMOR",
+                  "value": 55.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120991",
+                  "stat": "ABILITY_HASTE",
+                  "value": 8.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64859",
+                  "name": "Blighted Thorns",
+                  "text": "• Reduce the Source's <HealthText>Healing</> by <HealthText>45%</> for <HealthText>3s</>.\n• Apply a <EffectText>Bleed</> dealing <AbilityPowerText>30</> <AttackDamageText>(+30%</><img id=\"ArmorOrange\"></><AttackDamageText>)</> <AbilityPowerText>Damage</> over <EffectText>3s</>.",
+                  "active": false,
+                  "condition": "<Condition> On being hit by a Basic Attack:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 562,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50480",
+              "name": "Codex",
+              "displayName": "Codex",
+              "icon": "61132f6ebb9c4b11",
+              "smallIcon": "d7f81b52a8f0d868",
+              "gameId": 300001,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120523",
+                  "stat": "MAGICAL_POWER",
+                  "value": 12.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 562,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50480",
+              "name": "Codex",
+              "displayName": "Codex",
+              "icon": "61132f6ebb9c4b11",
+              "smallIcon": "d7f81b52a8f0d868",
+              "gameId": 300001,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120523",
+                  "stat": "MAGICAL_POWER",
+                  "value": 12.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 655,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50511",
+              "name": "DiffusalCane",
+              "displayName": "Diffusal Cane",
+              "icon": "4e94c9213e958fbe",
+              "smallIcon": "6112fc8e1ca55236",
+              "gameId": 400012,
+              "price": 500,
+              "totalPrice": 1200,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120557",
+                  "stat": "MAGICAL_POWER",
+                  "value": 35.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120558",
+                  "stat": "MAGICAL_PENETRATION",
+                  "value": 5.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 655,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50503",
+              "name": "BloodTome",
+              "displayName": "Blood Tome",
+              "icon": "586acd1182d2eb49",
+              "smallIcon": "b741537f1fc07a33",
+              "gameId": 400005,
+              "price": 550,
+              "totalPrice": 900,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120543",
+                  "stat": "MAGICAL_POWER",
+                  "value": 25.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120544",
+                  "stat": "MAGICAL_LIFESTEAL",
+                  "value": 5.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 814,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50637",
+              "name": "Overseer",
+              "displayName": "Overseer",
+              "icon": "e26221f71d5c4288",
+              "smallIcon": "26c80d36c3d7c67e",
+              "gameId": 500425,
+              "price": 1000,
+              "totalPrice": 3100,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "MAGE",
+              "aggressionType": "SUSTAIN",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120897",
+                  "stat": "MAGICAL_POWER",
+                  "value": 75.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120898",
+                  "stat": "MAGICAL_PENETRATION",
+                  "value": 7.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120899",
+                  "stat": "MAGICAL_LIFESTEAL",
+                  "value": 7.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64815",
+                  "name": "Exalted",
+                  "text": "• Deals <EffectText>15%</> more damage.  \n• <HealthText>Heals</> you for <HealthText>25%</> of the damage dealt to Heroes.",
+                  "active": false,
+                  "condition": "<Condition>Enhance your Ultimate Ability:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 816,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50673",
+              "name": "Transference",
+              "displayName": "Transference",
+              "icon": "2b174078d40cec50",
+              "smallIcon": "ace89df93060307f",
+              "gameId": 500523,
+              "price": 450,
+              "totalPrice": 2900,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "TANK",
+              "aggressionType": "SHIELDING",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "121010",
+                  "stat": "HEALTH",
+                  "value": 200.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "121011",
+                  "stat": "PHYSICAL_ARMOR",
+                  "value": 40.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "121012",
+                  "stat": "MAGICAL_ARMOR",
+                  "value": 35.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "121013",
+                  "stat": "HEAL_AND_SHIELD_POWER",
+                  "value": 12.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64869",
+                  "name": "Shield Transference",
+                  "text": "• <HealthText>50%</> of its remaining value is restored as <HealthText>Health</> over <HealthText>3s</>.\n• Reduced to <HealthText>25%</> for <EffectText>Ally Shields</>.",
+                  "active": false,
+                  "condition": "<Condition>Upon</> <EffectText>Shields</> <Condition>expiring:</>",
+                  "cooldown": null
+                },
+                {
+                  "id": "64870",
+                  "name": "Ionizing Charge",
+                  "text": "• Gain <EffectText>12% Movement Speed</>.\n• Gain <EffectText>10%</> increased <EffectText>Armors</>.",
+                  "active": false,
+                  "condition": "<Condition>While</> <EffectText>Shielded</><Condition>:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 822,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50514",
+              "name": "DuskStave",
+              "displayName": "Dusk Stave",
+              "icon": "0d2ecf8cac5929bc",
+              "smallIcon": "3b77e2c0515577fb",
+              "gameId": 400014,
+              "price": 550,
+              "totalPrice": 1250,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120563",
+                  "stat": "MAGICAL_POWER",
+                  "value": 30.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120564",
+                  "stat": "MANA",
+                  "value": 200.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 822,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50489",
+              "name": "Pendant",
+              "displayName": "Pendant",
+              "icon": "e1be09cd50c108e1",
+              "smallIcon": "1ed4e199d81f98f2",
+              "gameId": 300019,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "UTILITY",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120530",
+                  "stat": "ABILITY_HASTE",
+                  "value": 5.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 952,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50629",
+              "name": "Oathkeeper",
+              "displayName": "Oathkeeper",
+              "icon": "04f69f18c98f3d9e",
+              "smallIcon": "e7332989e3d2e08c",
+              "gameId": 500410,
+              "price": 100,
+              "totalPrice": 3100,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "MAGE",
+              "aggressionType": "BURST",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120875",
+                  "stat": "MAGICAL_POWER",
+                  "value": 75.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120876",
+                  "stat": "HEALTH",
+                  "value": 175.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120877",
+                  "stat": "MANA",
+                  "value": 200.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120878",
+                  "stat": "ABILITY_HASTE",
+                  "value": 15.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64802",
+                  "name": "Celestial Spellblade",
+                  "text": "• Empower your next Basic Attack within <EffectText>4s</>.\n• Deal <AbilityPowerText>55 (+35%</><img id=\"APIconBlue\"></><AbilityPowerText>)</> <AbilityPowerText>Damage</> <EffectText>On-Hit</>.",
+                  "active": false,
+                  "condition": "<Condition>On Ability Cast:</>",
+                  "cooldown": "1.5s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 963,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50686",
+              "name": "WorldBreaker",
+              "displayName": "World Breaker",
+              "icon": "d372b25cf8cf04f3",
+              "smallIcon": "34ec2795078d2f0a",
+              "gameId": 500416,
+              "price": 600,
+              "totalPrice": 3200,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "MAGE",
+              "aggressionType": "DAMAGE_AMP",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "121053",
+                  "stat": "MAGICAL_POWER",
+                  "value": 40.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "121054",
+                  "stat": "HEALTH",
+                  "value": 300.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "121055",
+                  "stat": "TENACITY",
+                  "value": 20.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64887",
+                  "name": "Fiend",
+                  "text": "• Increases your <AbilityPowerText>Magical Damage</> dealt by <AbilityPowerText>2%</> for <AbilityPowerText>3s</>.\n• Stacks up to <EffectText>6</> times.",
+                  "active": false,
+                  "condition": "<Condition>On dealing</> <AbilityPowerText>Magical Damage</> <Condition>to a Hero:</>",
+                  "cooldown": null
+                },
+                {
+                  "id": "64888",
+                  "name": "Maya",
+                  "text": "• Gain <HealthText>(+5%</><img id=\"HealthIconGreen\"></><HealthText>)</> <AbilityPowerText>Magical Power</>.",
+                  "active": false,
+                  "condition": null,
+                  "cooldown": null
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "132328690",
+        "name": "psychomain",
+        "team": "DAWN",
+        "role": "OFFLANE",
+        "level": 18,
+        "kills": 0,
+        "deaths": 3,
+        "assists": 1,
+        "gold": 17336,
+        "minionsKilled": 220,
+        "heroDamage": 14826,
+        "heroDamageTaken": 23274,
+        "totalDamageDealt": 95580,
+        "totalDamageDealtToObjectives": 3663,
+        "totalDamageDealtToStructures": 777,
+        "totalDamageTaken": 30239,
+        "totalDamageMitigated": 20475,
+        "totalHealingDone": 9044,
+        "largestKillingSpree": 0,
+        "largestCriticalStrike": 0,
+        "multiKill": 0,
+        "wardsPlaced": 7,
+        "wardsDestroyed": 0,
+        "endTime": "2025-12-17T21:23:39Z",
+        "player": {
+          "id": "23df91be-cb50-4f09-99d6-38f600676492",
+          "uuid": "23df91be-cb50-4f09-99d6-38f600676492",
+          "name": "psychomain"
+        },
+        "hero": {
+          "id": "1",
+          "name": "Crunch",
+          "slug": "crunch"
+        },
+        "heroData": {
+          "id": "8726",
+          "name": "Crunch",
+          "displayName": "Crunch",
+          "icon": "ac9a0f61e85d0fa2",
+          "classes": [
+            "FIGHTER"
+          ],
+          "roles": [
+            "OFFLANE",
+            "JUNGLE"
+          ],
+          "mainAttributes": {
+            "attackPower": 5,
+            "abilityPower": 7,
+            "durability": 5,
+            "mobility": 5
+          }
+        },
+        "inventoryItemData": [
+          {
+            "id": "50563",
+            "name": "Augmentation",
+            "displayName": "Augmentation",
+            "icon": "a7a09b4769f1e4fd",
+            "smallIcon": "57e3d214772c2540",
+            "gameId": 500301,
+            "price": 350,
+            "totalPrice": 3250,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "FIGHTER",
+            "aggressionType": "ON_HIT",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120659",
+                "stat": "PHYSICAL_POWER",
+                "value": 30.0,
+                "showPercent": false
+              },
+              {
+                "id": "120660",
+                "stat": "ATTACK_SPEED",
+                "value": 25.0,
+                "showPercent": true
+              },
+              {
+                "id": "120661",
+                "stat": "HEALTH",
+                "value": 225.0,
+                "showPercent": false
+              },
+              {
+                "id": "120662",
+                "stat": "ABILITY_HASTE",
+                "value": 16.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64693",
+                "name": "True Strike",
+                "text": "• Empower your next Basic Attack within <EffectText>4s</>. \n• Deal <AttackDamageText>(+80% Base Physical Power</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <EffectText>Damage On-Hit</>.",
+                "active": false,
+                "condition": "<Condition>On Ability Cast:</>",
+                "cooldown": "1.5s"
+              }
+            ]
+          },
+          {
+            "id": "50623",
+            "name": "MistmeadowBuckler",
+            "displayName": "Mistmeadow Buckler",
+            "icon": "bd42f6c5d3824c2b",
+            "smallIcon": "72d834c109dc2e88",
+            "gameId": 500317,
+            "price": 350,
+            "totalPrice": 3000,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "FIGHTER",
+            "aggressionType": "ANTI_MAGIC",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120857",
+                "stat": "PHYSICAL_POWER",
+                "value": 45.0,
+                "showPercent": false
+              },
+              {
+                "id": "120858",
+                "stat": "MAGICAL_ARMOR",
+                "value": 40.0,
+                "showPercent": false
+              },
+              {
+                "id": "120859",
+                "stat": "BASE_HEALTH_REGENERATION",
+                "value": 80.0,
+                "showPercent": true
+              },
+              {
+                "id": "120860",
+                "stat": "ABILITY_HASTE",
+                "value": 15.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64791",
+                "name": "Mistwood Guard",
+                "text": "• Gain 100 charges. Regenerate 5 charges each second.\n• While at 100 charges, gain <AbilityPowerText>15 Magical Armor</>.",
+                "active": false,
+                "condition": null,
+                "cooldown": null
+              },
+              {
+                "id": "64792",
+                "name": "Bark Skin",
+                "text": "• Consume <AbilityName>Mistwood Guard</> charges.\n• Block <AbilityPowerText>1 Damage</> for each charge consumed.\n• Can block up to <EffectText>50%</> of the <AbilityPowerText>Damage</> received.",
+                "active": false,
+                "condition": "<Condition>On taking</> <AbilityPowerText>Magical Damage</><Condition>:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50624",
+            "name": "Mutilator",
+            "displayName": "Mutilator",
+            "icon": "83339d998e57df9c",
+            "smallIcon": "35f94588a25d6b84",
+            "gameId": 500307,
+            "price": 650,
+            "totalPrice": 3200,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "FIGHTER",
+            "aggressionType": "ANTI_TANK",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120861",
+                "stat": "PHYSICAL_POWER",
+                "value": 40.0,
+                "showPercent": false
+              },
+              {
+                "id": "120862",
+                "stat": "ABILITY_HASTE",
+                "value": 15.0,
+                "showPercent": false
+              },
+              {
+                "id": "120863",
+                "stat": "OMNIVAMP",
+                "value": 10.0,
+                "showPercent": true
+              }
+            ],
+            "effects": [
+              {
+                "id": "64793",
+                "name": "Mutilate",
+                "text": "• Deal <HealthText>1%</> of their <HealthText>Max Health</> as <AttackDamageText>Damage</>.",
+                "active": false,
+                "condition": "<Condition>On Basic Attacking Heroes:</>",
+                "cooldown": null
+              },
+              {
+                "id": "64794",
+                "name": "Devour",
+                "text": "• Apply <AbilityName>Mutilate</> 2.5 times (once per ability).",
+                "active": false,
+                "condition": "<Condition>Ability Hits on Heroes:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50664",
+            "name": "TaintedBlade",
+            "displayName": "Tainted Blade",
+            "icon": "6a6a220c15337e92",
+            "smallIcon": "e2b40521b4853be3",
+            "gameId": 300308,
+            "price": 450,
+            "totalPrice": 3100,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "FIGHTER",
+            "aggressionType": "ANTI_HEAL",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120982",
+                "stat": "PHYSICAL_POWER",
+                "value": 40.0,
+                "showPercent": false
+              },
+              {
+                "id": "120983",
+                "stat": "HEALTH",
+                "value": 250.0,
+                "showPercent": false
+              },
+              {
+                "id": "120984",
+                "stat": "ABILITY_HASTE",
+                "value": 15.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64856",
+                "name": "Blighted Strikes",
+                "text": "• Reduce the Target's <HealthText>Healing</> by <HealthText>45%</> for <HealthText>3s</>.",
+                "active": false,
+                "condition": "<Condition>On dealing</> <AttackDamageText>Physical Damage</><Condition>:</>",
+                "cooldown": null
+              },
+              {
+                "id": "64857",
+                "name": "Hex",
+                "text": "• Cause them to take <EffectText>5%</> more damage for <EffectText>3s</>.",
+                "active": false,
+                "condition": "<Condition>On dealing Ability Damage to a</> <EffectText>Blighted</> <Condition>Target:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50583",
+            "name": "Draconum",
+            "displayName": "Draconum",
+            "icon": "b18151fbd1ba4251",
+            "smallIcon": "37c1643649bf6fd8",
+            "gameId": 500304,
+            "price": 350,
+            "totalPrice": 3000,
+            "rarity": "EPIC",
+            "slotType": "PASSIVE",
+            "class": "FIGHTER",
+            "aggressionType": "SUSTAINED_FIGHTING",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120726",
+                "stat": "PHYSICAL_POWER",
+                "value": 45.0,
+                "showPercent": false
+              },
+              {
+                "id": "120727",
+                "stat": "PHYSICAL_ARMOR",
+                "value": 40.0,
+                "showPercent": false
+              },
+              {
+                "id": "120728",
+                "stat": "ABILITY_HASTE",
+                "value": 15.0,
+                "showPercent": false
+              }
+            ],
+            "effects": [
+              {
+                "id": "64731",
+                "name": "Surge",
+                "text": "• Gain <HealthText>2%</> increased <HealthText>Healing</> for <EffectText>5s</>.\n• Stacks up to <EffectText>10</> times.",
+                "active": false,
+                "condition": "<Condition>On dealing damage to Heroes or Monsters:</>",
+                "cooldown": null
+              },
+              {
+                "id": "64732",
+                "name": "Flow",
+                "text": "• Restore <HealthText>(+120%</><img id=\"ADIconOrange\"></><HealthText>)(+6%</><img id=\"HealthIconGreen\"></><HealthText>)</> <HealthText>Health</>.",
+                "active": false,
+                "condition": "<Condition> On Takedown:</>",
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50538",
+            "name": "RunicVeil",
+            "displayName": "Runic Veil",
+            "icon": "63d54ce4e726c1bb",
+            "smallIcon": "912b89ab5222eb57",
+            "gameId": 400057,
+            "price": 300,
+            "totalPrice": 1000,
+            "rarity": "RARE",
+            "slotType": "PASSIVE",
+            "class": "NONE",
+            "aggressionType": "OFFENSE",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [
+              {
+                "id": "120607",
+                "stat": "HEALTH",
+                "value": 125.0,
+                "showPercent": false
+              },
+              {
+                "id": "120608",
+                "stat": "MAGICAL_ARMOR",
+                "value": 20.0,
+                "showPercent": false
+              }
+            ],
+            "effects": []
+          },
+          {
+            "id": "50426",
+            "name": "DivinePotion",
+            "displayName": "Divine Potion",
+            "icon": "890add37ce18eddd",
+            "smallIcon": "748368f05179e528",
+            "gameId": 100013,
+            "price": 250,
+            "totalPrice": 250,
+            "rarity": "EPIC",
+            "slotType": "ACTIVE",
+            "class": "NONE",
+            "aggressionType": "OFFENSE",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [],
+            "effects": [
+              {
+                "id": "64574",
+                "name": "",
+                "text": "<EffectText>Permanently upgrades your Refillable Potion.</>",
+                "active": false,
+                "condition": null,
+                "cooldown": null
+              },
+              {
+                "id": "64575",
+                "name": "Consume",
+                "text": "• <HealthText>Regenerate 180-360 Health</> and <ManaText>70-120 Mana</> over <EffectText>15s</>.\n• Based on <ManaText>Level</>.\n• Max Charges: <EffectText>2</>.\n• Charges are restored upon entering Base.",
+                "active": true,
+                "condition": null,
+                "cooldown": null
+              }
+            ]
+          },
+          {
+            "id": "50448",
+            "name": "Judgement",
+            "displayName": "Judgement",
+            "icon": "6a486fc0b7580a2c",
+            "smallIcon": "f3bc3074e94f2818",
+            "gameId": 200306,
+            "price": 0,
+            "totalPrice": 0,
+            "rarity": "LEGENDARY",
+            "slotType": "CREST",
+            "class": "FIGHTER",
+            "aggressionType": "AREA_DAMAGE",
+            "isEvolved": false,
+            "isHidden": true,
+            "stats": [
+              {
+                "id": "120427",
+                "stat": "PHYSICAL_POWER",
+                "value": 12.0,
+                "showPercent": false
+              },
+              {
+                "id": "120428",
+                "stat": "HEALTH",
+                "value": 100.0,
+                "showPercent": false
+              },
+              {
+                "id": "120429",
+                "stat": "OMNIVAMP",
+                "value": 4.0,
+                "showPercent": true
+              }
+            ],
+            "effects": [
+              {
+                "id": "64602",
+                "name": "Thunder Cleaver",
+                "text": "• Deal <AbilityPowerText>70</> <AttackDamageText>(+30%</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <AbilityPowerText>Damage</> in an area around you.\n• On Hero hit, <HealthText>Heal</> <AttackDamageText>(+30%</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <HealthText>(+8%</><img id=\"HealthIconGreen\"></><HealthText>)</>.\n• Subsequent Hero hits <HealthText>Heal</> for <EffectText>50%</> effectiveness.",
+                "active": true,
+                "condition": null,
+                "cooldown": "24-10s"
+              }
+            ]
+          },
+          {
+            "id": "50691",
+            "name": "StealthWard",
+            "displayName": "Stealth Ward",
+            "icon": "592f49a275b51673",
+            "smallIcon": "97f78d1dc259e331",
+            "gameId": 100009,
+            "price": 0,
+            "totalPrice": 0,
+            "rarity": "COMMON",
+            "slotType": "TRINKET",
+            "class": "NONE",
+            "aggressionType": "OFFENSE",
+            "isEvolved": false,
+            "isHidden": false,
+            "stats": [],
+            "effects": [
+              {
+                "id": "64895",
+                "name": "Stealth Ward",
+                "text": "• Place an invisible <EffectText>Ward</> for <EffectText>86s</>.\n• Reveals any nearby non <EffectText>Stealthed</> Units.\n• Max Charges: <EffectText>2</>.",
+                "active": true,
+                "condition": null,
+                "cooldown": "171s"
+              }
+            ]
+          }
+        ],
+        "perkData": [
+          {
+            "id": "9206",
+            "name": "Perk_Common_Executioner",
+            "displayName": "Executioner",
+            "icon": "85b5efaaa58ed007",
+            "description": "Deal 6% more damage to Heroes below 40% Max Health.",
+            "simpleDescription": null,
+            "slot": "COMMON_2",
+            "displayOrder": 4,
+            "aggressionTypes": []
+          },
+          {
+            "id": "9213",
+            "name": "Perk_Common_Voracity",
+            "displayName": "Voracity",
+            "icon": "a8fb3e36ef37fcc7",
+            "description": "Heal for 3.5% of damage dealt to Heroes.",
+            "simpleDescription": null,
+            "slot": "COMMON_1",
+            "displayOrder": 0,
+            "aggressionTypes": []
+          },
+          {
+            "id": "9073",
+            "name": "Perk_Crunch_DashRange",
+            "displayName": "Lunge Crunch",
+            "icon": "3613b2335fc098f3",
+            "description": "Forward Crunch travels 15% further.",
+            "simpleDescription": null,
+            "slot": "HERO_SPECIFIC_1",
+            "displayOrder": 1,
+            "aggressionTypes": [
+              "MOBILITY"
+            ]
+          }
+        ],
+        "transactions": [
+          {
+            "gameTime": 0,
+            "transactionType": "AUTO_BUY",
+            "itemData": {
+              "id": "50429",
+              "name": "RefillablePotion",
+              "displayName": "Refillable Potion",
+              "icon": "292cd3994e805212",
+              "smallIcon": "0f2c5edce41c24c7",
+              "gameId": 100006,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "COMMON",
+              "slotType": "ACTIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [],
+              "effects": [
+                {
+                  "id": "64580",
+                  "name": "Consume",
+                  "text": "• <HealthText>Regenerate 150-330 Health</> over <HealthText>15s</>.\n• Based on <ManaText>Level</>.\n• Max Charges: <EffectText>2</>.\n• Charges are restored upon entering Base.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 0,
+            "transactionType": "AUTO_BUY",
+            "itemData": {
+              "id": "50691",
+              "name": "StealthWard",
+              "displayName": "Stealth Ward",
+              "icon": "592f49a275b51673",
+              "smallIcon": "97f78d1dc259e331",
+              "gameId": 100009,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "COMMON",
+              "slotType": "TRINKET",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [],
+              "effects": [
+                {
+                  "id": "64895",
+                  "name": "Stealth Ward",
+                  "text": "• Place an invisible <EffectText>Ward</> for <EffectText>86s</>.\n• Reveals any nearby non <EffectText>Stealthed</> Units.\n• Max Charges: <EffectText>2</>.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": "171s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 7,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50449",
+              "name": "WarriorCrest",
+              "displayName": "Warrior Crest",
+              "icon": "377c0fe90b6312aa",
+              "smallIcon": "c3182337ede35178",
+              "gameId": 200301,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "LEGENDARY",
+              "slotType": "CREST",
+              "class": "FIGHTER",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120430",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 5.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120431",
+                  "stat": "HEALTH",
+                  "value": 50.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120432",
+                  "stat": "OMNIVAMP",
+                  "value": 2.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64603",
+                  "name": "Warrior",
+                  "text": "• <HealthText>Restore</> <AttackDamageText>(+8%</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <HealthText>Health</> over <HealthText>10s</>.\n• After restoring <HealthText>200 Health</>:\n• <EffectText>Evolves</> into <AbilityName>Champion Crest</>.",
+                  "active": false,
+                  "condition": "<Condition>On damaging Heroes or Monsters and Unit Kills:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 28,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50489",
+              "name": "Pendant",
+              "displayName": "Pendant",
+              "icon": "e1be09cd50c108e1",
+              "smallIcon": "1ed4e199d81f98f2",
+              "gameId": 300019,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "UTILITY",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120530",
+                  "stat": "ABILITY_HASTE",
+                  "value": 5.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 31,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50489",
+              "name": "Pendant",
+              "displayName": "Pendant",
+              "icon": "e1be09cd50c108e1",
+              "smallIcon": "1ed4e199d81f98f2",
+              "gameId": 300019,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "UTILITY",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120530",
+                  "stat": "ABILITY_HASTE",
+                  "value": 5.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 183,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50533",
+              "name": "RedwoodShortbow",
+              "displayName": "Redwood Shortbow",
+              "icon": "227cce2459ed8497",
+              "smallIcon": "a497b40f39af7539",
+              "gameId": 400052,
+              "price": 250,
+              "totalPrice": 950,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120597",
+                  "stat": "ATTACK_SPEED",
+                  "value": 20.0,
+                  "showPercent": true
+                },
+                {
+                  "id": "120598",
+                  "stat": "ABILITY_HASTE",
+                  "value": 8.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 186,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50544",
+              "name": "SpellSlasher",
+              "displayName": "Spell Slasher",
+              "icon": "42cbc9a3626485d5",
+              "smallIcon": "c86215b28a0216d9",
+              "gameId": 300013,
+              "price": 300,
+              "totalPrice": 650,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120616",
+                  "stat": "ABILITY_HASTE",
+                  "value": 8.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64678",
+                  "name": "Spellblade",
+                  "text": "• Empower your next Basic Attack within <EffectText>4s</>.\n• Deal <AttackDamageText>40 Damage</> <EffectText>On-Hit</>.",
+                  "active": false,
+                  "condition": "<Condition> On Ability Cast:</>",
+                  "cooldown": "1.5s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 334,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50549",
+              "name": "StoneOfStrength",
+              "displayName": "Stone Of Strength",
+              "icon": "1bd8972c155fa0c8",
+              "smallIcon": "89d2aec0231820b7",
+              "gameId": 400044,
+              "price": 600,
+              "totalPrice": 1300,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120623",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 20.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120624",
+                  "stat": "HEALTH",
+                  "value": 150.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 440,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50448",
+              "name": "Judgement",
+              "displayName": "Judgement",
+              "icon": "6a486fc0b7580a2c",
+              "smallIcon": "f3bc3074e94f2818",
+              "gameId": 200306,
+              "price": 0,
+              "totalPrice": 0,
+              "rarity": "LEGENDARY",
+              "slotType": "CREST",
+              "class": "FIGHTER",
+              "aggressionType": "AREA_DAMAGE",
+              "isEvolved": false,
+              "isHidden": true,
+              "stats": [
+                {
+                  "id": "120427",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 12.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120428",
+                  "stat": "HEALTH",
+                  "value": 100.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120429",
+                  "stat": "OMNIVAMP",
+                  "value": 4.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64602",
+                  "name": "Thunder Cleaver",
+                  "text": "• Deal <AbilityPowerText>70</> <AttackDamageText>(+30%</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <AbilityPowerText>Damage</> in an area around you.\n• On Hero hit, <HealthText>Heal</> <AttackDamageText>(+30%</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <HealthText>(+8%</><img id=\"HealthIconGreen\"></><HealthText>)</>.\n• Subsequent Hero hits <HealthText>Heal</> for <EffectText>50%</> effectiveness.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": "24-10s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 442,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50563",
+              "name": "Augmentation",
+              "displayName": "Augmentation",
+              "icon": "a7a09b4769f1e4fd",
+              "smallIcon": "57e3d214772c2540",
+              "gameId": 500301,
+              "price": 350,
+              "totalPrice": 3250,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "FIGHTER",
+              "aggressionType": "ON_HIT",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120659",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 30.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120660",
+                  "stat": "ATTACK_SPEED",
+                  "value": 25.0,
+                  "showPercent": true
+                },
+                {
+                  "id": "120661",
+                  "stat": "HEALTH",
+                  "value": 225.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120662",
+                  "stat": "ABILITY_HASTE",
+                  "value": 16.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64693",
+                  "name": "True Strike",
+                  "text": "• Empower your next Basic Attack within <EffectText>4s</>. \n• Deal <AttackDamageText>(+80% Base Physical Power</><img id=\"ADIconOrange\"></><AttackDamageText>)</> <EffectText>Damage On-Hit</>.",
+                  "active": false,
+                  "condition": "<Condition>On Ability Cast:</>",
+                  "cooldown": "1.5s"
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 455,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50499",
+              "name": "Wraps",
+              "displayName": "Wraps",
+              "icon": "0af5d558b8b17340",
+              "smallIcon": "4312e3da0bc3ffd4",
+              "gameId": 300017,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120539",
+                  "stat": "MAGICAL_ARMOR",
+                  "value": 10.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 456,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50486",
+              "name": "LifeStream",
+              "displayName": "Life Stream",
+              "icon": "b48c38038d2ed851",
+              "smallIcon": "021ea09ae2793efd",
+              "gameId": 300006,
+              "price": 350,
+              "totalPrice": 350,
+              "rarity": "UNCOMMON",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120527",
+                  "stat": "BASE_HEALTH_REGENERATION",
+                  "value": 40.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 601,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50623",
+              "name": "MistmeadowBuckler",
+              "displayName": "Mistmeadow Buckler",
+              "icon": "bd42f6c5d3824c2b",
+              "smallIcon": "72d834c109dc2e88",
+              "gameId": 500317,
+              "price": 350,
+              "totalPrice": 3000,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "FIGHTER",
+              "aggressionType": "ANTI_MAGIC",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120857",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 45.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120858",
+                  "stat": "MAGICAL_ARMOR",
+                  "value": 40.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120859",
+                  "stat": "BASE_HEALTH_REGENERATION",
+                  "value": 80.0,
+                  "showPercent": true
+                },
+                {
+                  "id": "120860",
+                  "stat": "ABILITY_HASTE",
+                  "value": 15.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64791",
+                  "name": "Mistwood Guard",
+                  "text": "• Gain 100 charges. Regenerate 5 charges each second.\n• While at 100 charges, gain <AbilityPowerText>15 Magical Armor</>.",
+                  "active": false,
+                  "condition": null,
+                  "cooldown": null
+                },
+                {
+                  "id": "64792",
+                  "name": "Bark Skin",
+                  "text": "• Consume <AbilityName>Mistwood Guard</> charges.\n• Block <AbilityPowerText>1 Damage</> for each charge consumed.\n• Can block up to <EffectText>50%</> of the <AbilityPowerText>Damage</> received.",
+                  "active": false,
+                  "condition": "<Condition>On taking</> <AbilityPowerText>Magical Damage</><Condition>:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 604,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50426",
+              "name": "DivinePotion",
+              "displayName": "Divine Potion",
+              "icon": "890add37ce18eddd",
+              "smallIcon": "748368f05179e528",
+              "gameId": 100013,
+              "price": 250,
+              "totalPrice": 250,
+              "rarity": "EPIC",
+              "slotType": "ACTIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [],
+              "effects": [
+                {
+                  "id": "64574",
+                  "name": "",
+                  "text": "<EffectText>Permanently upgrades your Refillable Potion.</>",
+                  "active": false,
+                  "condition": null,
+                  "cooldown": null
+                },
+                {
+                  "id": "64575",
+                  "name": "Consume",
+                  "text": "• <HealthText>Regenerate 180-360 Health</> and <ManaText>70-120 Mana</> over <EffectText>15s</>.\n• Based on <ManaText>Level</>.\n• Max Charges: <EffectText>2</>.\n• Charges are restored upon entering Base.",
+                  "active": true,
+                  "condition": null,
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 798,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50624",
+              "name": "Mutilator",
+              "displayName": "Mutilator",
+              "icon": "83339d998e57df9c",
+              "smallIcon": "35f94588a25d6b84",
+              "gameId": 500307,
+              "price": 650,
+              "totalPrice": 3200,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "FIGHTER",
+              "aggressionType": "ANTI_TANK",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120861",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 40.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120862",
+                  "stat": "ABILITY_HASTE",
+                  "value": 15.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120863",
+                  "stat": "OMNIVAMP",
+                  "value": 10.0,
+                  "showPercent": true
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64793",
+                  "name": "Mutilate",
+                  "text": "• Deal <HealthText>1%</> of their <HealthText>Max Health</> as <AttackDamageText>Damage</>.",
+                  "active": false,
+                  "condition": "<Condition>On Basic Attacking Heroes:</>",
+                  "cooldown": null
+                },
+                {
+                  "id": "64794",
+                  "name": "Devour",
+                  "text": "• Apply <AbilityName>Mutilate</> 2.5 times (once per ability).",
+                  "active": false,
+                  "condition": "<Condition>Ability Hits on Heroes:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 801,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50542",
+              "name": "SerratedBlade",
+              "displayName": "Serrated Blade",
+              "icon": "65d84b0514dbc97a",
+              "smallIcon": "121cca338d0f0d7b",
+              "gameId": 400031,
+              "price": 300,
+              "totalPrice": 1000,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120613",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 20.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64676",
+                  "name": "Blighted Strikes",
+                  "text": "• Reduce the Target's <HealthText>Healing</> by <HealthText>35%</> for <HealthText>3s</>.",
+                  "active": false,
+                  "condition": "<Condition>On Dealing</> <AttackDamageText>Physical Damage</><Condition>:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 993,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50664",
+              "name": "TaintedBlade",
+              "displayName": "Tainted Blade",
+              "icon": "6a6a220c15337e92",
+              "smallIcon": "e2b40521b4853be3",
+              "gameId": 300308,
+              "price": 450,
+              "totalPrice": 3100,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "FIGHTER",
+              "aggressionType": "ANTI_HEAL",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120982",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 40.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120983",
+                  "stat": "HEALTH",
+                  "value": 250.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120984",
+                  "stat": "ABILITY_HASTE",
+                  "value": 15.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64856",
+                  "name": "Blighted Strikes",
+                  "text": "• Reduce the Target's <HealthText>Healing</> by <HealthText>45%</> for <HealthText>3s</>.",
+                  "active": false,
+                  "condition": "<Condition>On dealing</> <AttackDamageText>Physical Damage</><Condition>:</>",
+                  "cooldown": null
+                },
+                {
+                  "id": "64857",
+                  "name": "Hex",
+                  "text": "• Cause them to take <EffectText>5%</> more damage for <EffectText>3s</>.",
+                  "active": false,
+                  "condition": "<Condition>On dealing Ability Damage to a</> <EffectText>Blighted</> <Condition>Target:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 995,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50550",
+              "name": "TemporalRipper",
+              "displayName": "Temporal Ripper",
+              "icon": "1c2f1091111a47e6",
+              "smallIcon": "754836431eff4a3d",
+              "gameId": 400037,
+              "price": 300,
+              "totalPrice": 1000,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120625",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 20.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120626",
+                  "stat": "ABILITY_HASTE",
+                  "value": 8.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 996,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50516",
+              "name": "FortifiedMantle",
+              "displayName": "Fortified Mantle",
+              "icon": "c0aced0150be17b8",
+              "smallIcon": "5db9b68f1932668a",
+              "gameId": 400016,
+              "price": 600,
+              "totalPrice": 1300,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120567",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 20.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120568",
+                  "stat": "PHYSICAL_ARMOR",
+                  "value": 15.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          },
+          {
+            "gameTime": 1039,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50583",
+              "name": "Draconum",
+              "displayName": "Draconum",
+              "icon": "b18151fbd1ba4251",
+              "smallIcon": "37c1643649bf6fd8",
+              "gameId": 500304,
+              "price": 350,
+              "totalPrice": 3000,
+              "rarity": "EPIC",
+              "slotType": "PASSIVE",
+              "class": "FIGHTER",
+              "aggressionType": "SUSTAINED_FIGHTING",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120726",
+                  "stat": "PHYSICAL_POWER",
+                  "value": 45.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120727",
+                  "stat": "PHYSICAL_ARMOR",
+                  "value": 40.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120728",
+                  "stat": "ABILITY_HASTE",
+                  "value": 15.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": [
+                {
+                  "id": "64731",
+                  "name": "Surge",
+                  "text": "• Gain <HealthText>2%</> increased <HealthText>Healing</> for <EffectText>5s</>.\n• Stacks up to <EffectText>10</> times.",
+                  "active": false,
+                  "condition": "<Condition>On dealing damage to Heroes or Monsters:</>",
+                  "cooldown": null
+                },
+                {
+                  "id": "64732",
+                  "name": "Flow",
+                  "text": "• Restore <HealthText>(+120%</><img id=\"ADIconOrange\"></><HealthText>)(+6%</><img id=\"HealthIconGreen\"></><HealthText>)</> <HealthText>Health</>.",
+                  "active": false,
+                  "condition": "<Condition> On Takedown:</>",
+                  "cooldown": null
+                }
+              ]
+            }
+          },
+          {
+            "gameTime": 1045,
+            "transactionType": "BUY",
+            "itemData": {
+              "id": "50538",
+              "name": "RunicVeil",
+              "displayName": "Runic Veil",
+              "icon": "63d54ce4e726c1bb",
+              "smallIcon": "912b89ab5222eb57",
+              "gameId": 400057,
+              "price": 300,
+              "totalPrice": 1000,
+              "rarity": "RARE",
+              "slotType": "PASSIVE",
+              "class": "NONE",
+              "aggressionType": "OFFENSE",
+              "isEvolved": false,
+              "isHidden": false,
+              "stats": [
+                {
+                  "id": "120607",
+                  "stat": "HEALTH",
+                  "value": 125.0,
+                  "showPercent": false
+                },
+                {
+                  "id": "120608",
+                  "stat": "MAGICAL_ARMOR",
+                  "value": 20.0,
+                  "showPercent": false
+                }
+              ],
+              "effects": []
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

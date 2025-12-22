@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cb-discord-bots"
+version = "0.1.0"
+description = "Monorepo for Predecessor game Discord bots and supporting services"
+requires-python = ">=3.9"
+dependencies = [
+    # Discord bot
+    "discord.py>=2.3.0",
+
+    # HTTP client for GraphQL API
+    "aiohttp>=3.9.0",
+
+    # Cron scheduling
+    "apscheduler>=3.10.0",
+
+    # PostgreSQL async driver
+    "asyncpg>=0.29.0",
+
+    # Database migrations
+    "alembic>=1.13.0",
+    "sqlalchemy>=2.0.0",  # Required by alembic for connection handling
+    "psycopg2-binary>=2.9.0",  # Required by alembic for PostgreSQL
+
+    # Environment variable management
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+
+    # Test containers for PostgreSQL
+    "testcontainers[postgres]>=4.0.0",
+
+    # Linting/formatting (optional)
+    "ruff>=0.1.0",
+]
+
+[tool.setuptools]
+packages = ["predecessor_api", "data"]
+
+[tool.setuptools.package-dir]
+# Map sub-packages for editable install
+"predecessor_api" = "api/predecessor"
+"data" = "data"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_functions = ["test_*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

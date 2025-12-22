@@ -1,0 +1,9 @@
+[project]
+name = "predecessor-api"
+version = "0.1.0"
+description = "Python client for Predecessor GraphQL API"
+requires-python = ">=3.9"
+# Dependencies managed in root pyproject.toml
+
+[tool.setuptools]
+packages = ["predecessor_api"]

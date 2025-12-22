@@ -1,0 +1,9 @@
+[project]
+name = "predecessor-crons"
+version = "0.1.0"
+description = "Cron workers for fetching and processing Predecessor match data"
+requires-python = ">=3.9"
+# Dependencies managed in root pyproject.toml
+
+[tool.setuptools]
+packages = ["crons", "services"]
