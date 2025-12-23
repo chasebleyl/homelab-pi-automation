@@ -77,6 +77,16 @@ class MatchService:
                         icon
                     }
                 }
+                inventoryItemData {
+                    icon
+                    displayName
+                    slotType
+                }
+                perkData {
+                    displayName
+                    icon
+                    slot
+                }
             }
         }
     }

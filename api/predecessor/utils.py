@@ -1,6 +1,35 @@
 """Utility functions for the Predecessor API package."""
 
 
+def name_to_slug(name: str) -> str:
+    """
+    Convert a display name to a URL/filename-safe slug.
+
+    Handles spaces, apostrophes, periods, ampersands, and collapses multiple dashes.
+
+    Args:
+        name: The display name (e.g., "Iggy & Scorch", "Lt. Belica", "GRIM.exe")
+
+    Returns:
+        Slug format (e.g., "iggy-scorch", "lt-belica", "grim-exe")
+
+    Example:
+        >>> name_to_slug("Iggy & Scorch")
+        'iggy-scorch'
+        >>> name_to_slug("Lt. Belica")
+        'lt-belica'
+        >>> name_to_slug("GRIM.exe")
+        'grim-exe'
+    """
+    slug = name.lower().replace(" ", "-").replace("'", "").replace(".", "-").replace("&", "")
+    # Collapse multiple consecutive dashes into single dash
+    while "--" in slug:
+        slug = slug.replace("--", "-")
+    # Remove leading/trailing dashes
+    slug = slug.strip("-")
+    return slug
+
+
 def calculate_per_minute(value: float | int, duration_seconds: float | int) -> float:
     """
     Calculate a per-minute rate from a total value and duration in seconds.

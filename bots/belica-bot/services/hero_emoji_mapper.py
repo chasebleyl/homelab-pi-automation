@@ -4,6 +4,8 @@ from typing import Optional
 import discord
 from discord import utils
 
+from predecessor_api import name_to_slug
+
 logger = logging.getLogger("belica.hero_emoji")
 
 
@@ -111,27 +113,27 @@ class HeroEmojiMapper:
     def _normalize_hero_name(self, hero_name: str) -> str:
         """
         Normalize hero name for lookup.
-        
+
         Args:
             hero_name: Hero name from API (e.g., "Countess", "Lt. Belica", "Mourn")
-            
+
         Returns:
             Normalized hero name for emoji lookup
         """
         # Try direct lookup first
         if hero_name in self.HERO_NAME_TO_EMOJI_NAME:
             return self.HERO_NAME_TO_EMOJI_NAME[hero_name]
-        
+
         # Try case-insensitive lookup
         hero_name_lower = hero_name.lower()
         for api_name, emoji_name in self.HERO_NAME_TO_EMOJI_NAME.items():
             if api_name.lower() == hero_name_lower:
                 return emoji_name
-        
-        # Fallback: convert hero name to emoji name format
-        # Remove special characters and hyphens, convert to lowercase, replace spaces with nothing
-        # Discord removes hyphens from emoji names
-        emoji_name = "".join(c.lower() for c in hero_name if c.isalnum())
+
+        # Fallback: use shared slug function, then remove hyphens for Discord emoji format
+        # Discord emoji names cannot contain hyphens
+        slug = name_to_slug(hero_name)
+        emoji_name = slug.replace("-", "")
         logger.warning(f"No mapping found for hero '{hero_name}', using fallback: '{emoji_name}'")
         return emoji_name
     

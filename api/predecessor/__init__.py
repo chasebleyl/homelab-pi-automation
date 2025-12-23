@@ -19,7 +19,7 @@ from .hero_service import HeroService
 from .item_service import ItemService
 from .player_matches_service import PlayerMatchesService
 from .player_service import PlayerService, PlayerInfo
-from .utils import format_player_display_name, calculate_per_minute
+from .utils import format_player_display_name, calculate_per_minute, name_to_slug
 
 __all__ = [
     "PredecessorAPI",
@@ -49,5 +49,6 @@ __all__ = [
     "PlayerInfo",
     "format_player_display_name",
     "calculate_per_minute",
+    "name_to_slug",
 ]
 
