@@ -15,14 +15,14 @@ pip install -e ".[dev]"
 
 ```
 api/predecessor/
-├── __init__.py              # Package exports (import as predecessor_api)
-├── client.py                # PredecessorAPI - GraphQL client
-├── models.py                # Hero, HeroRegistry
-├── item_models.py           # Item, ItemRegistry, ItemData, etc.
-├── match_models.py          # MatchData, MatchPlayerData, enums
-├── hero_service.py          # HeroService - hero data fetching
-├── item_service.py          # ItemService - item data fetching
-├── match_service.py         # MatchService - match data fetching
+├── __init__.py               # Package exports (import as predecessor_api)
+├── client.py                 # PredecessorAPI - GraphQL client
+├── models.py                 # Hero, HeroRegistry
+├── item_models.py            # Item, ItemRegistry, ItemData, etc.
+├── match_models.py           # MatchData, MatchPlayerData, enums
+├── hero_service.py           # HeroService - hero data fetching
+├── item_service.py           # ItemService - item data fetching
+├── match_service.py          # MatchService - match data fetching
 └── player_matches_service.py # PlayerMatchesService - player match history
 ```
 

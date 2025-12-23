@@ -22,3 +22,20 @@ class ProcessedMatch:
             processed_at=row["processed_at"],
             notified_bot=row["notified_bot"]
         )
+
+
+@dataclass
+class PlayerMatchCursor:
+    """Entity representing a player's match fetch cursor."""
+    player_uuid: str
+    last_match_end_time: datetime
+    updated_at: datetime
+
+    @classmethod
+    def from_row(cls, row: dict) -> "PlayerMatchCursor":
+        """Create a PlayerMatchCursor from a database row."""
+        return cls(
+            player_uuid=row["player_uuid"],
+            last_match_end_time=row["last_match_end_time"],
+            updated_at=row["updated_at"]
+        )

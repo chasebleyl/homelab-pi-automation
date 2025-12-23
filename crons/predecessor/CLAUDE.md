@@ -31,20 +31,30 @@ crons/predecessor/
 
 ## Data Flow
 
+Uses **cursor-based fetching** to efficiently track matches per player:
+
 1. Job queries database for subscribed player UUIDs
-2. Fetches recent matches from pred.gg API for those players
-3. Checks `processed_matches` table to skip already-handled matches
-4. POSTs new matches to belica-bot HTTP endpoint (`/api/matches`)
-5. Marks matches as processed and notified
+2. For each player, gets their cursor from `player_match_cursors` table
+   - If cursor exists: fetch matches from cursor time to now
+   - If no cursor: fetch matches from last 24 hours (initial backfill)
+3. Fetches matches from pred.gg API for the calculated time range
+4. Checks `processed_matches` table to skip already-handled matches
+5. POSTs new matches to belica-bot HTTP endpoint (`/api/matches`)
+6. Marks matches as processed and notified
+7. Updates player's cursor to the latest match end time
+
+This approach ensures:
+- No matches are missed even if the cron is down for extended periods
+- Efficient queries (only fetches new matches since last run)
+- Per-player tracking (different players can have different cursor positions)
 
 ## Environment Variables
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `PRED_API_URL` | No | https://pred.gg/gql | Predecessor GraphQL API URL |
+| `PRED_GG_API_URL` | No | https://pred.gg/gql | Predecessor GraphQL API URL |
 | `BELICA_BOT_URL` | No | http://localhost:8080 | Bot HTTP endpoint |
 | `RECENT_MATCHES_CRON` | No | */5 * * * * | Cron schedule (every 5 min) |
-| `RECENT_MATCHES_INTERVAL_MINUTES` | No | 10 | Look-back window for matches |
 | `TRACKED_PLAYER_UUIDS` | No | - | Comma-separated UUIDs (in addition to DB subscriptions) |
 | `DATABASE_URL` | No* | - | PostgreSQL connection URL |
 | `DB_HOST` | No* | localhost | Database host |

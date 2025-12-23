@@ -33,7 +33,7 @@ This will automatically install:
 2. Set up environment variables (create a `.env` file):
 ```bash
 # Predecessor API
-PRED_API_URL=https://pred.gg/gql
+PRED_GG_API_URL=https://pred.gg/gql
 
 # PostgreSQL Database (used by data package)
 DATABASE_URL=postgresql://user:password@localhost:5432/predecessor

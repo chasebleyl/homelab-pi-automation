@@ -100,8 +100,8 @@ class CronWorker:
 async def main() -> None:
     """Main entry point."""
     Config.validate()
-    DatabaseConfig.validate()  # Validate database configuration
-    
+    DatabaseConfig().validate()  # Validate database configuration
+
     worker = CronWorker()
     await worker.run_forever()
 

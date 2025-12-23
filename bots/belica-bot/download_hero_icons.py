@@ -49,7 +49,7 @@ async def download_all_hero_icons(output_dir: str = "hero_icons") -> None:
     output_path.mkdir(parents=True, exist_ok=True)
     
     # Initialize API client and hero service
-    api = PredecessorAPI(Config.PRED_API_URL)
+    api = PredecessorAPI(Config.PRED_GG_API_URL)
     hero_service = HeroService(api)
     
     print("Fetching heroes from GraphQL API...")

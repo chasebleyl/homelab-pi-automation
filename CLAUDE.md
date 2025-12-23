@@ -60,9 +60,35 @@ The monorepo uses a single virtual environment at the root:
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
+
+# Copy and configure environment variables
+cp .env.example .env
+# Edit .env with your Discord token, etc.
+
+# Start PostgreSQL
+docker compose up -d postgres
 ```
 
 All sub-packages (`api/predecessor`, `data`) are automatically available via the root `pyproject.toml` package mappings.
+
+## Environment Variables
+
+Single `.env` file at the monorepo root (see `.env.example`):
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `DISCORD_TOKEN` | Yes | - | Discord bot token |
+| `TEST_GUILD_ID` | No | - | Guild ID for fast slash command sync |
+| `PRED_GG_API_URL` | No | https://pred.gg/gql | Predecessor GraphQL API URL |
+| `DB_PASSWORD` | Yes* | - | Database password |
+| `DB_HOST` | No | localhost | Database host |
+| `DB_PORT` | No | 5432 | Database port |
+| `DB_NAME` | No | predecessor | Database name |
+| `DB_USER` | No | postgres | Database user |
+| `DATABASE_URL` | No* | - | Full PostgreSQL URL (alternative to DB_* vars) |
+| `BELICA_BOT_URL` | No | http://localhost:8080 | Bot HTTP endpoint (for crons) |
+
+*Either `DATABASE_URL` or `DB_PASSWORD` required for database features.
 
 ## Testing
 

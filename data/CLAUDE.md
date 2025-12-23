@@ -20,9 +20,14 @@ data/
 ├── __init__.py       # Package exports
 ├── config.py         # DatabaseConfig - environment variable handling
 ├── connection.py     # Database - connection pool management
-├── predecessor.py    # Predecessor entities: ProcessedMatch
+├── predecessor.py    # Predecessor entities: ProcessedMatch, PlayerMatchCursor
 ├── belica_bot.py     # Bot entities: SubscribedProfile, TargetChannel
-├── repositories.py   # CRUD operations for each entity
+├── repositories/     # Repository classes (one per entity)
+│   ├── __init__.py
+│   ├── processed_match.py
+│   ├── subscribed_profile.py
+│   ├── target_channel.py
+│   └── player_match_cursor.py
 ├── alembic.ini       # Alembic configuration
 └── migrations/       # Database migrations
     ├── env.py        # Alembic environment config
@@ -37,7 +42,8 @@ from data import (
     Database,
     ProcessedMatchRepository,
     SubscribedProfileRepository,
-    TargetChannelRepository
+    TargetChannelRepository,
+    PlayerMatchCursorRepository
 )
 
 # Connect
@@ -48,11 +54,13 @@ await db.connect()
 match_repo = ProcessedMatchRepository(db)
 profile_repo = SubscribedProfileRepository(db)
 channel_repo = TargetChannelRepository(db)
+cursor_repo = PlayerMatchCursorRepository(db)
 
 # Query
 is_processed = await match_repo.is_match_processed("match-uuid")
 subscriptions = await profile_repo.get_subscriptions_for_guild(guild_id)
 channels = await channel_repo.get_channels_for_guild(guild_id)
+last_match_time = await cursor_repo.get_last_match_time(player_uuid)
 
 # Cleanup
 await db.close()
@@ -92,12 +100,23 @@ class TargetChannel:
     configured_at: datetime
 ```
 
+### PlayerMatchCursor
+Tracks the last fetched match timestamp per player for cursor-based fetching.
+```python
+@dataclass
+class PlayerMatchCursor:
+    player_uuid: str      # Primary key
+    last_match_end_time: datetime
+    updated_at: datetime
+```
+
 ## Database Schema
 
 Tables managed via Alembic migrations:
 - `processed_matches` - Match processing state
 - `subscribed_profiles` - Guild player subscriptions
 - `target_channels` - Guild notification channels
+- `player_match_cursors` - Per-player cursor for match fetching
 
 ## Migrations
 
@@ -163,25 +182,33 @@ class MyEntity:
         return cls(id=row["id"], ...)
 ```
 
-2. Add repository to `repositories.py`:
+2. Create a new repository file in `repositories/my_entity.py`:
 ```python
+from ..connection import Database
+from ..predecessor import MyEntity  # or belica_bot
+
 class MyEntityRepository:
     def __init__(self, db: Database) -> None:
-        self._db = db
+        self.db = db
 
     async def get_by_id(self, id: str) -> Optional[MyEntity]:
-        async with self._db.pool.acquire() as conn:
+        async with self.db.pool.acquire() as conn:
             row = await conn.fetchrow("SELECT * FROM my_table WHERE id = $1", id)
             return MyEntity.from_row(dict(row)) if row else None
 ```
 
-3. Create a migration for the new table:
+3. Export from `repositories/__init__.py`:
+```python
+from .my_entity import MyEntityRepository
+```
+
+4. Create a migration for the new table:
 ```bash
 cd data
 alembic revision -m "add my_table"
 ```
 
-4. Edit the migration file with your SQL:
+5. Edit the migration file with your SQL:
 ```python
 def upgrade() -> None:
     op.execute("""
@@ -195,9 +222,9 @@ def downgrade() -> None:
     op.execute("DROP TABLE IF EXISTS my_table")
 ```
 
-5. Also add to `connection.py` `_init_schema()` for test compatibility:
+6. Also add to `connection.py` `_init_schema()` for test compatibility:
 ```python
 CREATE TABLE IF NOT EXISTS my_table (...);
 ```
 
-6. Export from `__init__.py`
+7. Export from `data/__init__.py`

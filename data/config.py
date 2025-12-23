@@ -1,8 +1,11 @@
 """Database configuration management."""
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load .env from monorepo root (parent of data/)
+_root_env = Path(__file__).parent.parent / ".env"
+load_dotenv(_root_env)
 
 
 class DatabaseConfig:

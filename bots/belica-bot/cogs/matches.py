@@ -15,13 +15,13 @@ logger = logging.getLogger("belica.matches")
 
 class Matches(commands.Cog):
     """Commands for match tracking and display."""
-    
+
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         # Access services from bot instance
         self.hero_registry = getattr(bot, 'hero_registry', None)
         self.profile_subscription: ProfileSubscription = getattr(bot, 'profile_subscription', None)
-        # Create match service (will be initialized with API and hero registry)
+        # Create match service (will be initialized lazily)
         self.match_service: Optional[MatchService] = None
     
     @app_commands.command(
@@ -259,9 +259,9 @@ class Matches(commands.Cog):
             color=discord.Color.blue()
         )
         embed.set_footer(text=f"Total: {len(player_uuids)} profile(s)")
-        
+
         await interaction.response.send_message(embed=embed, ephemeral=True)
-    
+
     def _get_hero_icon_url(self, hero_name: str) -> str:
         """
         Get the correct icon URL for a hero by name.

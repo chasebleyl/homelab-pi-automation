@@ -39,7 +39,7 @@ async def test_asset_id_urls(asset_id: str) -> list[tuple[str, bool]]:
 
 async def test_hero_icons() -> None:
     """Query heroes and their icon URLs from the API."""
-    api = PredecessorAPI(Config.PRED_API_URL)
+    api = PredecessorAPI(Config.PRED_GG_API_URL)
     hero_service = HeroService(api)
     registry = HeroRegistry()
     

@@ -35,22 +35,32 @@ bots/belica-bot/
 - **Services**: Business logic and data access (`*_db.py` = PostgreSQL-backed)
 - **HTTP Server**: Receives match notifications from cron workers at `/api/matches`
 
+## Slash Commands
+
+### General (`cogs/general.py`)
+- `/ping` - Check bot latency
+- `/info` - Display bot information
+- `/set-target-channel` - Configure channel for bot posts
+- `/remove-target-channel` - Remove target channel
+- `/list-target-channels` - List configured channels
+- `/clear-target-channels` - Clear all target channels
+
+### Matches (`cogs/matches.py`)
+- `/match-preview` - Preview match embed format
+- `/match-id <id>` - Fetch and display match by ID
+- `/match-profile-subscribe <uuid>` - Subscribe to player's matches
+- `/match-profile-unsubscribe <uuid>` - Unsubscribe from player
+- `/match-profile-list` - List subscribed profiles
+
 ## Environment Variables
+
+See root [CLAUDE.md](../../CLAUDE.md#environment-variables) for all environment variables. Bot-specific:
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `DISCORD_TOKEN` | Yes | - | Discord bot token |
-| `TEST_GUILD_ID` | No | - | Guild ID for fast slash command sync during dev |
-| `PRED_API_URL` | No | https://pred.gg/gql | Predecessor GraphQL API URL |
+| `TEST_GUILD_ID` | No | - | Guild ID for fast slash command sync |
 | `HTTP_PORT` | No | 8080 | Port for HTTP server |
-| `DATABASE_URL` | No* | - | PostgreSQL connection URL |
-| `DB_HOST` | No* | localhost | Database host |
-| `DB_PORT` | No* | 5432 | Database port |
-| `DB_NAME` | No* | predecessor | Database name |
-| `DB_USER` | No* | postgres | Database user |
-| `DB_PASSWORD` | No* | - | Database password |
-
-*Either `DATABASE_URL` or `DB_*` variables required for database features.
 
 ## Dependencies
 

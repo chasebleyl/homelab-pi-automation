@@ -33,7 +33,12 @@ class BelicaBot(commands.Bot):
             description="Predecessor stats and information bot"
         )
         
-        self.api = PredecessorAPI(Config.PRED_API_URL)
+        self.api = PredecessorAPI(
+            api_url=Config.PRED_GG_API_URL,
+            oauth_token_url=Config.PRED_GG_OAUTH_API_URL or None,
+            client_id=Config.PRED_GG_CLIENT_ID or None,
+            client_secret=Config.PRED_GG_CLIENT_SECRET or None,
+        )
         self.hero_registry = HeroRegistry()
         self.hero_service = HeroService(self.api)
         self.channel_config = ChannelConfig()
