@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from .client import PredecessorAPI
+from .graphql_fragments import MATCH_PLAYERS_FRAGMENT
 
 logger = logging.getLogger("predecessor_api.player_matches_service")
 
@@ -12,12 +13,12 @@ class PlayerMatchesService:
     """Service for fetching player matches from the Predecessor API."""
     
     # GraphQL query for fetching recent matches by player
-    GET_PLAYER_MATCHES_QUERY = """
-    query GetPlayerMatches($playerKey: PlayerKey!, $filter: PlayerMatchesFilterInput, $limit: Int, $offset: Int) {
-        player(by: $playerKey) {
-            matchesPaginated(filter: $filter, limit: $limit, offset: $offset) {
-                results {
-                    match {
+    GET_PLAYER_MATCHES_QUERY = f"""
+    query GetPlayerMatches($playerKey: PlayerKey!, $filter: PlayerMatchesFilterInput, $limit: Int, $offset: Int) {{
+        player(by: $playerKey) {{
+            matchesPaginated(filter: $filter, limit: $limit, offset: $offset) {{
+                results {{
+                    match {{
                         id
                         uuid
                         duration
@@ -25,34 +26,13 @@ class PlayerMatchesService:
                         gameMode
                         region
                         winningTeam
-                        matchPlayers {
-                            player {
-                                uuid
-                                name
-                            }
-                            hero {
-                                name
-                            }
-                            heroData {
-                                name
-                                displayName
-                                icon
-                            }
-                            team
-                            kills
-                            deaths
-                            assists
-                            rating {
-                                points
-                                newPoints
-                            }
-                        }
-                    }
-                }
+                        {MATCH_PLAYERS_FRAGMENT}
+                    }}
+                }}
                 totalCount
-            }
-        }
-    }
+            }}
+        }}
+    }}
     """
     
     def __init__(self, api: PredecessorAPI) -> None:

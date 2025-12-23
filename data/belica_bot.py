@@ -1,6 +1,7 @@
 """Belica bot data entities for Discord guild configurations."""
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Optional
 
 
 @dataclass
@@ -9,6 +10,7 @@ class SubscribedProfile:
     guild_id: int
     player_uuid: str
     subscribed_at: datetime
+    player_name: Optional[str] = None
 
     @classmethod
     def from_row(cls, row: dict) -> "SubscribedProfile":
@@ -16,7 +18,8 @@ class SubscribedProfile:
         return cls(
             guild_id=row["guild_id"],
             player_uuid=row["player_uuid"],
-            subscribed_at=row["subscribed_at"]
+            subscribed_at=row["subscribed_at"],
+            player_name=row.get("player_name")
         )
 
 

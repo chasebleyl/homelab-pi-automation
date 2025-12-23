@@ -6,8 +6,8 @@ from datetime import datetime, timezone
 from typing import Optional
 import logging
 
-from predecessor_api import MatchData, MatchPlayerData, TeamSide, GameMode, Region, MatchService
-from services import MatchMessageFormatter, ProfileSubscription, HeroEmojiMapper
+from predecessor_api import MatchData, MatchPlayerData, TeamSide, GameMode, Region, Role, MatchService, PlayerService
+from services import MatchMessageFormatter, ProfileSubscription, HeroEmojiMapper, RoleEmojiMapper
 from services.uuid_utils import normalize_uuid, validate_uuid
 
 logger = logging.getLogger("belica.matches")
@@ -21,8 +21,9 @@ class Matches(commands.Cog):
         # Access services from bot instance
         self.hero_registry = getattr(bot, 'hero_registry', None)
         self.profile_subscription: ProfileSubscription = getattr(bot, 'profile_subscription', None)
-        # Create match service (will be initialized lazily)
+        # Create services (will be initialized lazily)
         self.match_service: Optional[MatchService] = None
+        self.player_service: Optional[PlayerService] = None
     
     @app_commands.command(
         name="match-preview",
@@ -42,12 +43,14 @@ class Matches(commands.Cog):
         if self.profile_subscription and interaction.guild:
             subscribed_uuids = set(await self.profile_subscription.get_profiles(interaction.guild.id))
         
-        # Create hero emoji mapper if guild or bot is available
+        # Create emoji mappers if guild or bot is available
         hero_emoji_mapper = None
+        role_emoji_mapper = None
         if interaction.guild or self.bot:
             hero_emoji_mapper = HeroEmojiMapper(guild=interaction.guild, bot=self.bot)
-        
-        formatter = MatchMessageFormatter(sample_match, subscribed_uuids, hero_emoji_mapper)
+            role_emoji_mapper = RoleEmojiMapper(guild=interaction.guild, bot=self.bot)
+
+        formatter = MatchMessageFormatter(sample_match, subscribed_uuids, hero_emoji_mapper, role_emoji_mapper)
         
         embed = formatter.create_embed()
         view = formatter.create_view()
@@ -62,6 +65,15 @@ class Matches(commands.Cog):
                 return None
             self.match_service = MatchService(api, self.hero_registry)
         return self.match_service
+
+    def _get_player_service(self) -> Optional[PlayerService]:
+        """Get or create the player service instance."""
+        if self.player_service is None:
+            api = getattr(self.bot, 'api', None)
+            if not api:
+                return None
+            self.player_service = PlayerService(api)
+        return self.player_service
     
     @app_commands.command(
         name="match-id",
@@ -97,13 +109,15 @@ class Matches(commands.Cog):
             if self.profile_subscription and interaction.guild:
                 subscribed_uuids = set(await self.profile_subscription.get_profiles(interaction.guild.id))
             
-            # Create hero emoji mapper if guild or bot is available
+            # Create emoji mappers if guild or bot is available
             hero_emoji_mapper = None
+            role_emoji_mapper = None
             if interaction.guild or self.bot:
                 hero_emoji_mapper = HeroEmojiMapper(guild=interaction.guild, bot=self.bot)
-            
+                role_emoji_mapper = RoleEmojiMapper(guild=interaction.guild, bot=self.bot)
+
             # Format and send
-            formatter = MatchMessageFormatter(match, subscribed_uuids, hero_emoji_mapper)
+            formatter = MatchMessageFormatter(match, subscribed_uuids, hero_emoji_mapper, role_emoji_mapper)
             embed = formatter.create_embed()
             view = formatter.create_view()
             
@@ -133,14 +147,14 @@ class Matches(commands.Cog):
                 ephemeral=True
             )
             return
-        
+
         if not interaction.guild:
             await interaction.response.send_message(
                 "❌ This command can only be used in a server.",
                 ephemeral=True
             )
             return
-        
+
         # Validate and normalize UUID format
         formatted_uuid = normalize_uuid(player_id)
         if not formatted_uuid:
@@ -150,21 +164,55 @@ class Matches(commands.Cog):
                 ephemeral=True
             )
             return
-        
-        was_new = await self.profile_subscription.add_profile(interaction.guild.id, formatted_uuid)
-        
+
+        # Defer response since API validation may take a moment
+        await interaction.response.defer(ephemeral=True)
+
+        # Validate player exists via API
+        player_service = self._get_player_service()
+        if not player_service:
+            await interaction.followup.send(
+                "❌ API client is not available. Cannot validate player.",
+                ephemeral=True
+            )
+            return
+
+        try:
+            player_info = await player_service.validate_player(formatted_uuid)
+        except Exception as e:
+            logger.error(f"Error validating player {formatted_uuid}: {e}")
+            await interaction.followup.send(
+                f"❌ Error validating player: {str(e)}",
+                ephemeral=True
+            )
+            return
+
+        if player_info is None:
+            await interaction.followup.send(
+                f"❌ Player not found. The UUID `{formatted_uuid}` does not exist on pred.gg.\n"
+                "Please verify the player UUID from their profile URL.",
+                ephemeral=True
+            )
+            return
+
+        # Player exists - add to subscriptions with their name
+        was_new = await self.profile_subscription.add_profile(
+            interaction.guild.id, formatted_uuid, player_info.name
+        )
+
         profile_url = f"https://pred.gg/players/{formatted_uuid}"
-        
+        player_display = f"**{player_info.name}**" if player_info.name else f"`{formatted_uuid}`"
+
         if was_new:
-            await interaction.response.send_message(
-                f"✅ Subscribed to player profile!\n"
+            await interaction.followup.send(
+                f"✅ Subscribed to {player_display}!\n"
                 f"Profile: [View on pred.gg]({profile_url})\n"
                 f"Matches including this player will now be shown in match messages.",
                 ephemeral=True
             )
         else:
-            await interaction.response.send_message(
-                f"ℹ️ This profile is already subscribed.\n"
+            await interaction.followup.send(
+                f"ℹ️ Already subscribed to {player_display}.\n"
                 f"Profile: [View on pred.gg]({profile_url})",
                 ephemeral=True
             )
@@ -229,36 +277,39 @@ class Matches(commands.Cog):
                 ephemeral=True
             )
             return
-        
+
         if not interaction.guild:
             await interaction.response.send_message(
                 "❌ This command can only be used in a server.",
                 ephemeral=True
             )
             return
-        
-        player_uuids = await self.profile_subscription.get_profiles(interaction.guild.id)
-        
-        if not player_uuids:
+
+        profiles = await self.profile_subscription.get_profiles_with_names(interaction.guild.id)
+
+        if not profiles:
             await interaction.response.send_message(
                 "ℹ️ No player profiles are subscribed for this server.\n"
                 "Use `/match-profile-subscribe` to add one.",
                 ephemeral=True
             )
             return
-        
-        # Build list of profile links
+
+        # Build list of profile links with names
         profile_list = []
-        for uuid in player_uuids:
-            profile_url = f"https://pred.gg/players/{uuid}"
-            profile_list.append(f"• [`{uuid}`]({profile_url})")
-        
+        for profile in profiles:
+            profile_url = f"https://pred.gg/players/{profile.player_uuid}"
+            if profile.player_name:
+                profile_list.append(f"• **{profile.player_name}** - [`{profile.player_uuid}`]({profile_url})")
+            else:
+                profile_list.append(f"• [`{profile.player_uuid}`]({profile_url})")
+
         embed = discord.Embed(
             title="Subscribed Player Profiles",
             description="\n".join(profile_list),
             color=discord.Color.blue()
         )
-        embed.set_footer(text=f"Total: {len(player_uuids)} profile(s)")
+        embed.set_footer(text=f"Total: {len(profiles)} profile(s)")
 
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
@@ -300,7 +351,9 @@ class Matches(commands.Cog):
                     hero_name="Countess",
                     hero_icon_url=self._get_hero_icon_url("Countess"),
                     team=TeamSide.DUSK,
+                    role=Role.JUNGLE,
                     kills=14, deaths=4, assists=4,
+                    minions_killed=187, gold=21450,
                     mmr_change=29,
                     performance_score=159.37,
                     is_opted_in=True,
@@ -311,7 +364,9 @@ class Matches(commands.Cog):
                     hero_name="Dekker",
                     hero_icon_url=self._get_hero_icon_url("Dekker"),
                     team=TeamSide.DUSK,
+                    role=Role.SUPPORT,
                     kills=5, deaths=4, assists=18,
+                    minions_killed=42, gold=14320,
                     mmr_change=25,
                     performance_score=148.50,
                     is_opted_in=True,
@@ -322,7 +377,9 @@ class Matches(commands.Cog):
                     hero_name="Shinbi",
                     hero_icon_url=self._get_hero_icon_url("Shinbi"),
                     team=TeamSide.DUSK,
+                    role=Role.MIDLANE,
                     kills=6, deaths=13, assists=10,
+                    minions_killed=289, gold=18750,
                     mmr_change=31,
                     performance_score=105.37,
                     is_opted_in=True,
@@ -334,7 +391,9 @@ class Matches(commands.Cog):
                     hero_name="Grux",
                     hero_icon_url=self._get_hero_icon_url("Grux"),
                     team=TeamSide.DUSK,
+                    role=Role.OFFLANE,
                     kills=8, deaths=5, assists=7,
+                    minions_killed=245, gold=17890,
                     mmr_change=27,
                     is_opted_in=False,
                 ),
@@ -344,7 +403,9 @@ class Matches(commands.Cog):
                     hero_name="Murdock",
                     hero_icon_url=self._get_hero_icon_url("Murdock"),
                     team=TeamSide.DUSK,
+                    role=Role.CARRY,
                     kills=6, deaths=9, assists=12,
+                    minions_killed=356, gold=22100,
                     mmr_change=24,
                     is_opted_in=False,
                 ),
@@ -355,7 +416,9 @@ class Matches(commands.Cog):
                     hero_name="Sevarog",
                     hero_icon_url=self._get_hero_icon_url("Sevarog"),
                     team=TeamSide.DAWN,
+                    role=Role.JUNGLE,
                     kills=7, deaths=8, assists=9,
+                    minions_killed=165, gold=16540,
                     mmr_change=-18,
                     is_opted_in=False,
                 ),
@@ -365,7 +428,9 @@ class Matches(commands.Cog):
                     hero_name="Narbash",
                     hero_icon_url=self._get_hero_icon_url("Narbash"),
                     team=TeamSide.DAWN,
+                    role=Role.SUPPORT,
                     kills=2, deaths=7, assists=15,
+                    minions_killed=38, gold=11200,
                     mmr_change=-22,
                     is_opted_in=False,
                 ),
@@ -375,7 +440,9 @@ class Matches(commands.Cog):
                     hero_name="Sparrow",
                     hero_icon_url=self._get_hero_icon_url("Sparrow"),
                     team=TeamSide.DAWN,
+                    role=Role.CARRY,
                     kills=11, deaths=6, assists=5,
+                    minions_killed=312, gold=19870,
                     mmr_change=-15,
                     is_opted_in=False,
                 ),
@@ -385,7 +452,9 @@ class Matches(commands.Cog):
                     hero_name="Gideon",
                     hero_icon_url=self._get_hero_icon_url("Gideon"),
                     team=TeamSide.DAWN,
+                    role=Role.MIDLANE,
                     kills=9, deaths=10, assists=8,
+                    minions_killed=267, gold=17200,
                     mmr_change=-20,
                     is_opted_in=False,
                 ),
@@ -395,7 +464,9 @@ class Matches(commands.Cog):
                     hero_name="Khaimera",
                     hero_icon_url=self._get_hero_icon_url("Khaimera"),
                     team=TeamSide.DAWN,
+                    role=Role.OFFLANE,
                     kills=6, deaths=8, assists=7,
+                    minions_killed=198, gold=15430,
                     mmr_change=-19,
                     is_opted_in=False,
                 ),

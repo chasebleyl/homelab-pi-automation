@@ -1,9 +1,24 @@
-"""Script to download all hero icons from the Predecessor GraphQL API."""
+"""Script to download all hero icons from the Predecessor GraphQL API.
+
+Run from the monorepo root with the virtual environment activated:
+    source .venv/bin/activate
+    python bots/belica-bot/icons/heroes/download_hero_icons.py
+
+Or from the icons/heroes/ directory:
+    cd bots/belica-bot/icons/heroes
+    ../../../../.venv/bin/python download_hero_icons.py
+"""
 import asyncio
 import aiohttp
 import os
+import sys
 from pathlib import Path
 from typing import Optional
+
+# Add belica-bot root to path for imports
+SCRIPT_DIR = Path(__file__).parent
+BELICA_BOT_ROOT = SCRIPT_DIR.parent.parent
+sys.path.insert(0, str(BELICA_BOT_ROOT))
 
 from predecessor_api import PredecessorAPI, HeroService
 from config import Config
@@ -37,7 +52,7 @@ async def download_image(session: aiohttp.ClientSession, url: str, filepath: Pat
         return False
 
 
-async def download_all_hero_icons(output_dir: str = "hero_icons") -> None:
+async def download_all_hero_icons(output_dir: str = ".") -> None:
     """
     Download all hero icons from the Predecessor API.
     
@@ -122,10 +137,8 @@ async def download_all_hero_icons(output_dir: str = "hero_icons") -> None:
 
 async def main() -> None:
     """Main entry point."""
-    import sys
-    
-    # Get output directory from command line or use default
-    output_dir = sys.argv[1] if len(sys.argv) > 1 else "hero_icons"
+    # Get output directory from command line or use default (current directory)
+    output_dir = sys.argv[1] if len(sys.argv) > 1 else "."
     
     await download_all_hero_icons(output_dir)
 

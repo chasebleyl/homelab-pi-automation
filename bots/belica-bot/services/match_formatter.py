@@ -1,8 +1,135 @@
 """Discord message formatter for match data."""
+import io
 import discord
+import logging
 from typing import Optional
-from predecessor_api import MatchData, MatchPlayerData, TeamSide
+from predecessor_api import MatchData, MatchPlayerData, TeamSide, calculate_per_minute
 from .hero_emoji_mapper import HeroEmojiMapper
+from .role_emoji_mapper import RoleEmojiMapper
+
+logger = logging.getLogger(__name__)
+
+
+async def _handle_scoreboard_callback(interaction: discord.Interaction, match_uuid: str):
+    """Shared callback logic for scoreboard button."""
+    # Defer with ephemeral=True so "thinking..." is only visible to clicker
+    await interaction.response.defer()
+
+    try:
+        # Access bot services via interaction.client
+        bot = interaction.client
+
+        # Check if bot has required services
+        if not hasattr(bot, "match_service"):
+            await interaction.followup.send(
+                "Bot services not available. Please try again later.",
+                ephemeral=True,
+            )
+            return
+
+        # Fetch detailed match data
+        match_data = await bot.match_service.fetch_detailed_match(match_uuid)
+        if not match_data:
+            await interaction.followup.send(
+                "Could not fetch match data. The match may no longer be available.",
+                ephemeral=True,
+            )
+            return
+
+        # Import here to avoid circular imports
+        from .leaderboard_image import generate_leaderboard_image
+
+        # Generate the image
+        image_bytes = generate_leaderboard_image(match_data)
+
+        # Create file attachment
+        filename = f"scoreboard_{match_uuid}.png"
+        file = discord.File(io.BytesIO(image_bytes), filename=filename)
+
+        # Get the original message's embed and update it to include the image
+        original_embed = interaction.message.embeds[0] if interaction.message.embeds else None
+        if original_embed:
+            # Set the image on the embed to reference the attachment
+            original_embed.set_image(url=f"attachment://{filename}")
+
+        # Create a view with only the "Open" button (remove "View Scoreboard" since it's now shown)
+        view = discord.ui.View(timeout=None)
+        # Find and keep the Open button from the original message
+        for component in interaction.message.components:
+            for child in component.children:
+                if child.url:  # URL buttons (like "Open") have a url attribute
+                    view.add_item(
+                        discord.ui.Button(
+                            style=child.style,
+                            label=child.label,
+                            emoji=child.emoji,
+                            url=child.url,
+                        )
+                    )
+
+        # Edit the original message to include the image and remove the scoreboard button
+        await interaction.message.edit(embed=original_embed, attachments=[file], view=view)
+
+    except Exception as e:
+        logger.exception(f"Error generating scoreboard for match {match_uuid}")
+        await interaction.followup.send(
+            f"Error generating scoreboard: {str(e)}",
+            ephemeral=True,
+        )
+
+
+class ScoreboardButton(
+    discord.ui.DynamicItem[discord.ui.Button],
+    template=r"scoreboard:(?P<match_uuid>[a-f0-9-]+)",
+):
+    """
+    Persistent button for viewing match scoreboard.
+
+    Uses DynamicItem to handle button clicks even after bot restarts,
+    matching custom_id pattern 'scoreboard:{match_uuid}'.
+    """
+
+    def __init__(self, match_uuid: str):
+        super().__init__(
+            discord.ui.Button(
+                style=discord.ButtonStyle.secondary,
+                label="View Scoreboard",
+                custom_id=f"scoreboard:{match_uuid}",
+            )
+        )
+        self.match_uuid = match_uuid
+
+    @classmethod
+    async def from_custom_id(
+        cls, interaction: discord.Interaction, item: discord.ui.Button, match: dict
+    ):
+        """Reconstruct button from custom_id after bot restart."""
+        return cls(match_uuid=match["match_uuid"])
+
+    async def callback(self, interaction: discord.Interaction):
+        """Handle button click."""
+        await _handle_scoreboard_callback(interaction, self.match_uuid)
+
+
+class MatchView(discord.ui.View):
+    """View with buttons for match messages."""
+
+    def __init__(self, match_url: str, match_uuid: str):
+        # timeout=None makes the view persistent
+        super().__init__(timeout=None)
+
+        # "Open" button - links to match details on pred.gg
+        self.add_item(
+            discord.ui.Button(
+                style=discord.ButtonStyle.secondary,
+                label="Open",
+                emoji="🔗",
+                url=match_url,
+            )
+        )
+
+        # "View Scoreboard" button - generates and shows the leaderboard image
+        self.add_item(ScoreboardButton(match_uuid))
 
 
 class MatchMessageFormatter:
@@ -23,20 +150,23 @@ class MatchMessageFormatter:
         self,
         match: MatchData,
         subscribed_player_uuids: set[str] | None = None,
-        hero_emoji_mapper: Optional[HeroEmojiMapper] = None
+        hero_emoji_mapper: Optional[HeroEmojiMapper] = None,
+        role_emoji_mapper: Optional[RoleEmojiMapper] = None
     ) -> None:
         """
         Initialize the match formatter.
-        
+
         Args:
             match: The match data to format
             subscribed_player_uuids: Set of player UUIDs that should be included
                                     even if they haven't opted in (guild-specific subscriptions)
             hero_emoji_mapper: Optional mapper for hero emojis. If provided, hero emojis will be used.
+            role_emoji_mapper: Optional mapper for role emojis. If provided, role emojis will be used.
         """
         self.match = match
         self.subscribed_player_uuids = subscribed_player_uuids or set()
         self.hero_emoji_mapper = hero_emoji_mapper
+        self.role_emoji_mapper = role_emoji_mapper
     
     def _determine_embed_color(self) -> discord.Color:
         """
@@ -127,22 +257,14 @@ class MatchMessageFormatter:
     def create_view(self) -> discord.ui.View:
         """
         Create the button view for the match message.
-        
+
         Returns:
-            A Discord View with action buttons.
+            A Discord View with action buttons (Open link + View Scoreboard).
         """
-        view = discord.ui.View()
-        
-        # "Open" button links to match details
-        open_button = discord.ui.Button(
-            style=discord.ButtonStyle.secondary,
-            label="Open",
-            emoji="🔗",
-            url=self.match.match_url,
+        return MatchView(
+            match_url=self.match.match_url,
+            match_uuid=self.match.match_uuid,
         )
-        view.add_item(open_button)
-        
-        return view
     
     def _build_match_overview(self) -> str:
         """Build the match overview description text."""
@@ -193,58 +315,71 @@ class MatchMessageFormatter:
     def _format_player_line(self, player: MatchPlayerData) -> str:
         """
         Format a single player's stats line.
-        
-        Format: +29 [HeroName] **PlayerName** 14/4/4 159.37 PS
-        
+
+        Format: +29 [HeroEmoji] [RoleEmoji] **PlayerName** `7/7/3` - `12.7CS/m` - `451G/m` 159.37 PS
+
         Args:
             player: The player data to format.
-            
+
         Returns:
             Formatted player line with markdown.
         """
         parts = []
-        
+
         # MMR change (if available)
         if player.mmr_change_string:
             parts.append(f"`{player.mmr_change_string:>4}`")
-        
+
         # Hero emoji or name
         if self.hero_emoji_mapper:
             hero_display = self.hero_emoji_mapper.get_emoji_or_fallback(player.hero_name)
         else:
             hero_display = f"*{player.hero_name}*"
         parts.append(hero_display)
-        
+
+        # Role emoji (between hero and player name)
+        if self.role_emoji_mapper:
+            role_display = self.role_emoji_mapper.get_emoji_or_fallback(player.role.value)
+            if role_display:  # Only add if not empty (NONE/FILL roles return empty)
+                parts.append(role_display)
+
         # Player name with profile link
         parts.append(f"[**{player.player_name}**]({player.player_profile_url})")
-        
+
         # KDA
         parts.append(f"`{player.kda_string}`")
-        
+
+        # CS/m and G/m (per minute stats)
+        cs_per_min = calculate_per_minute(player.minions_killed, self.match.duration_seconds)
+        gold_per_min = calculate_per_minute(player.gold, self.match.duration_seconds)
+        parts.append(f"- `{cs_per_min:.1f}CS/m` - `{gold_per_min:.0f}G/m`")
+
         # Performance score (if available)
         if player.performance_score is not None:
             parts.append(f"**{player.performance_score:.2f}** PS")
-        
+
         return " ".join(parts)
 
 
 def create_match_message(
     match: MatchData,
     subscribed_player_uuids: set[str] | None = None,
-    hero_emoji_mapper: Optional[HeroEmojiMapper] = None
+    hero_emoji_mapper: Optional[HeroEmojiMapper] = None,
+    role_emoji_mapper: Optional[RoleEmojiMapper] = None
 ) -> tuple[discord.Embed, discord.ui.View]:
     """
     Convenience function to create embed and view for a match.
-    
+
     Args:
         match: The match data to format.
         subscribed_player_uuids: Set of player UUIDs that should be included
                                 even if they haven't opted in (guild-specific subscriptions)
         hero_emoji_mapper: Optional mapper for hero emojis. If provided, hero emojis will be used.
-        
+        role_emoji_mapper: Optional mapper for role emojis. If provided, role emojis will be used.
+
     Returns:
         Tuple of (embed, view) ready to send.
     """
-    formatter = MatchMessageFormatter(match, subscribed_player_uuids, hero_emoji_mapper)
+    formatter = MatchMessageFormatter(match, subscribed_player_uuids, hero_emoji_mapper, role_emoji_mapper)
     return formatter.create_embed(), formatter.create_view()
 

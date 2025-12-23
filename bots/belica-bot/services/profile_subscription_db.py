@@ -2,25 +2,25 @@
 import logging
 from typing import Optional
 
-from data import Database, SubscribedProfileRepository
+from data import Database, SubscribedProfileRepository, SubscribedProfile
 
 logger = logging.getLogger("belica.profile_subscription")
 
 
 class ProfileSubscription:
     """Manages player profile subscriptions per guild (server) using database."""
-    
+
     def __init__(self, db: Optional[Database] = None) -> None:
         """
         Initialize the profile subscription manager.
-        
+
         Args:
             db: Optional Database instance. If None, creates a new one.
         """
         self.db = db
         self._repo: Optional[SubscribedProfileRepository] = None
         self._db_initialized = False
-    
+
     async def _ensure_db(self) -> None:
         """Ensure database is connected and repository is initialized."""
         if not self._db_initialized:
@@ -30,23 +30,26 @@ class ProfileSubscription:
                 await self.db.connect()
             elif not self.db._pool:
                 await self.db.connect()
-            
+
             self._repo = SubscribedProfileRepository(self.db)
             self._db_initialized = True
-    
-    async def add_profile(self, guild_id: int, player_uuid: str) -> bool:
+
+    async def add_profile(
+        self, guild_id: int, player_uuid: str, player_name: Optional[str] = None
+    ) -> bool:
         """
         Add a player profile to subscriptions for a guild.
-        
+
         Args:
             guild_id: The Discord guild (server) ID
             player_uuid: The player UUID from pred.gg
-            
+            player_name: The player's display name (optional)
+
         Returns:
             True if profile was added, False if it already exists
         """
         await self._ensure_db()
-        return await self._repo.add_profile(guild_id, player_uuid)
+        return await self._repo.add_profile(guild_id, player_uuid, player_name)
     
     async def remove_profile(self, guild_id: int, player_uuid: str) -> bool:
         """
@@ -64,16 +67,29 @@ class ProfileSubscription:
     
     async def get_profiles(self, guild_id: int) -> list[str]:
         """
-        Get all subscribed player profiles for a guild.
-        
+        Get all subscribed player UUIDs for a guild.
+
         Args:
             guild_id: The Discord guild (server) ID
-            
+
         Returns:
             List of player UUIDs, empty list if none subscribed
         """
         await self._ensure_db()
         return await self._repo.get_profiles(guild_id)
+
+    async def get_profiles_with_names(self, guild_id: int) -> list[SubscribedProfile]:
+        """
+        Get all subscribed player profiles for a guild with their names.
+
+        Args:
+            guild_id: The Discord guild (server) ID
+
+        Returns:
+            List of SubscribedProfile objects, empty list if none subscribed
+        """
+        await self._ensure_db()
+        return await self._repo.get_profiles_with_names(guild_id)
     
     async def is_subscribed(self, guild_id: int, player_uuid: str) -> bool:
         """

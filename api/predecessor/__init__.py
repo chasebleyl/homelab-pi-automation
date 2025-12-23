@@ -13,11 +13,13 @@ from .item_models import (
     HeroClass,
     ItemDescriptionStat,
 )
-from .match_models import MatchData, MatchPlayerData, TeamSide, GameMode, Region
+from .match_models import MatchData, MatchPlayerData, TeamSide, GameMode, Region, Role
 from .match_service import MatchService
 from .hero_service import HeroService
 from .item_service import ItemService
 from .player_matches_service import PlayerMatchesService
+from .player_service import PlayerService, PlayerInfo
+from .utils import format_player_display_name, calculate_per_minute
 
 __all__ = [
     "PredecessorAPI",
@@ -38,9 +40,14 @@ __all__ = [
     "TeamSide",
     "GameMode",
     "Region",
+    "Role",
     "MatchService",
     "HeroService",
     "ItemService",
     "PlayerMatchesService",
+    "PlayerService",
+    "PlayerInfo",
+    "format_player_display_name",
+    "calculate_per_minute",
 ]
 

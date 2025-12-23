@@ -6,10 +6,11 @@ import discord
 from discord.ext import commands
 
 from config import Config
-from predecessor_api import PredecessorAPI, HeroRegistry, HeroService
+from predecessor_api import PredecessorAPI, HeroRegistry, HeroService, MatchService
 from services.channel_config_db import ChannelConfig
 from services.profile_subscription_db import ProfileSubscription
 from services.http_server import HTTPServer
+from services.match_formatter import ScoreboardButton
 
 # Configure logging
 logging.basicConfig(
@@ -41,6 +42,7 @@ class BelicaBot(commands.Bot):
         )
         self.hero_registry = HeroRegistry()
         self.hero_service = HeroService(self.api)
+        self.match_service = MatchService(self.api, self.hero_registry)
         self.channel_config = ChannelConfig()
         self.profile_subscription = ProfileSubscription()
         self.application_emojis: list[discord.Emoji] = []  # Cache application emojis
@@ -61,7 +63,11 @@ class BelicaBot(commands.Bot):
         await self.load_extension("cogs.general")
         await self.load_extension("cogs.matches")
         logger.info("Loaded cogs")
-        
+
+        # Register dynamic items for persistent button handling after bot restarts
+        self.add_dynamic_items(ScoreboardButton)
+        logger.info("Registered dynamic items for persistent buttons")
+
         # Sync slash commands
         if Config.TEST_GUILD_ID:
             # Fast guild-specific sync for development/testing
@@ -112,7 +118,7 @@ class BelicaBot(commands.Bot):
         http_port = int(os.getenv("HTTP_PORT", "8080"))
         self.http_server = HTTPServer(self, port=http_port)
         await self.http_server.start()
-    
+
     async def is_target_channel(self, channel: discord.TextChannel) -> bool:
         """
         Check if a channel is configured as a target channel for posting.

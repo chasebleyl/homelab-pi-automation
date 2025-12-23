@@ -35,20 +35,34 @@ class Region(Enum):
     SA = "South America"
 
 
+class Role(Enum):
+    """Player roles in a match."""
+    NONE = "none"
+    CARRY = "carry"
+    OFFLANE = "offlane"
+    MIDLANE = "midlane"
+    SUPPORT = "support"
+    JUNGLE = "jungle"
+    FILL = "fill"
+
+
 @dataclass(frozen=True)
 class MatchPlayerData:
     """
     Data for a single player in a match.
-    
+
     Attributes:
         player_name: The player's display name.
         player_uuid: The player's UUID for profile URL construction.
         hero_name: Display name of the hero played.
         hero_icon_url: URL to the hero's icon image.
         team: Which team the player was on (Dawn/Dusk).
+        role: The player's role in the match (carry, support, etc.).
         kills: Number of kills.
         deaths: Number of deaths.
         assists: Number of assists.
+        minions_killed: Total minions killed (creep score).
+        gold: Total gold earned.
         mmr_change: Change in MMR (positive or negative). None if unranked.
         performance_score: Optional performance score metric. None if unavailable.
         is_opted_in: Whether this player has opted into detailed stat display.
@@ -58,9 +72,12 @@ class MatchPlayerData:
     hero_name: str
     hero_icon_url: str
     team: TeamSide
+    role: Role
     kills: int
     deaths: int
     assists: int
+    minions_killed: int
+    gold: int
     mmr_change: int | None = None
     performance_score: float | None = None
     is_opted_in: bool = False

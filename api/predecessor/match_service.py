@@ -5,17 +5,35 @@ from typing import Optional
 
 from .client import PredecessorAPI
 from .models import HeroRegistry
-from .match_models import MatchData, MatchPlayerData, TeamSide, GameMode, Region
+from .match_models import MatchData, MatchPlayerData, TeamSide, GameMode, Region, Role
+from .graphql_fragments import MATCH_PLAYERS_FRAGMENT
+from .utils import format_player_display_name
 
 logger = logging.getLogger("predecessor_api.match_service")
 
 
 class MatchService:
     """Service for fetching and processing match data from the Predecessor API."""
-    
+
     # GraphQL query for fetching match data
-    GET_MATCH_QUERY = """
-    query GetMatch($matchKey: MatchKey!) {
+    GET_MATCH_QUERY = f"""
+    query GetMatch($matchKey: MatchKey!) {{
+        match(by: $matchKey) {{
+            id
+            uuid
+            duration
+            endTime
+            gameMode
+            region
+            winningTeam
+            {MATCH_PLAYERS_FRAGMENT}
+        }}
+    }}
+    """
+
+    # Detailed query with all stats for leaderboard image generation
+    GET_DETAILED_MATCH_QUERY = """
+    query GetDetailedMatch($matchKey: MatchKey!) {
         match(by: $matchKey) {
             id
             uuid
@@ -38,12 +56,26 @@ class MatchService:
                     icon
                 }
                 team
+                role
                 kills
                 deaths
                 assists
+                heroDamage
+                heroDamageTaken
+                wardsPlaced
+                wardsDestroyed
+                minionsKilled
+                neutralMinionsKilled
+                gold
                 rating {
                     points
                     newPoints
+                    rank {
+                        name
+                        abbreviation
+                        tierName
+                        icon
+                    }
                 }
             }
         }
@@ -113,7 +145,36 @@ class MatchService:
         
         # Transform to MatchData model
         return self.transform_match_data(match_data)
-    
+
+    async def fetch_detailed_match(self, match_id: str) -> Optional[dict]:
+        """
+        Fetch detailed match data from the API (raw dict for leaderboard generation).
+
+        This returns the raw GraphQL response including all detailed stats
+        like heroDamage, wardsPlaced, etc. for leaderboard image generation.
+
+        Args:
+            match_id: The match ID (UUID or numeric)
+
+        Returns:
+            Raw match data dict if found, None otherwise
+
+        Raises:
+            Exception: If there's an error fetching from the API
+        """
+        # Normalize match ID
+        match_key = self.normalize_match_id(match_id.strip())
+
+        # Fetch detailed match data
+        result = await self.api.query(self.GET_DETAILED_MATCH_QUERY, {"matchKey": match_key})
+        match_data = result.get("match")
+
+        if not match_data:
+            return None
+
+        # Return raw dict wrapped in expected format for leaderboard generator
+        return {"match": match_data}
+
     def transform_match_data(self, match_data: dict) -> MatchData:
         """
         Transform GraphQL match data to MatchData model.
@@ -157,8 +218,9 @@ class MatchService:
             hero_data_versioned = mp.get("heroData") or {}
             team_str = mp.get("team", "NONE")
             
-            player_name = player_data.get("name", "Unknown") if player_data else "Unknown"
             player_uuid = player_data.get("uuid", "") if player_data else ""
+            raw_name = player_data.get("name") if player_data else None
+            player_name = format_player_display_name(raw_name, player_uuid)
             
             # Prefer heroData (version-specific) over hero, fallback to "Unknown"
             if hero_data_versioned:
@@ -170,11 +232,15 @@ class MatchService:
                 logger.warning(f"No hero data found for player {player_name}")
             
             team = self._map_team_side(team_str)
-            
+            role_str = mp.get("role", "NONE")
+            role = self._map_role(role_str)
+
             kills = mp.get("kills", 0)
             deaths = mp.get("deaths", 0)
             assists = mp.get("assists", 0)
-            
+            minions_killed = mp.get("minionsKilled", 0)
+            gold = mp.get("gold", 0)
+
             # Count kills per team
             if team == TeamSide.DAWN:
                 dawn_kills += kills
@@ -204,9 +270,12 @@ class MatchService:
                 hero_name=hero_name,
                 hero_icon_url=hero_icon_url,
                 team=team,
+                role=role,
                 kills=kills,
                 deaths=deaths,
                 assists=assists,
+                minions_killed=minions_killed,
+                gold=gold,
                 mmr_change=mmr_change,
                 performance_score=None,  # Not available in API
                 is_opted_in=False,  # Not available in API
@@ -263,6 +332,19 @@ class MatchService:
             return TeamSide.DUSK
         else:
             return TeamSide.DAWN  # Default fallback
+
+    def _map_role(self, role_str: str) -> Role:
+        """Map GraphQL Role enum to our Role enum."""
+        mapping = {
+            "NONE": Role.NONE,
+            "CARRY": Role.CARRY,
+            "OFFLANE": Role.OFFLANE,
+            "MIDLANE": Role.MIDLANE,
+            "SUPPORT": Role.SUPPORT,
+            "JUNGLE": Role.JUNGLE,
+            "FILL": Role.FILL,
+        }
+        return mapping.get(role_str, Role.NONE)
     
     def _get_hero_icon_url(self, hero_name: str) -> str:
         """

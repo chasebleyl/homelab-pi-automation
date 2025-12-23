@@ -1,0 +1,373 @@
+{
+  "match": {
+    "id": "2a0ac355-54c7-48f6-8b73-33cc9d4200a4",
+    "uuid": "2a0ac355-54c7-48f6-8b73-33cc9d4200a4",
+    "duration": 1564,
+    "endTime": "2025-12-23T03:49:35Z",
+    "gameMode": "RANKED",
+    "region": "NA",
+    "winningTeam": "DUSK",
+    "matchPlayers": [
+      {
+        "player": {
+          "uuid": "5a54118e-b35d-45f3-b508-245934e0c33f",
+          "name": null
+        },
+        "hero": {
+          "name": "Lizard"
+        },
+        "heroData": {
+          "name": "Lizard",
+          "displayName": "Zarus",
+          "icon": "2adedb19551f7be5"
+        },
+        "team": "DAWN",
+        "role": "MIDLANE",
+        "kills": 6,
+        "deaths": 7,
+        "assists": 4,
+        "heroDamage": 22525,
+        "heroDamageTaken": 22585,
+        "wardsPlaced": 5,
+        "wardsDestroyed": 1,
+        "minionsKilled": 100,
+        "neutralMinionsKilled": 15,
+        "gold": 9846,
+        "rating": {
+          "points": 897.0,
+          "newPoints": 875.0,
+          "rank": {
+            "name": "Gold I",
+            "abbreviation": "G1",
+            "tierName": "Gold",
+            "icon": "bd3235ed2d814c4d"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "b02d3c57-26c8-4286-8e49-92e30cdc4bca",
+          "name": null
+        },
+        "hero": {
+          "name": "Crunch"
+        },
+        "heroData": {
+          "name": "Crunch",
+          "displayName": "Crunch",
+          "icon": "ac9a0f61e85d0fa2"
+        },
+        "team": "DAWN",
+        "role": "JUNGLE",
+        "kills": 5,
+        "deaths": 4,
+        "assists": 4,
+        "heroDamage": 16590,
+        "heroDamageTaken": 20917,
+        "wardsPlaced": 0,
+        "wardsDestroyed": 0,
+        "minionsKilled": 179,
+        "neutralMinionsKilled": 129,
+        "gold": 10904,
+        "rating": {
+          "points": 462.0,
+          "newPoints": 447.0,
+          "rank": {
+            "name": "Silver II",
+            "abbreviation": "S2",
+            "tierName": "Silver",
+            "icon": "fc69387012302b46"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "4085057b-e7af-4e58-a88e-4afe88a03ef7",
+          "name": "AssasinKiller608"
+        },
+        "hero": {
+          "name": "Boost"
+        },
+        "heroData": {
+          "name": "Boost",
+          "displayName": "Skylar",
+          "icon": "d87d5522cf78c915"
+        },
+        "team": "DAWN",
+        "role": "CARRY",
+        "kills": 4,
+        "deaths": 3,
+        "assists": 1,
+        "heroDamage": 23101,
+        "heroDamageTaken": 12479,
+        "wardsPlaced": 4,
+        "wardsDestroyed": 0,
+        "minionsKilled": 140,
+        "neutralMinionsKilled": 5,
+        "gold": 9746,
+        "rating": {
+          "points": 490.0,
+          "newPoints": 474.0,
+          "rank": {
+            "name": "Silver II",
+            "abbreviation": "S2",
+            "tierName": "Silver",
+            "icon": "fc69387012302b46"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "1cb40a0c-6070-47db-93c1-65eaa835c1d7",
+          "name": null
+        },
+        "hero": {
+          "name": "Muriel"
+        },
+        "heroData": {
+          "name": "Muriel",
+          "displayName": "Muriel",
+          "icon": "2c827fcff5a02da5"
+        },
+        "team": "DUSK",
+        "role": "MIDLANE",
+        "kills": 4,
+        "deaths": 6,
+        "assists": 7,
+        "heroDamage": 14299,
+        "heroDamageTaken": 16305,
+        "wardsPlaced": 7,
+        "wardsDestroyed": 0,
+        "minionsKilled": 111,
+        "neutralMinionsKilled": 6,
+        "gold": 10242,
+        "rating": {
+          "points": 141.0,
+          "newPoints": 174.0,
+          "rank": {
+            "name": "Bronze II",
+            "abbreviation": "B2",
+            "tierName": "Bronze",
+            "icon": "26389cf81c492cde"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "bef8303e-569a-425e-8e7e-f1554664e652",
+          "name": null
+        },
+        "hero": {
+          "name": "Riktor"
+        },
+        "heroData": {
+          "name": "Riktor",
+          "displayName": "Riktor",
+          "icon": "576daa2e0305e877"
+        },
+        "team": "DAWN",
+        "role": "SUPPORT",
+        "kills": 0,
+        "deaths": 7,
+        "assists": 3,
+        "heroDamage": 5732,
+        "heroDamageTaken": 24972,
+        "wardsPlaced": 12,
+        "wardsDestroyed": 2,
+        "minionsKilled": 53,
+        "neutralMinionsKilled": 0,
+        "gold": 9811,
+        "rating": {
+          "points": 351.0,
+          "newPoints": 328.0,
+          "rank": {
+            "name": "Silver III",
+            "abbreviation": "S3",
+            "tierName": "Silver",
+            "icon": "fc69387012302b46"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "23df91be-cb50-4f09-99d6-38f600676492",
+          "name": "psychomain"
+        },
+        "hero": {
+          "name": "GRIMexe"
+        },
+        "heroData": {
+          "name": "GRIMexe",
+          "displayName": "GRIM.exe",
+          "icon": "ae6f5a33a6ca0197"
+        },
+        "team": "DUSK",
+        "role": "CARRY",
+        "kills": 7,
+        "deaths": 0,
+        "assists": 8,
+        "heroDamage": 31199,
+        "heroDamageTaken": 14505,
+        "wardsPlaced": 9,
+        "wardsDestroyed": 0,
+        "minionsKilled": 248,
+        "neutralMinionsKilled": 39,
+        "gold": 14354,
+        "rating": {
+          "points": 533.0,
+          "newPoints": 557.0,
+          "rank": {
+            "name": "Silver I",
+            "abbreviation": "S1",
+            "tierName": "Silver",
+            "icon": "fc69387012302b46"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "ed171bc5-7157-443e-98a1-89200687836b",
+          "name": "lvl_1000_bidoof"
+        },
+        "hero": {
+          "name": "Grux"
+        },
+        "heroData": {
+          "name": "Grux",
+          "displayName": "Grux",
+          "icon": "4d1f268b89b454f6"
+        },
+        "team": "DUSK",
+        "role": "OFFLANE",
+        "kills": 3,
+        "deaths": 2,
+        "assists": 2,
+        "heroDamage": 22616,
+        "heroDamageTaken": 15195,
+        "wardsPlaced": 5,
+        "wardsDestroyed": 0,
+        "minionsKilled": 253,
+        "neutralMinionsKilled": 64,
+        "gold": 12332,
+        "rating": {
+          "points": 200.0,
+          "newPoints": 233.0,
+          "rank": {
+            "name": "Bronze I",
+            "abbreviation": "B1",
+            "tierName": "Bronze",
+            "icon": "26389cf81c492cde"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "0d5cdfed-839a-4360-a14e-396c558b9436",
+          "name": "Jin Qiu's Leathe..."
+        },
+        "hero": {
+          "name": "Wood"
+        },
+        "heroData": {
+          "name": "Wood",
+          "displayName": "Mourn",
+          "icon": "21c15938a85150dd"
+        },
+        "team": "DUSK",
+        "role": "SUPPORT",
+        "kills": 3,
+        "deaths": 2,
+        "assists": 11,
+        "heroDamage": 16030,
+        "heroDamageTaken": 15878,
+        "wardsPlaced": 7,
+        "wardsDestroyed": 0,
+        "minionsKilled": 10,
+        "neutralMinionsKilled": 4,
+        "gold": 10599,
+        "rating": {
+          "points": 280.0,
+          "newPoints": 313.0,
+          "rank": {
+            "name": "Bronze I",
+            "abbreviation": "B1",
+            "tierName": "Bronze",
+            "icon": "26389cf81c492cde"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "a9481463-27fe-416f-b7e8-83e07bf926b0",
+          "name": "chili_toenail121..."
+        },
+        "hero": {
+          "name": "Greystone"
+        },
+        "heroData": {
+          "name": "Greystone",
+          "displayName": "Greystone",
+          "icon": "82d8319293547d22"
+        },
+        "team": "DAWN",
+        "role": "OFFLANE",
+        "kills": 1,
+        "deaths": 2,
+        "assists": 2,
+        "heroDamage": 14307,
+        "heroDamageTaken": 27776,
+        "wardsPlaced": 10,
+        "wardsDestroyed": 0,
+        "minionsKilled": 201,
+        "neutralMinionsKilled": 4,
+        "gold": 10698,
+        "rating": {
+          "points": 446.0,
+          "newPoints": 423.0,
+          "rank": {
+            "name": "Silver II",
+            "abbreviation": "S2",
+            "tierName": "Silver",
+            "icon": "fc69387012302b46"
+          }
+        }
+      },
+      {
+        "player": {
+          "uuid": "85979618-b189-4f4d-a781-c9821e0a027f",
+          "name": "King Loogithin' ..."
+        },
+        "hero": {
+          "name": "Boris"
+        },
+        "heroData": {
+          "name": "Boris",
+          "displayName": "Boris",
+          "icon": "dce981c530523dec"
+        },
+        "team": "DUSK",
+        "role": "JUNGLE",
+        "kills": 6,
+        "deaths": 6,
+        "assists": 5,
+        "heroDamage": 24262,
+        "heroDamageTaken": 20370,
+        "wardsPlaced": 2,
+        "wardsDestroyed": 0,
+        "minionsKilled": 192,
+        "neutralMinionsKilled": 168,
+        "gold": 12711,
+        "rating": {
+          "points": 531.0,
+          "newPoints": 562.0,
+          "rank": {
+            "name": "Silver I",
+            "abbreviation": "S1",
+            "tierName": "Silver",
+            "icon": "fc69387012302b46"
+          }
+        }
+      }
+    ]
+  }
+}

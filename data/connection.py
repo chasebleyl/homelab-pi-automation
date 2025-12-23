@@ -70,6 +70,7 @@ class Database:
                 CREATE TABLE IF NOT EXISTS subscribed_profiles (
                     guild_id BIGINT NOT NULL,
                     player_uuid TEXT NOT NULL,
+                    player_name TEXT,
                     subscribed_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
                     PRIMARY KEY (guild_id, player_uuid)
                 );

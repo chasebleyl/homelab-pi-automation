@@ -20,13 +20,16 @@ class SubscribedProfileRepository:
         """
         self.db = db
 
-    async def add_profile(self, guild_id: int, player_uuid: str) -> bool:
+    async def add_profile(
+        self, guild_id: int, player_uuid: str, player_name: Optional[str] = None
+    ) -> bool:
         """
         Add a player profile subscription for a guild.
 
         Args:
             guild_id: The Discord guild (server) ID
             player_uuid: The player UUID from pred.gg
+            player_name: The player's display name (optional)
 
         Returns:
             True if profile was added, False if it already exists
@@ -46,9 +49,9 @@ class SubscribedProfileRepository:
             # Insert the new subscription
             try:
                 await conn.execute("""
-                    INSERT INTO subscribed_profiles (guild_id, player_uuid, subscribed_at)
-                    VALUES ($1, $2, NOW())
-                """, guild_id, player_uuid)
+                    INSERT INTO subscribed_profiles (guild_id, player_uuid, player_name, subscribed_at)
+                    VALUES ($1, $2, $3, NOW())
+                """, guild_id, player_uuid, player_name)
                 return True
             except Exception as e:
                 logger.error(f"Error adding profile subscription: {e}")
@@ -85,7 +88,7 @@ class SubscribedProfileRepository:
 
     async def get_profiles(self, guild_id: int) -> list[str]:
         """
-        Get all subscribed player profiles for a guild.
+        Get all subscribed player UUIDs for a guild.
 
         Args:
             guild_id: The Discord guild (server) ID
@@ -100,6 +103,25 @@ class SubscribedProfileRepository:
                 ORDER BY subscribed_at ASC
             """, guild_id)
             return [row["player_uuid"] for row in rows]
+
+    async def get_profiles_with_names(self, guild_id: int) -> list[SubscribedProfile]:
+        """
+        Get all subscribed player profiles for a guild with their names.
+
+        Args:
+            guild_id: The Discord guild (server) ID
+
+        Returns:
+            List of SubscribedProfile objects, empty list if none subscribed
+        """
+        async with self.db.pool.acquire() as conn:
+            rows = await conn.fetch("""
+                SELECT guild_id, player_uuid, player_name, subscribed_at
+                FROM subscribed_profiles
+                WHERE guild_id = $1
+                ORDER BY subscribed_at ASC
+            """, guild_id)
+            return [SubscribedProfile.from_row(dict(row)) for row in rows]
 
     async def is_subscribed(self, guild_id: int, player_uuid: str) -> bool:
         """

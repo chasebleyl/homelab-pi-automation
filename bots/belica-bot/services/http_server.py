@@ -7,6 +7,7 @@ from typing import Optional
 from predecessor_api import MatchService
 from services.match_formatter import MatchMessageFormatter
 from services.hero_emoji_mapper import HeroEmojiMapper
+from services.role_emoji_mapper import RoleEmojiMapper
 from services.profile_subscription_db import ProfileSubscription
 
 logger = logging.getLogger("belica.http_server")
@@ -129,14 +130,16 @@ class HTTPServer:
                 if profile_subscription:
                     subscribed_uuids = set(await profile_subscription.get_profiles(guild_id))
                 
-                # Create hero emoji mapper
+                # Create emoji mappers
                 hero_emoji_mapper = HeroEmojiMapper(guild=guild, bot=self.bot)
-                
+                role_emoji_mapper = RoleEmojiMapper(guild=guild, bot=self.bot)
+
                 # Format and send match
                 formatter = MatchMessageFormatter(
                     match,
                     subscribed_uuids,
-                    hero_emoji_mapper
+                    hero_emoji_mapper,
+                    role_emoji_mapper
                 )
                 
                 embed = formatter.create_embed()
