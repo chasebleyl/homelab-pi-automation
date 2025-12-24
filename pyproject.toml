@@ -11,6 +11,9 @@ dependencies = [
     # Discord bot
     "discord.py>=2.3.0",
 
+    # Image generation for scoreboards
+    "Pillow>=10.0.0",
+
     # HTTP client for GraphQL API
     "aiohttp>=3.9.0",
 

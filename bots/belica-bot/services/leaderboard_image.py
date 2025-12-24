@@ -462,7 +462,7 @@ class LeaderboardImageGenerator:
 
         row_center_y = y + self.ROW_HEIGHT // 2
 
-        # 1. Rank badge
+        # 1. Rank badge - always show rank and VP
         x, width = self.COLUMNS["rank"]
         if rank_name:
             rank_color = self._get_rank_color(tier_name)
@@ -470,11 +470,19 @@ class LeaderboardImageGenerator:
                 (x + self.PADDING, row_center_y - self._s(10)),
                 rank_name,
                 fill=rank_color,
-                font=self.font_small
+                font=self.font_medium
             )
             draw.text(
-                (x + self.PADDING, row_center_y + self._s(2)),
-                f"{int(vp)} VP",
+                (x + self.PADDING, row_center_y + self._s(4)),
+                f"{int(vp):,} VP",
+                fill=self.TEXT_SECONDARY,
+                font=self.font_small
+            )
+        else:
+            # Show "Unranked" for players without rank data
+            draw.text(
+                (x + self.PADDING, row_center_y - self._s(4)),
+                "Unranked",
                 fill=self.TEXT_MUTED,
                 font=self.font_small
             )
