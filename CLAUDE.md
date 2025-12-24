@@ -10,6 +10,7 @@ Monorepo for Predecessor game Discord bots and supporting services. Uses the pre
 | `api/predecessor/` | Shared GraphQL API client library | [Details](api/predecessor/CLAUDE.md) |
 | `crons/predecessor/` | Scheduled jobs for match fetching | [Details](crons/predecessor/CLAUDE.md) |
 | `data/` | Shared PostgreSQL data layer | [Details](data/CLAUDE.md) |
+| `ansible/` | Raspberry Pi deployment automation | [Details](ansible/CLAUDE.md) |
 
 ## Quick Start
 

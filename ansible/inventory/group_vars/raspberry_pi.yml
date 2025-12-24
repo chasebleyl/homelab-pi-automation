@@ -27,6 +27,12 @@ system_packages:
   - python3-dev
   - libpq-dev
   - build-essential
+  - fail2ban
+
+# fail2ban configuration
+fail2ban_maxretry: 5
+fail2ban_bantime: 3600
+fail2ban_findtime: 600
 
 # PostgreSQL tuning for Raspberry Pi (limited RAM)
 postgres_shared_buffers: "128MB"

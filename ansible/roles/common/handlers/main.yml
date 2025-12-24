@@ -1,3 +1,7 @@
 ---
 # Common role handlers
-# Note: Service-specific handlers are in their respective roles
+
+- name: Restart fail2ban
+  systemd:
+    name: fail2ban
+    state: restarted

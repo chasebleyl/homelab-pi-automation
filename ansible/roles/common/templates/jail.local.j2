@@ -1,0 +1,26 @@
+# fail2ban jail configuration
+# Managed by Ansible - do not edit manually
+
+[DEFAULT]
+# Ban duration in seconds (default: 1 hour)
+bantime = {{ fail2ban_bantime }}
+
+# Time window to count failures (default: 10 minutes)
+findtime = {{ fail2ban_findtime }}
+
+# Number of failures before ban (default: 5)
+maxretry = {{ fail2ban_maxretry }}
+
+# Ignore local connections
+ignoreip = 127.0.0.1/8 ::1
+
+# Use systemd backend for log reading
+backend = systemd
+
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+maxretry = {{ fail2ban_maxretry }}
+bantime = {{ fail2ban_bantime }}
+findtime = {{ fail2ban_findtime }}
