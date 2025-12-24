@@ -35,13 +35,13 @@
       when: git_result.changed
 
     - name: Install/update Python dependencies
-      pip:
-        name: "."
-        extra_args: "-e .[dev]"
+      ansible.builtin.command:
+        cmd: "{{ venv_dir }}/bin/pip install -e '.[dev]'"
         chdir: "{{ app_dir }}"
-        virtualenv: "{{ venv_dir }}"
       become: yes
       become_user: "{{ app_user }}"
+      register: pip_result
+      changed_when: "'Successfully installed' in pip_result.stdout"
 
     - name: Deploy .env file
       template:
