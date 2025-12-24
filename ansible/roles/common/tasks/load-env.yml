@@ -3,14 +3,14 @@
 # This allows using a single .env for both local dev and Ansible deployment
 
 - name: Check if .env file exists
-  local_action:
-    module: stat
+  ansible.builtin.stat:
     path: "{{ playbook_dir }}/../../.env"
   register: env_file
+  delegate_to: localhost
   become: no
 
 - name: Fail if .env file not found
-  fail:
+  ansible.builtin.fail:
     msg: |
       .env file not found at repository root!
       Please copy .env.example to .env and configure your secrets:
@@ -18,10 +18,10 @@
   when: not env_file.stat.exists
 
 - name: Load .env file contents
-  local_action:
-    module: slurp
+  ansible.builtin.slurp:
     src: "{{ playbook_dir }}/../../.env"
   register: env_file_content
+  delegate_to: localhost
   become: no
 
 - name: Parse .env file into variables

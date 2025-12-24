@@ -38,16 +38,15 @@ class Database:
             if db_url.startswith("postgresql://"):
                 db_url = db_url.replace("postgresql://", "postgres://", 1)
 
-            # Set search_path on each new connection to use the schema
-            async def init_connection(conn):
-                await conn.execute(f"SET search_path TO {schema}, public")
-
+            # Set search_path via server_settings so it persists across connection reuse
+            # Note: Using init= callback doesn't work because asyncpg resets connection
+            # state when returning connections to the pool
             self._pool = await asyncpg.create_pool(
                 db_url,
                 min_size=1,
                 max_size=10,
                 command_timeout=60,
-                init=init_connection
+                server_settings={"search_path": f"{schema}, public"}
             )
             logger.info(f"Database connection pool created (schema: {schema})")
 

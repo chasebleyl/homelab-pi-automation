@@ -19,6 +19,11 @@
     name: "{{ system_packages }}"
     state: present
 
+- name: Generate en_US.UTF-8 locale
+  community.general.locale_gen:
+    name: en_US.UTF-8
+    state: present
+
 - name: Ensure app directory exists
   file:
     path: "{{ app_dir }}"
@@ -56,15 +61,20 @@
   become: yes
   become_user: "{{ app_user }}"
 
+- name: Check if dependencies are installed
+  ansible.builtin.stat:
+    path: "{{ venv_dir }}/bin/alembic"
+  register: alembic_check
+
 - name: Install Python dependencies
-  pip:
-    name: "."
-    extra_args: "-e .[dev]"
+  ansible.builtin.command:
+    cmd: "{{ venv_dir }}/bin/pip install -e '.[dev]'"
     chdir: "{{ app_dir }}"
-    virtualenv: "{{ venv_dir }}"
   become: yes
   become_user: "{{ app_user }}"
-  when: git_result.changed or force_pip_install | default(false)
+  when: git_result.changed or not alembic_check.stat.exists or force_pip_install | default(false)
+  register: pip_result
+  changed_when: "'Successfully installed' in pip_result.stdout"
 
 - name: Deploy .env file
   template:
@@ -73,6 +83,5 @@
     owner: "{{ app_user }}"
     group: "{{ app_group }}"
     mode: "0600"
-  notify:
-    - Restart belica-bot
-    - Restart predecessor-crons
+  # Note: Don't notify service restarts here - services may not exist yet
+  # Services are started/restarted by their respective roles

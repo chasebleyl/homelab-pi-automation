@@ -37,6 +37,18 @@
 - name: Flush handlers to apply PostgreSQL config
   meta: flush_handlers
 
+- name: Ensure PostgreSQL is running
+  ansible.builtin.systemd:
+    name: postgresql
+    state: started
+  register: postgres_started
+
+- name: Wait for PostgreSQL to be ready
+  ansible.builtin.wait_for:
+    path: /var/run/postgresql/.s.PGSQL.5432
+    state: present
+    timeout: 30
+
 - name: Set PostgreSQL user password
   become: yes
   become_user: postgres
