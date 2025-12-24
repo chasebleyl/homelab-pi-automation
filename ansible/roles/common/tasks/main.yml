@@ -1,0 +1,78 @@
+---
+# Common role: Base system setup for Raspberry Pi
+
+- name: Load environment variables from .env
+  include_tasks: load-env.yml
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Upgrade all packages
+  apt:
+    upgrade: safe
+  when: upgrade_packages | default(false)
+
+- name: Install system packages
+  apt:
+    name: "{{ system_packages }}"
+    state: present
+
+- name: Ensure app directory exists
+  file:
+    path: "{{ app_dir }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "0755"
+
+- name: Clone/update repository
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ app_dir }}"
+    version: "{{ repo_branch }}"
+    force: no
+    accept_hostkey: yes
+  become: yes
+  become_user: "{{ app_user }}"
+  register: git_result
+
+- name: Create Python virtual environment
+  command: python3 -m venv {{ venv_dir }}
+  args:
+    creates: "{{ venv_dir }}/bin/python"
+  become: yes
+  become_user: "{{ app_user }}"
+
+- name: Upgrade pip in virtual environment
+  pip:
+    name:
+      - pip
+      - setuptools
+      - wheel
+    state: latest
+    virtualenv: "{{ venv_dir }}"
+  become: yes
+  become_user: "{{ app_user }}"
+
+- name: Install Python dependencies
+  pip:
+    name: "."
+    extra_args: "-e .[dev]"
+    chdir: "{{ app_dir }}"
+    virtualenv: "{{ venv_dir }}"
+  become: yes
+  become_user: "{{ app_user }}"
+  when: git_result.changed or force_pip_install | default(false)
+
+- name: Deploy .env file
+  template:
+    src: env.j2
+    dest: "{{ app_dir }}/.env"
+    owner: "{{ app_user }}"
+    group: "{{ app_group }}"
+    mode: "0600"
+  notify:
+    - Restart belica-bot
+    - Restart predecessor-crons

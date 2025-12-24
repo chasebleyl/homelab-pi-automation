@@ -1,0 +1,81 @@
+---
+# Deploy playbook: Code-only deployment (skip infrastructure setup)
+#
+# Use this for faster deployments when infrastructure is already set up.
+# Pulls latest code, installs dependencies, and restarts services.
+#
+# Usage:
+#   ansible-playbook playbooks/deploy.yml
+
+- name: Deploy code updates to Raspberry Pi
+  hosts: raspberry_pi
+  become: yes
+
+  vars:
+    force_pip_install: true  # Always reinstall dependencies on deploy
+
+  tasks:
+    - name: Load environment variables from .env
+      include_tasks: ../roles/common/tasks/load-env.yml
+
+    - name: Pull latest code
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: "{{ repo_branch }}"
+        force: no
+        accept_hostkey: yes
+      become: yes
+      become_user: "{{ app_user }}"
+      register: git_result
+
+    - name: Display git changes
+      debug:
+        msg: "Git updated: {{ git_result.before }}..{{ git_result.after }}"
+      when: git_result.changed
+
+    - name: Install/update Python dependencies
+      pip:
+        name: "."
+        extra_args: "-e .[dev]"
+        chdir: "{{ app_dir }}"
+        virtualenv: "{{ venv_dir }}"
+      become: yes
+      become_user: "{{ app_user }}"
+
+    - name: Deploy .env file
+      template:
+        src: ../roles/common/templates/env.j2
+        dest: "{{ app_dir }}/.env"
+        owner: "{{ app_user }}"
+        group: "{{ app_group }}"
+        mode: "0600"
+
+    - name: Restart services
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+        daemon_reload: yes
+      loop:
+        - belica-bot
+        - predecessor-crons
+
+    - name: Wait for belica-bot to be ready
+      wait_for:
+        port: "{{ belica_bot_port }}"
+        host: "127.0.0.1"
+        delay: 2
+        timeout: 30
+
+    - name: Verify services are running
+      command: systemctl is-active {{ item }}
+      register: service_check
+      loop:
+        - belica-bot
+        - predecessor-crons
+      changed_when: false
+      failed_when: service_check.rc != 0
+
+    - name: Deployment complete
+      debug:
+        msg: "Deployment successful! Services restarted and running."

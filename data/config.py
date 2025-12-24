@@ -15,13 +15,17 @@ class DatabaseConfig:
     instantiated with a specific database URL for testing.
     """
 
-    def __init__(self, database_url: str | None = None) -> None:
-        """Initialize config with optional explicit database URL.
+    def __init__(
+        self, database_url: str | None = None, schema: str | None = None
+    ) -> None:
+        """Initialize config with optional explicit database URL and schema.
 
         Args:
             database_url: If provided, use this URL instead of environment variables.
+            schema: If provided, use this schema instead of environment variable.
         """
         self._database_url = database_url
+        self._schema = schema
 
     def get_database_url(self) -> str:
         """Get the database connection URL."""
@@ -37,14 +41,20 @@ class DatabaseConfig:
         # Construct from individual parameters
         host = os.getenv("DB_HOST", "localhost")
         port = os.getenv("DB_PORT", "5432")
-        name = os.getenv("DB_NAME", "predecessor")
+        name = os.getenv("DB_NAME", "hobbydata")
         user = os.getenv("DB_USER", "postgres")
         password = os.getenv("DB_PASSWORD", "")
         return f"postgresql://{user}:{password}@{host}:{port}/{name}"
 
+    def get_schema(self) -> str:
+        """Get the database schema name."""
+        if self._schema:
+            return self._schema
+        return os.getenv("DB_SCHEMA", "predecessor")
+
     def validate(self) -> None:
         """Validate that required configuration is present."""
         db_url = self.get_database_url()
-        if not db_url or db_url == "postgresql://postgres:@localhost:5432/predecessor":
+        if not db_url or db_url == "postgresql://postgres:@localhost:5432/hobbydata":
             raise ValueError("DATABASE_URL or DB_* environment variables must be set")
 

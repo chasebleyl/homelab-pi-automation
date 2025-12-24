@@ -31,18 +31,25 @@ class Database:
         if self._pool is None:
             # Parse DATABASE_URL or use individual parameters
             db_url = self.config.get_database_url()
+            schema = self.config.get_schema()
+
             # asyncpg uses postgres:// but we might have postgresql:// from Config
             # Convert postgresql:// to postgres:// if needed
             if db_url.startswith("postgresql://"):
                 db_url = db_url.replace("postgresql://", "postgres://", 1)
 
+            # Set search_path on each new connection to use the schema
+            async def init_connection(conn):
+                await conn.execute(f"SET search_path TO {schema}, public")
+
             self._pool = await asyncpg.create_pool(
                 db_url,
                 min_size=1,
                 max_size=10,
-                command_timeout=60
+                command_timeout=60,
+                init=init_connection
             )
-            logger.info("Database connection pool created")
+            logger.info(f"Database connection pool created (schema: {schema})")
 
             # Schema initialization - only for testing
             # Production uses: cd data && alembic upgrade head
@@ -51,7 +58,10 @@ class Database:
     
     async def _init_schema(self) -> None:
         """Initialize database schema (create tables if they don't exist)."""
+        schema = self.config.get_schema()
         async with self._pool.acquire() as conn:
+            # Create schema if it doesn't exist
+            await conn.execute(f"CREATE SCHEMA IF NOT EXISTS {schema}")
             await conn.execute("""
                 CREATE TABLE IF NOT EXISTS processed_matches (
                     match_uuid TEXT PRIMARY KEY,

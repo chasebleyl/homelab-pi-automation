@@ -1,0 +1,40 @@
+# Predecessor API Cron Workers Service
+# Managed by Ansible - do not edit manually
+
+[Unit]
+Description=Predecessor API Cron Workers
+Documentation=https://github.com/YOUR_USERNAME/cb-discord-bots
+After=network.target postgresql.service belica-bot.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User={{ app_user }}
+Group={{ app_group }}
+WorkingDirectory={{ app_dir }}
+EnvironmentFile={{ app_dir }}/.env
+
+ExecStart={{ venv_dir }}/bin/python crons/predecessor/main.py
+
+# Restart configuration
+Restart=always
+RestartSec=30
+
+# Resource limits
+MemoryMax=128M
+CPUQuota=25%
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{ app_dir }}
+PrivateTmp=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=predecessor-crons
+
+[Install]
+WantedBy=multi-user.target

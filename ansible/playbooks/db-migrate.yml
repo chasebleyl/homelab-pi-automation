@@ -1,0 +1,46 @@
+---
+# Database migration playbook
+#
+# Runs database migrations without restarting services.
+# Useful for applying schema changes independently.
+#
+# Usage:
+#   ansible-playbook playbooks/db-migrate.yml
+
+- name: Run database migrations
+  hosts: raspberry_pi
+  become: yes
+
+  tasks:
+    - name: Load environment variables from .env
+      include_tasks: ../roles/common/tasks/load-env.yml
+
+    - name: Pull latest code (for migration files)
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: "{{ repo_branch }}"
+        force: no
+        accept_hostkey: yes
+      become: yes
+      become_user: "{{ app_user }}"
+
+    - name: Run database migrations
+      command: "{{ venv_dir }}/bin/alembic upgrade head"
+      args:
+        chdir: "{{ app_dir }}/data"
+      become: yes
+      become_user: "{{ app_user }}"
+      environment:
+        DATABASE_URL: "{{ database_url }}"
+        DB_SCHEMA: "{{ postgres_schema }}"
+      register: migration_result
+
+    - name: Display migration output
+      debug:
+        var: migration_result.stdout_lines
+      when: migration_result.stdout_lines | length > 0
+
+    - name: Migration complete
+      debug:
+        msg: "Database migrations applied successfully."

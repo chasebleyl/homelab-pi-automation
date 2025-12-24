@@ -1,0 +1,85 @@
+---
+# PostgreSQL role: Install and configure PostgreSQL on Raspberry Pi
+
+- name: Install PostgreSQL packages
+  apt:
+    name:
+      - "postgresql-{{ postgres_version }}"
+      - "postgresql-contrib-{{ postgres_version }}"
+      - python3-psycopg2  # Required for Ansible PostgreSQL modules
+      - libpq-dev
+    state: present
+
+- name: Ensure PostgreSQL is started and enabled
+  systemd:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Configure PostgreSQL for Raspberry Pi (low memory)
+  template:
+    src: postgresql.conf.j2
+    dest: "/etc/postgresql/{{ postgres_version }}/main/conf.d/99-raspberry-pi.conf"
+    owner: postgres
+    group: postgres
+    mode: "0644"
+  notify: Restart PostgreSQL
+
+- name: Configure pg_hba.conf for local connections
+  template:
+    src: pg_hba.conf.j2
+    dest: "/etc/postgresql/{{ postgres_version }}/main/pg_hba.conf"
+    owner: postgres
+    group: postgres
+    mode: "0640"
+  notify: Restart PostgreSQL
+
+- name: Flush handlers to apply PostgreSQL config
+  meta: flush_handlers
+
+- name: Set PostgreSQL user password
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ postgres_user }}"
+    password: "{{ postgres_password }}"
+    state: present
+
+- name: Create application database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ postgres_db }}"
+    owner: "{{ postgres_user }}"
+    encoding: UTF8
+    lc_collate: en_US.UTF-8
+    lc_ctype: en_US.UTF-8
+    template: template0
+    state: present
+
+- name: Grant all privileges on database to user
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    db: "{{ postgres_db }}"
+    role: "{{ postgres_user }}"
+    type: database
+    privs: ALL
+    state: present
+
+# Schema creation is handled by migration 000_create_schema.py
+# The postgres user will own the schema since they run the migration
+
+- name: Run database migrations
+  command: "{{ venv_dir }}/bin/alembic upgrade head"
+  args:
+    chdir: "{{ app_dir }}/data"
+  become: yes
+  become_user: "{{ app_user }}"
+  environment:
+    DATABASE_URL: "{{ database_url }}"
+    DB_SCHEMA: "{{ postgres_schema }}"
+  register: migration_result
+  changed_when: "'Running upgrade' in migration_result.stdout"
+  tags:
+    - migrate

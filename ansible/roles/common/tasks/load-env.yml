@@ -1,0 +1,64 @@
+---
+# Load environment variables from root .env file
+# This allows using a single .env for both local dev and Ansible deployment
+
+- name: Check if .env file exists
+  local_action:
+    module: stat
+    path: "{{ playbook_dir }}/../../.env"
+  register: env_file
+  become: no
+
+- name: Fail if .env file not found
+  fail:
+    msg: |
+      .env file not found at repository root!
+      Please copy .env.example to .env and configure your secrets:
+        cp .env.example .env
+  when: not env_file.stat.exists
+
+- name: Load .env file contents
+  local_action:
+    module: slurp
+    src: "{{ playbook_dir }}/../../.env"
+  register: env_file_content
+  become: no
+
+- name: Parse .env file into variables
+  set_fact:
+    env_vars: "{{ env_vars | default({}) | combine({item.split('=', 1)[0]: item.split('=', 1)[1] | default('')}) }}"
+  loop: "{{ (env_file_content.content | b64decode).split('\n') }}"
+  when:
+    - item | trim | length > 0
+    - not item.startswith('#')
+    - '"=" in item'
+  no_log: true  # Don't log secrets
+
+# Map .env variables to Ansible variables
+- name: Set application variables from .env
+  set_fact:
+    # Ansible/Pi settings
+    pi_ip_address: "{{ env_vars.ANSIBLE_PI_HOST | default('pi.local') }}"
+    ansible_user: "{{ env_vars.ANSIBLE_PI_USER | default('pi') }}"
+    repo_url: "{{ env_vars.ANSIBLE_REPO_URL | default('https://github.com/YOUR_USERNAME/cb-discord-bots.git') }}"
+    repo_branch: "{{ env_vars.ANSIBLE_REPO_BRANCH | default('main') }}"
+    # App secrets
+    discord_token: "{{ env_vars.DISCORD_TOKEN | default('') }}"
+    test_guild_id: "{{ env_vars.TEST_GUILD_ID | default('') }}"
+    pred_gg_api_url: "{{ env_vars.PRED_GG_API_URL | default('https://pred.gg/gql') }}"
+    pred_gg_oauth_api_url: "{{ env_vars.PRED_GG_OAUTH_API_URL | default('') }}"
+    pred_gg_client_id: "{{ env_vars.PRED_GG_CLIENT_ID | default('') }}"
+    pred_gg_client_secret: "{{ env_vars.PRED_GG_CLIENT_SECRET | default('') }}"
+    postgres_password: "{{ env_vars.DB_PASSWORD | default('postgres') }}"
+    postgres_host: "{{ env_vars.DB_HOST | default('localhost') }}"
+    postgres_port: "{{ env_vars.DB_PORT | default('5432') }}"
+    postgres_db: "{{ env_vars.DB_NAME | default('hobbydata') }}"
+    postgres_schema: "{{ env_vars.DB_SCHEMA | default('predecessor') }}"
+    postgres_user: "{{ env_vars.DB_USER | default('postgres') }}"
+    belica_bot_url: "{{ env_vars.BELICA_BOT_URL | default('http://localhost:' + (belica_bot_port | string)) }}"
+  no_log: true
+
+- name: Build database URL
+  set_fact:
+    database_url: "postgresql://{{ postgres_user }}:{{ postgres_password }}@{{ postgres_host }}:{{ postgres_port }}/{{ postgres_db }}"
+  no_log: true

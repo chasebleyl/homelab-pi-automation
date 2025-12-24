@@ -1,0 +1,35 @@
+---
+# Raspberry Pi Configuration
+# --------------------------
+# All user-configurable settings come from root .env file.
+# This file contains only static defaults that rarely change.
+
+# Application paths (no need to change these)
+app_name: cb-discord-bots
+app_user: pi
+app_group: pi
+app_dir: /opt/cb-discord-bots
+venv_dir: "{{ app_dir }}/.venv"
+
+# PostgreSQL version
+postgres_version: "15"
+
+# Belica Bot HTTP server
+belica_bot_host: "0.0.0.0"
+belica_bot_port: 8080
+
+# System packages to install
+system_packages:
+  - git
+  - python3
+  - python3-pip
+  - python3-venv
+  - python3-dev
+  - libpq-dev
+  - build-essential
+
+# PostgreSQL tuning for Raspberry Pi (limited RAM)
+postgres_shared_buffers: "128MB"
+postgres_effective_cache_size: "256MB"
+postgres_work_mem: "4MB"
+postgres_maintenance_work_mem: "64MB"

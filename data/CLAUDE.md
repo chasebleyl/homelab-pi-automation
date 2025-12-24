@@ -112,11 +112,15 @@ class PlayerMatchCursor:
 
 ## Database Schema
 
+Tables live in the `hobbydata.predecessor` schema (database: `hobbydata`, schema: `predecessor`).
+
 Tables managed via Alembic migrations:
-- `processed_matches` - Match processing state
-- `subscribed_profiles` - Guild player subscriptions
-- `target_channels` - Guild notification channels
-- `player_match_cursors` - Per-player cursor for match fetching
+- `predecessor.processed_matches` - Match processing state
+- `predecessor.subscribed_profiles` - Guild player subscriptions
+- `predecessor.target_channels` - Guild notification channels
+- `predecessor.player_match_cursors` - Per-player cursor for match fetching
+
+The schema is created automatically by Alembic migrations and the `search_path` is set on connection.
 
 ## Migrations
 
@@ -160,7 +164,8 @@ alembic history
 | `DATABASE_URL` | No* | - | Full PostgreSQL URL |
 | `DB_HOST` | No* | localhost | Database host |
 | `DB_PORT` | No* | 5432 | Database port |
-| `DB_NAME` | No* | predecessor | Database name |
+| `DB_NAME` | No* | hobbydata | Database name |
+| `DB_SCHEMA` | No | predecessor | Schema within the database |
 | `DB_USER` | No* | postgres | Database user |
 | `DB_PASSWORD` | No* | - | Database password |
 

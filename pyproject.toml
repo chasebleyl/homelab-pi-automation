@@ -40,6 +40,9 @@ dev = [
 
     # Linting/formatting (optional)
     "ruff>=0.1.0",
+
+    # Ansible for deployment
+    "ansible>=9.0.0",
 ]
 
 [tool.setuptools]

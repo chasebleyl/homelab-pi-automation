@@ -1,0 +1,40 @@
+# Belica Discord Bot Service
+# Managed by Ansible - do not edit manually
+
+[Unit]
+Description=Belica Discord Bot
+Documentation=https://github.com/YOUR_USERNAME/cb-discord-bots
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User={{ app_user }}
+Group={{ app_group }}
+WorkingDirectory={{ app_dir }}
+EnvironmentFile={{ app_dir }}/.env
+
+ExecStart={{ venv_dir }}/bin/python bots/belica-bot/bot.py
+
+# Restart configuration
+Restart=always
+RestartSec=10
+
+# Resource limits
+MemoryMax=256M
+CPUQuota=50%
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths={{ app_dir }}
+PrivateTmp=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=belica-bot
+
+[Install]
+WantedBy=multi-user.target

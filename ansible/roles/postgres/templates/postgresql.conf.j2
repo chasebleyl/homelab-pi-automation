@@ -1,0 +1,27 @@
+# PostgreSQL configuration optimized for Raspberry Pi
+# Managed by Ansible - do not edit manually
+
+# Memory settings (tuned for limited RAM)
+shared_buffers = {{ postgres_shared_buffers }}
+effective_cache_size = {{ postgres_effective_cache_size }}
+work_mem = {{ postgres_work_mem }}
+maintenance_work_mem = {{ postgres_maintenance_work_mem }}
+
+# Checkpoint settings
+checkpoint_completion_target = 0.9
+wal_buffers = 16MB
+
+# Connection settings
+max_connections = 50
+
+# Logging
+log_destination = 'stderr'
+logging_collector = on
+log_directory = 'log'
+log_filename = 'postgresql-%Y-%m-%d.log'
+log_rotation_age = 1d
+log_rotation_size = 100MB
+log_min_duration_statement = 1000  # Log queries taking > 1 second
+
+# Locale
+lc_messages = 'en_US.UTF-8'

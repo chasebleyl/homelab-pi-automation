@@ -1,0 +1,62 @@
+---
+# Main playbook: Full infrastructure and application deployment
+#
+# Usage:
+#   ansible-playbook playbooks/site.yml
+#   ansible-playbook playbooks/site.yml -e "upgrade_packages=true"  # Also upgrade apt packages
+
+- name: Deploy cb-discord-bots to Raspberry Pi
+  hosts: raspberry_pi
+  become: yes
+
+  pre_tasks:
+    - name: Display deployment info
+      debug:
+        msg: "Deploying {{ app_name }} to {{ inventory_hostname }} ({{ ansible_host }})"
+
+    - name: Verify connectivity
+      ping:
+
+  roles:
+    - role: common
+      tags: [common, always]
+
+    - role: postgres
+      tags: [postgres, database, db]
+
+    - role: belica-bot
+      tags: [belica-bot, bot, app]
+
+    - role: predecessor-crons
+      tags: [predecessor-crons, crons, app]
+
+  post_tasks:
+    - name: Display service status
+      command: systemctl status {{ item }} --no-pager
+      register: service_status
+      loop:
+        - postgresql
+        - belica-bot
+        - predecessor-crons
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Show deployment summary
+      debug:
+        msg: |
+          ========================================
+          Deployment Complete!
+          ========================================
+          Host: {{ ansible_host }}
+          App Directory: {{ app_dir }}
+
+          Services:
+          - PostgreSQL: {{ 'running' if service_status.results[0].rc == 0 else 'not running' }}
+          - Belica Bot: {{ 'running' if service_status.results[1].rc == 0 else 'not running' }}
+          - Predecessor Crons: {{ 'running' if service_status.results[2].rc == 0 else 'not running' }}
+
+          Useful commands:
+          - View bot logs: journalctl -u belica-bot -f
+          - View cron logs: journalctl -u predecessor-crons -f
+          - Restart bot: sudo systemctl restart belica-bot
+          ========================================

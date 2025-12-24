@@ -1,0 +1,17 @@
+---
+# Belica Bot role handlers
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Restart belica-bot
+  systemd:
+    name: belica-bot
+    state: restarted
+    daemon_reload: yes
+
+- name: Stop belica-bot
+  systemd:
+    name: belica-bot
+    state: stopped

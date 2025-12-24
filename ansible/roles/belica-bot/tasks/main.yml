@@ -1,0 +1,28 @@
+---
+# Belica Bot role: Deploy and manage Discord bot as systemd service
+
+- name: Deploy belica-bot systemd service
+  template:
+    src: belica-bot.service.j2
+    dest: /etc/systemd/system/belica-bot.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart belica-bot
+
+- name: Ensure belica-bot service is enabled and started
+  systemd:
+    name: belica-bot
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Wait for belica-bot to be ready
+  wait_for:
+    port: "{{ belica_bot_port }}"
+    host: "127.0.0.1"
+    delay: 2
+    timeout: 30
+  when: wait_for_services | default(true)
