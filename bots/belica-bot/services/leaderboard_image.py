@@ -73,12 +73,19 @@ class LeaderboardImageGenerator:
         "items": (880, 140),    # Items (crest + 3 cols items + consumables col)
     }
 
-    def __init__(self, icons_dir: Optional[Path] = None, scale: float = 1.5):
+    def __init__(
+        self,
+        icons_dir: Optional[Path] = None,
+        scale: float = 1.5,
+        subscribed_names: Optional[dict[str, str]] = None
+    ):
         """Initialize the generator.
 
         Args:
             icons_dir: Path to icons directory containing heroes/ subfolder
             scale: Scale factor for image resolution (1.0 = 1000px wide, 1.5 = 1500px, 2.0 = 2000px)
+            subscribed_names: Dict mapping player UUIDs to their stored display names from
+                             subscribed_profiles table. Used as fallback when API doesn't provide a name.
         """
         self.scale = scale
         self.icons_dir = icons_dir or Path(__file__).parent.parent / "icons"
@@ -86,6 +93,7 @@ class LeaderboardImageGenerator:
         self.role_icons_dir = self.icons_dir / "roles"
         self.item_icons_dir = self.icons_dir / "items"
         self.augment_icons_dir = self.icons_dir / "augments"
+        self.subscribed_names = subscribed_names or {}
 
         # Compute scaled layout constants
         self.WIDTH = int(self.BASE_WIDTH * scale)
@@ -433,9 +441,11 @@ class LeaderboardImageGenerator:
         rating = player.get("rating", {})
         rank = rating.get("rank", {}) if rating else {}
 
+        player_uuid = player_info.get("uuid")
         player_name = format_player_display_name(
             player_info.get("name"),
-            player_info.get("uuid")
+            player_uuid,
+            self.subscribed_names.get(player_uuid) if player_uuid else None
         )
         hero_name = hero_data.get("displayName") or hero_data.get("name", "Unknown")
 
@@ -733,7 +743,8 @@ class LeaderboardImageGenerator:
 def generate_leaderboard_image(
     match_data: dict,
     icons_dir: Optional[Path] = None,
-    scale: float = 1.5
+    scale: float = 1.5,
+    subscribed_names: Optional[dict[str, str]] = None
 ) -> bytes:
     """Convenience function to generate a leaderboard image.
 
@@ -741,9 +752,11 @@ def generate_leaderboard_image(
         match_data: Match data dict
         icons_dir: Optional path to icons directory
         scale: Scale factor for image resolution (1.0 = 1000px wide, 1.5 = 1500px, 2.0 = 2000px)
+        subscribed_names: Dict mapping player UUIDs to their stored display names from
+                         subscribed_profiles table. Used as fallback when API doesn't provide a name.
 
     Returns:
         PNG image as bytes
     """
-    generator = LeaderboardImageGenerator(icons_dir, scale=scale)
+    generator = LeaderboardImageGenerator(icons_dir, scale=scale, subscribed_names=subscribed_names)
     return generator.generate(match_data)

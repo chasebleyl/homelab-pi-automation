@@ -36,11 +36,21 @@ async def _handle_scoreboard_callback(interaction: discord.Interaction, match_uu
             )
             return
 
+        # Get subscribed names for this guild (for fallback display names)
+        subscribed_names: dict[str, str] = {}
+        if interaction.guild_id and hasattr(bot, "profile_subscription"):
+            profiles = await bot.profile_subscription.get_profiles_with_names(interaction.guild_id)
+            subscribed_names = {
+                p.player_uuid: p.player_name
+                for p in profiles
+                if p.player_name
+            }
+
         # Import here to avoid circular imports
         from .leaderboard_image import generate_leaderboard_image
 
         # Generate the image
-        image_bytes = generate_leaderboard_image(match_data)
+        image_bytes = generate_leaderboard_image(match_data, subscribed_names=subscribed_names)
 
         # Create file attachment
         filename = f"scoreboard_{match_uuid}.png"
@@ -151,7 +161,8 @@ class MatchMessageFormatter:
         match: MatchData,
         subscribed_player_uuids: set[str] | None = None,
         hero_emoji_mapper: Optional[HeroEmojiMapper] = None,
-        role_emoji_mapper: Optional[RoleEmojiMapper] = None
+        role_emoji_mapper: Optional[RoleEmojiMapper] = None,
+        subscribed_names: dict[str, str] | None = None
     ) -> None:
         """
         Initialize the match formatter.
@@ -162,11 +173,14 @@ class MatchMessageFormatter:
                                     even if they haven't opted in (guild-specific subscriptions)
             hero_emoji_mapper: Optional mapper for hero emojis. If provided, hero emojis will be used.
             role_emoji_mapper: Optional mapper for role emojis. If provided, role emojis will be used.
+            subscribed_names: Dict mapping player UUIDs to their stored display names from
+                             subscribed_profiles table. Used as fallback when API doesn't provide a name.
         """
         self.match = match
         self.subscribed_player_uuids = subscribed_player_uuids or set()
         self.hero_emoji_mapper = hero_emoji_mapper
         self.role_emoji_mapper = role_emoji_mapper
+        self.subscribed_names = subscribed_names or {}
     
     def _determine_embed_color(self) -> discord.Color:
         """
@@ -312,6 +326,28 @@ class MatchMessageFormatter:
         
         return "\n".join(lines)
     
+    def _get_display_name(self, player: MatchPlayerData) -> str:
+        """
+        Get the display name for a player, using subscribed name as fallback.
+
+        If the player's API name is a UUID-based fallback (e.g., "user-a1b2c3d4...")
+        and we have a subscribed name stored, use the subscribed name instead.
+
+        Args:
+            player: The player data.
+
+        Returns:
+            The best available display name for the player.
+        """
+        # Check if current name is a UUID fallback (pattern: "user-{8chars}...")
+        if (
+            player.player_name.startswith("user-")
+            and player.player_name.endswith("...")
+            and player.player_uuid in self.subscribed_names
+        ):
+            return self.subscribed_names[player.player_uuid]
+        return player.player_name
+
     def _format_player_line(self, player: MatchPlayerData) -> str:
         """
         Format a single player's stats line.
@@ -343,8 +379,9 @@ class MatchMessageFormatter:
             if role_display:  # Only add if not empty (NONE/FILL roles return empty)
                 parts.append(role_display)
 
-        # Player name with profile link
-        parts.append(f"[**{player.player_name}**]({player.player_profile_url})")
+        # Player name with profile link (use subscribed name as fallback if available)
+        display_name = self._get_display_name(player)
+        parts.append(f"[**{display_name}**]({player.player_profile_url})")
 
         # KDA
         parts.append(f"`{player.kda_string}`")
@@ -365,7 +402,8 @@ def create_match_message(
     match: MatchData,
     subscribed_player_uuids: set[str] | None = None,
     hero_emoji_mapper: Optional[HeroEmojiMapper] = None,
-    role_emoji_mapper: Optional[RoleEmojiMapper] = None
+    role_emoji_mapper: Optional[RoleEmojiMapper] = None,
+    subscribed_names: dict[str, str] | None = None
 ) -> tuple[discord.Embed, discord.ui.View]:
     """
     Convenience function to create embed and view for a match.
@@ -376,10 +414,14 @@ def create_match_message(
                                 even if they haven't opted in (guild-specific subscriptions)
         hero_emoji_mapper: Optional mapper for hero emojis. If provided, hero emojis will be used.
         role_emoji_mapper: Optional mapper for role emojis. If provided, role emojis will be used.
+        subscribed_names: Dict mapping player UUIDs to their stored display names from
+                         subscribed_profiles table. Used as fallback when API doesn't provide a name.
 
     Returns:
         Tuple of (embed, view) ready to send.
     """
-    formatter = MatchMessageFormatter(match, subscribed_player_uuids, hero_emoji_mapper, role_emoji_mapper)
+    formatter = MatchMessageFormatter(
+        match, subscribed_player_uuids, hero_emoji_mapper, role_emoji_mapper, subscribed_names
+    )
     return formatter.create_embed(), formatter.create_view()
 

@@ -51,19 +51,32 @@ def calculate_per_minute(value: float | int, duration_seconds: float | int) -> f
     return value / duration_minutes
 
 
-def format_player_display_name(name: str | None, uuid: str | None) -> str:
+def format_player_display_name(
+    name: str | None,
+    uuid: str | None,
+    subscribed_name: str | None = None
+) -> str:
     """
-    Format a player's display name, falling back to truncated UUID if no name available.
+    Format a player's display name with fallback chain.
+
+    Fallback order:
+    1. API-provided name (if available)
+    2. Subscribed profile name (if player is subscribed and has a stored name)
+    3. Truncated UUID (if UUID available)
+    4. "Unknown" (last resort)
 
     Args:
-        name: The player's display name (may be None or empty)
+        name: The player's display name from API (may be None or empty)
         uuid: The player's UUID (used for fallback)
+        subscribed_name: The player's name from subscribed_profiles table (optional)
 
     Returns:
-        Display name, or "user-{uuid[:8]}..." if no name, or "Unknown" if neither
+        Display name using the fallback chain above
     """
     if name:
         return name
+    if subscribed_name:
+        return subscribed_name
     if uuid:
         return f"user-{uuid[:8]}..."
     return "Unknown"

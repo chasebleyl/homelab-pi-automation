@@ -120,15 +120,23 @@ class HTTPServer:
                     logger.warning(f"Channel {channel_id} not found in guild {guild_id}")
                     continue
                 
-                # Get subscribed profiles for this guild
+                # Get subscribed profiles for this guild (with names for fallback display)
                 profile_subscription: Optional[ProfileSubscription] = getattr(
                     self.bot,
                     'profile_subscription',
                     None
                 )
                 subscribed_uuids = None
+                subscribed_names: dict[str, str] = {}
                 if profile_subscription:
-                    subscribed_uuids = set(await profile_subscription.get_profiles(guild_id))
+                    profiles = await profile_subscription.get_profiles_with_names(guild_id)
+                    subscribed_uuids = {p.player_uuid for p in profiles}
+                    # Build lookup dict: uuid -> player_name (only if name exists)
+                    subscribed_names = {
+                        p.player_uuid: p.player_name
+                        for p in profiles
+                        if p.player_name
+                    }
                 
                 # Create emoji mappers
                 hero_emoji_mapper = HeroEmojiMapper(guild=guild, bot=self.bot)
@@ -139,7 +147,8 @@ class HTTPServer:
                     match,
                     subscribed_uuids,
                     hero_emoji_mapper,
-                    role_emoji_mapper
+                    role_emoji_mapper,
+                    subscribed_names
                 )
                 
                 embed = formatter.create_embed()
