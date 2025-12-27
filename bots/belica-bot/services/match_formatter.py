@@ -284,9 +284,7 @@ class MatchMessageFormatter:
         """Build the match overview description text."""
         lines = [
             f"**{self.match.score_string}**",
-            "",
             f"**Duration:** {self.match.duration_minutes} Minutes",
-            f"**Region:** {self.match.region.value}",
             f"**Gamemode:** {self.match.game_mode.value}",
         ]
         return "\n".join(lines)
