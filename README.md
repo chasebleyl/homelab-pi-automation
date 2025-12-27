@@ -9,18 +9,13 @@ Monorepo for [Predecessor](https://www.yourpredecessor.com/) game Discord bots a
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
+cp .env.example .env  # Edit with your Discord token
 
-# Configure
-cp .env.example .env
-# Edit .env with your Discord token
-
-# Start database
+# Database
 docker compose up -d postgres
-
-# Run migrations
 cd data && alembic upgrade head && cd ..
 
-# Run the bot
+# Run
 python bots/belica-bot/bot.py
 ```
 
@@ -32,7 +27,9 @@ python bots/belica-bot/bot.py
 | [api/predecessor](api/predecessor/) | Shared GraphQL API client |
 | [crons/predecessor](crons/predecessor/) | Scheduled match fetching jobs |
 | [data](data/) | Shared PostgreSQL data layer |
+| [ansible](ansible/) | Raspberry Pi deployment |
 
 ## Documentation
 
-See [CLAUDE.md](CLAUDE.md) for detailed architecture, environment variables, and development docs.
+- [CLAUDE.md](CLAUDE.md) - Architecture, environment variables, testing
+- [ansible/CLAUDE.md](ansible/CLAUDE.md) - Deployment commands and roles
