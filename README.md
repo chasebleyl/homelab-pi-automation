@@ -1,15 +1,17 @@
-# cb-discord-bots
+# homelab-pi-automation
 
-Monorepo for [Predecessor](https://www.yourpredecessor.com/) game Discord bots and supporting services.
+Monorepo for homelab services running on Raspberry Pi, with shared PostgreSQL infrastructure.
 
-## Quick Start
+## Current Services
+
+### Predecessor (Discord Bot)
+Match tracking bot for the [Predecessor](https://www.yourpredecessor.com/) game.
 
 ```bash
 # Setup
-python -m venv .venv
-source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-cp .env.example .env  # Edit with your Discord token
+cp .env.example .env  # Edit with your tokens
 
 # Database
 docker compose up -d postgres
@@ -23,11 +25,11 @@ python bots/belica-bot/bot.py
 
 | Package | Description |
 |---------|-------------|
-| [bots/belica-bot](bots/belica-bot/) | Discord bot for match tracking |
-| [api/predecessor](api/predecessor/) | Shared GraphQL API client |
-| [crons/predecessor](crons/predecessor/) | Scheduled match fetching jobs |
 | [data](data/) | Shared PostgreSQL data layer |
 | [ansible](ansible/) | Raspberry Pi deployment |
+| [bots/belica-bot](bots/belica-bot/) | Predecessor Discord bot |
+| [api/predecessor](api/predecessor/) | Predecessor GraphQL API client |
+| [crons/predecessor](crons/predecessor/) | Predecessor match fetching jobs |
 
 ## Documentation
 

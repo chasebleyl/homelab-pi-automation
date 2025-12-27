@@ -1,16 +1,16 @@
-# cb-discord-bots
+# homelab-pi-automation
 
-Monorepo for Predecessor game Discord bots and supporting services. Uses the pred.gg GraphQL API.
+Monorepo for homelab services running on Raspberry Pi, with shared PostgreSQL infrastructure.
 
 ## Packages
 
 | Package | Description | CLAUDE.md |
 |---------|-------------|-----------|
-| `bots/belica-bot/` | Discord bot (discord.py) | [Details](bots/belica-bot/CLAUDE.md) |
-| `api/predecessor/` | Shared GraphQL API client library | [Details](api/predecessor/CLAUDE.md) |
-| `crons/predecessor/` | Scheduled jobs for match fetching | [Details](crons/predecessor/CLAUDE.md) |
 | `data/` | Shared PostgreSQL data layer | [Details](data/CLAUDE.md) |
 | `ansible/` | Raspberry Pi deployment automation | [Details](ansible/CLAUDE.md) |
+| `bots/belica-bot/` | Predecessor Discord bot (discord.py) | [Details](bots/belica-bot/CLAUDE.md) |
+| `api/predecessor/` | Predecessor GraphQL API client | [Details](api/predecessor/CLAUDE.md) |
+| `crons/predecessor/` | Predecessor match fetching jobs | [Details](crons/predecessor/CLAUDE.md) |
 
 ## Quick Start
 
@@ -33,6 +33,8 @@ pytest
 ```
 
 ## Architecture Overview
+
+### Predecessor Service
 
 ```
 Discord Users
@@ -84,7 +86,7 @@ Single `.env` file at the monorepo root (see `.env.example`):
 | `DB_PASSWORD` | Yes* | - | Database password |
 | `DB_HOST` | No | localhost | Database host |
 | `DB_PORT` | No | 5432 | Database port |
-| `DB_NAME` | No | predecessor | Database name |
+| `DB_NAME` | No | hobbydata | Database name |
 | `DB_USER` | No | postgres | Database user |
 | `DATABASE_URL` | No* | - | Full PostgreSQL URL (alternative to DB_* vars) |
 | `BELICA_BOT_URL` | No | http://localhost:8080 | Bot HTTP endpoint (for crons) |
