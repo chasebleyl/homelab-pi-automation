@@ -108,6 +108,16 @@ class Database:
 
                 CREATE INDEX IF NOT EXISTS idx_player_match_cursors_last_match_end_time
                     ON player_match_cursors(last_match_end_time);
+
+                -- Composite indexes for query optimization (migration 004)
+                CREATE INDEX IF NOT EXISTS idx_subscribed_profiles_guild_id_subscribed_at
+                    ON subscribed_profiles(guild_id, subscribed_at);
+
+                CREATE INDEX IF NOT EXISTS idx_target_channels_guild_id_configured_at
+                    ON target_channels(guild_id, configured_at);
+
+                CREATE INDEX IF NOT EXISTS idx_processed_matches_notified_bot_processed_at
+                    ON processed_matches(notified_bot, processed_at);
             """)
             logger.info("Database schema initialized")
     

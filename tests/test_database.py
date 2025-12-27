@@ -17,11 +17,11 @@ async def test_database_connection(db):
 async def test_schema_tables_exist(db):
     """Test that schema initialization creates expected tables."""
     async with db.pool.acquire() as conn:
-        # Check that our tables exist
+        # Check that our tables exist in the predecessor schema
         tables = await conn.fetch("""
             SELECT table_name
             FROM information_schema.tables
-            WHERE table_schema = 'public'
+            WHERE table_schema = 'predecessor'
             ORDER BY table_name
         """)
         table_names = [row["table_name"] for row in tables]
